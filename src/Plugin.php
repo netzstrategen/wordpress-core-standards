@@ -39,6 +39,7 @@ class Plugin {
     if (is_admin()) {
       return;
     }
+    UserFrontend::init();
   }
 
   /**
