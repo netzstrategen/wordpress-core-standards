@@ -105,7 +105,7 @@ EOD;
    */
   public static function login_form_bottom($output) {
     if (get_option('users_can_register')) {
-      $output .= '<a href="' . esc_url(wp_registration_url()) . '" class="register btn btn--no-border">' . __('Register') . '</a>';
+      $output .= '<a href="' . esc_url(wp_registration_url()) . '" class="register">' . __('Register') . '</a>';
     }
     return $output;
   }

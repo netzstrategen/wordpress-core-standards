@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Core Standards
-  Version: 1.2.0
+  Version: 1.3.1
   Text Domain: core-standards
   Description: Standard refinements.
   Author: netzstrategen
@@ -36,5 +36,6 @@ register_activation_hook(__FILE__, __NAMESPACE__ . '\Schema::activate');
 register_deactivation_hook(__FILE__, __NAMESPACE__ . '\Schema::deactivate');
 register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Schema::uninstall');
 
+add_action('widgets_init', __NAMESPACE__ . '\Widgets\UserLoginFormWidget::init');
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');

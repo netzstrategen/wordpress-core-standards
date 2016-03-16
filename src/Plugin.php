@@ -13,11 +13,18 @@ namespace Netzstrategen\CoreStandards;
 class Plugin {
 
   /**
+   * Prefix for naming.
+   *
+   * @var string
+   */
+  const PREFIX = 'core-standards';
+
+  /**
    * Gettext localization domain.
    *
    * @var string
    */
-  const L10N = 'core-standards';
+  const L10N = self::PREFIX;
 
   /**
    * @var string
@@ -35,6 +42,8 @@ class Plugin {
 
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
+
+    add_shortcode('user-login-form', __NAMESPACE__ . '\UserLoginForm::getOutput');
 
     if (is_admin()) {
       return;
