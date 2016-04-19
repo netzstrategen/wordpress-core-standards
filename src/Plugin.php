@@ -40,6 +40,9 @@ class Plugin {
     // @see https://developer.mozilla.org/en-US/Firefox/Privacy/Tracking_Protection
     add_filter('oembed_providers', __CLASS__ . '::oembed_providers');
 
+    // Add wrapper to oEmbed elements.
+    add_filter('embed_oembed_html', __CLASS__ . '::embed_oembed_html', 10, 4);
+
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
 
@@ -58,6 +61,13 @@ class Plugin {
     $providers['#https?://(www\.)?facebook\.com/(.+/)?video.+#i'] = ['https://www.facebook.com/plugins/video/oembed.{format}', TRUE];
     $providers['#https?://(www\.)?facebook\.com/.+#i'] = ['https://www.facebook.com/plugins/post/oembed.{format}', TRUE];
     return $providers;
+  }
+
+  /**
+   * Wrap oEmbed output for styling purposes.
+   */
+  public static function embed_oembed_html($html, $url, $attr, $post_id) {
+    return '<div class="oembed">' . $html . '</div>';
   }
 
   /**
