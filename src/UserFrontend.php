@@ -136,7 +136,7 @@ EOD;
     $from_email = get_option('admin_email');
     // Ensure that emails from staging site instances can still be identified.
     if (isset($_SERVER['SERVER_NAME'])) {
-      $from_email = strtok($from_email, '@') . '@' . $_SERVER['SERVER_NAME'];
+      $from_email = strtok($from_email, '@') . '@' . str_replace('www.', '', $_SERVER['SERVER_NAME']);
     }
     $from_header = "From: $from_name <$from_email>";
     if (empty($message['headers'])) {
