@@ -10,6 +10,9 @@ namespace Netzstrategen\CoreStandards;
 class UserFrontend {
 
   public static function init() {
+    // Increase session cookie lifetime to prevent unnecessary logouts.
+    add_filter('auth_cookie_expiration', __CLASS__ . '::auth_cookie_expiration', 10, 3);
+
     // Enable Remember Me by default.
     add_action('login_head', __CLASS__ . '::login_head');
     add_filter('login_form_defaults', __CLASS__ . '::login_form_defaults');
@@ -33,6 +36,15 @@ class UserFrontend {
     if (!Admin::currentUserHasAccess()) {
       add_filter('show_admin_bar', '__return_false');
     }
+  }
+
+  /**
+   * @implements auth_cookie_expiration
+   */
+  public static function auth_cookie_expiration($duration, $user_id, $remember) {
+    // Default duration is 2 days, with remember-me 14 days.
+    // Increase the first to 1 month and the second to 7 months.
+    return $duration * 15;
   }
 
   /**
