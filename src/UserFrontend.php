@@ -60,7 +60,7 @@ class UserFrontend {
    * @implements login_form_defaults
    */
   public static function login_form_defaults(array $args) {
-    $args += ['value_remember' => TRUE];
+    $args['value_remember'] = TRUE;
     return $args;
   }
 

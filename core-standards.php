@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Core Standards
-  Version: 1.9.0
+  Version: 1.9.1
   Text Domain: core-standards
   Description: Standard refinements.
   Author: netzstrategen
