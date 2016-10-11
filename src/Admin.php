@@ -21,6 +21,9 @@ class Admin {
     static::preventBackendAccess();
     static::removeUselessCoreUpdateNagMessages();
 
+    // Removes administrative dashboard widgets hidden by current user.
+    add_action('hidden_meta_boxes', __CLASS__ . '::hidden_meta_boxes', 10, 3);
+
     add_filter('get_user_option_user-settings', __CLASS__ . '::get_user_option_user_settings', 10, 3);
 
     add_filter('get_sample_permalink', __CLASS__ . '::get_sample_permalink', 10, 5);
@@ -95,6 +98,36 @@ class Admin {
         $role->remove_cap('admin_access');
       }
     }
+  }
+
+  /**
+   * Removes administrative dashboard widgets hidden by current user.
+   *
+   * When logging in to the administrative area the dashboard page can take a
+   * very long time to load, even if the user disabled all widgets.
+   *
+   * @implements hidden_meta_boxes
+   */
+  public static function hidden_meta_boxes($hidden, $screen, $use_defaults) {
+    global $wp_meta_boxes;
+    static $has_run = FALSE;
+
+    if ($screen->id !== 'dashboard' || $has_run) {
+      return $hidden;
+    }
+    $has_run = TRUE;
+    $hidden_ids = array_combine($hidden, $hidden);
+
+    foreach ($wp_meta_boxes[$screen->id] as $context => $priorities) {
+      foreach ($wp_meta_boxes[$screen->id][$context] as $priority => $boxes) {
+        foreach ($wp_meta_boxes[$screen->id][$context][$priority] as $id => $box) {
+          if (isset($hidden_ids[$id]) && isset($box['callback'])) {
+            $wp_meta_boxes[$screen->id][$context][$priority][$id]['callback'] = '__return_null';
+          }
+        }
+      }
+    }
+    return $hidden;
   }
 
   /**
