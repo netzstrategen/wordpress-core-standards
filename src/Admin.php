@@ -18,6 +18,8 @@ class Admin {
   public static function init() {
     static::preventBackendAccess();
     static::removeUselessCoreUpdateNagMessages();
+
+    add_filter('get_user_option_user-settings', __CLASS__ . '::get_user_option_user_settings', 10, 3);
   }
 
   /**
@@ -88,6 +90,41 @@ class Admin {
         $role->remove_cap('admin_access');
       }
     }
+  }
+
+  /**
+   * @implements get_user_option_{user_settings}
+   *
+   * Sets default settings for the attachment media popup.
+   *
+   * @see wp_user_settings();
+   *
+   * @param string $value
+   *   The received option value.
+   * @param string $option
+   *   The current option name.
+   * @param object $user
+   *   The current WP_User object.
+   *
+   * @return string
+   */
+  public static function get_user_option_user_settings($value, $option, \WP_User $user) {
+    $overrides = apply_filters('core-standards/user/settings/overrides', [
+      'imgsize' => 'medium',
+      'align' => 'center',
+      'urlbutton' => 'none',
+    ]);
+    parse_str($value, $settings);
+    $settings = http_build_query(array_merge($settings, $overrides));
+
+    if (isset($_COOKIE['wp-settings-' . $user->ID])) {
+      parse_str($_COOKIE['wp-settings-' . $user->ID], $cookie_settings);
+      $cookie_settings = http_build_query(array_merge($cookie_settings, $overrides));
+      $secure = ('https' === parse_url(admin_url(), PHP_URL_SCHEME));
+      setcookie('wp-settings-' . $user->ID, $cookie_settings, time() + YEAR_IN_SECONDS, SITECOOKIEPATH, null, $secure);
+      $_COOKIE['wp-settings-' . $user->ID] = $cookie_settings;
+    }
+    return $settings;
   }
 
 }
