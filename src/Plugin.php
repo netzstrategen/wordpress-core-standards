@@ -46,6 +46,10 @@ class Plugin {
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
 
+    // Set proper From header for all emails.
+    // Remove "[$blogname]" prefix in email subjects of user account mails.
+    add_filter('wp_mail', __NAMESPACE__ . '\Mail::wp_mail');
+
     add_shortcode('user-login-form', __NAMESPACE__ . '\UserLoginForm::getOutput');
 
     if (is_admin()) {
