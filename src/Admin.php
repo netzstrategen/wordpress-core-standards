@@ -12,6 +12,8 @@ namespace Netzstrategen\CoreStandards;
  */
 class Admin {
 
+  private static $skip_sample_permalink = [];
+
   /**
    * @implements admin_init
    */
@@ -20,6 +22,9 @@ class Admin {
     static::removeUselessCoreUpdateNagMessages();
 
     add_filter('get_user_option_user-settings', __CLASS__ . '::get_user_option_user_settings', 10, 3);
+
+    add_filter('get_sample_permalink', __CLASS__ . '::get_sample_permalink', 10, 5);
+    add_filter('get_sample_permalink_html', __CLASS__ . '::get_sample_permalink_html', 10, 5);
   }
 
   /**
@@ -125,6 +130,45 @@ class Admin {
       $_COOKIE['wp-settings-' . $user->ID] = $cookie_settings;
     }
     return $settings;
+  }
+
+  /**
+   * Prevents post ID to be used as permalink.
+   *
+   * When a new post is auto-saved without a title then a permalink is generated
+   * from the post ID. This solution forces the permalink to stay blank until a
+   * title is inserted.
+   *
+   * @see https://core.trac.wordpress.org/ticket/36157
+   * @implements get_sample_permalink
+   */
+  public static function get_sample_permalink($permalink, $post_id, $title, $name, $post) {
+    // $title is only passed from the autosave/post JavaScript, but not when the
+    // permalink UI is generated for the initial page output on the server-side.
+    if ($post_id === (int) $permalink[1] && empty($post->post_title)) {
+      static::$skip_sample_permalink[$post_id] = TRUE;
+      return array('', '');
+    }
+    static::$skip_sample_permalink[$post_id] = FALSE;
+    return $permalink;
+  }
+
+  /**
+   * Prevents unpretty preview link to be displayed until a post title is set.
+   *
+   * When get_sample_permalink() returns a blank permalink then
+   * get_sample_permalink_html() still creates the permalink UI widget that
+   * contains an unpretty preview link, which should not appear. This solution
+   * uses a static flag to determine the situation, because there is no earlier
+   * filter that allows to prevent the output.
+   *
+   * @implements get_sample_permalink_html
+   */
+  public static function get_sample_permalink_html($html, $post_id, $new_title, $new_slug, $post) {
+    if (!empty(static::$skip_sample_permalink[$post_id])) {
+      return '';
+    }
+    return $html;
   }
 
 }
