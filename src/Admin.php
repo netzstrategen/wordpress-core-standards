@@ -28,6 +28,10 @@ class Admin {
 
     add_filter('get_sample_permalink', __CLASS__ . '::get_sample_permalink', 10, 5);
     add_filter('get_sample_permalink_html', __CLASS__ . '::get_sample_permalink_html', 10, 5);
+
+    // Exposes SVG images in media library.
+    add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
+    add_action('admin_head', __CLASS__ . '::admin_head');
   }
 
   /**
@@ -202,6 +206,41 @@ class Admin {
       return '';
     }
     return $html;
+  }
+
+  /**
+   * Exposes SVG images in media grid views.
+   *
+   * @implements wp_prepare_attachment_for_js
+   */
+  public static function wp_prepare_attachment_for_js($post) {
+    if ($post['mime'] !== 'image/svg+xml') {
+      return $post;
+    }
+    $post['icon'] = $post['url'];
+    return $post;
+  }
+
+  /**
+   * Adds styles for showing SVG icons.
+   *
+   * @implements admin_head
+   */
+  public static function admin_head() {
+    echo <<<EOD
+<style>
+  .media-icon {
+    background: #eee;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  .media-icon img[src$=".svg"],
+  img[src$=".svg"].attachment-post-thumbnail {
+    width: 100% !important;
+    height: auto !important;
+  }
+</style>
+EOD;
   }
 
 }
