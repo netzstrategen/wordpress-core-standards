@@ -55,6 +55,9 @@ class Plugin {
     if (is_admin()) {
       return;
     }
+    // Add teaser image to RSS feeds.
+    add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
+
     UserFrontend::init();
   }
 
