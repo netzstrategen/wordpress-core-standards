@@ -32,6 +32,11 @@ class UserFrontend {
     // Set proper From header for all emails.
     // Remove "[$blogname]" prefix in email subjects of user account mails.
     add_filter('wp_mail', __CLASS__ . '::wp_mail');
+
+    // Remove admin bar for users with no backend access.
+    if (!Admin::currentUserHasAccess()) {
+      add_filter('show_admin_bar', '__return_false');
+    }
   }
 
   /**

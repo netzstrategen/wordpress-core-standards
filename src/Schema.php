@@ -16,6 +16,7 @@ class Schema {
    * register_activation_hook() callback.
    */
   public static function activate() {
+    Admin::addAccessCapability();
   }
 
   /**
@@ -28,6 +29,7 @@ class Schema {
    * register_uninstall_hook() callback.
    */
   public static function uninstall() {
+    Admin::removeAccessCapability();
   }
 
 }
