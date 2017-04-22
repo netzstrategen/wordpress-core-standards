@@ -40,21 +40,26 @@ class UserLoginFormWidget extends \WP_Widget {
    * Outputs the administrative widget form.
    */
   function form($instance) {
+    $instance += [
+      'redirect' => NULL,
+      'profile_path' => NULL,
+      'show_login_link' => 0,
+    ];
   ?>
 <p>
   <label for="<?= $this->get_field_id('redirect') ?>"><?= __('Login redirect', Plugin::L10N) ?>:</label>
-  <input type="text" name="<?= $this->get_field_name('redirect') ?>" value="<?= isset($instance['redirect']) ? $instance['redirect'] : '' ?>" class="widefat" id="<?= $this->get_field_id('redirect') ?>">
+  <input type="text" name="<?= $this->get_field_name('redirect') ?>" value="<?= $instance['redirect'] ?>" class="widefat" id="<?= $this->get_field_id('redirect') ?>">
   <span class="description"><?= __('Leave empty to redirect to current page.', Plugin::L10N) ?></span>
 </p>
 <p>
   <label for="<?= $this->get_field_id('profile_path') ?>"><?= __('User profile path', Plugin::L10N) ?>:</label>
-  <input type="text" name="<?= $this->get_field_name('profile_path') ?>" value="<?= isset($instance['profile_path']) ? $instance['profile_path'] : '' ?>" class="widefat" id="<?= $this->get_field_id('profile_path') ?>">
+  <input type="text" name="<?= $this->get_field_name('profile_path') ?>" value="<?= $instance['profile_path'] ?>" class="widefat" id="<?= $this->get_field_id('profile_path') ?>">
   <span class="description"><?= __('Defaults to "user".', Plugin::L10N) ?></span>
 </p>
 <p>
   <label for="<?= $this->get_field_id('show_login_link') ?>">
     <input type="hidden" name="<?= $this->get_field_name('show_login_link') ?>" value="0">
-    <input type="checkbox" name="<?= $this->get_field_name('show_login_link') ?>" value="1" <?= checked((bool) $instance['show_login_link']) ?> class="checkbox" id="<?= $this->get_field_id('show_login_link') ?>"> <?= __('Show login link', Plugin::L10N) ?>
+    <input type="checkbox" name="<?= $this->get_field_name('show_login_link') ?>" value="1" <?= checked($instance['show_login_link']) ?> class="checkbox" id="<?= $this->get_field_id('show_login_link') ?>"> <?= __('Show login link', Plugin::L10N) ?>
   </label>
 </p>
   <?php
