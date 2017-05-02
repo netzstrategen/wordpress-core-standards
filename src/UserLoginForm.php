@@ -31,7 +31,7 @@ class UserLoginForm {
     if (!empty($args['show_reset_link']) && $link = static::getResetPasswordLink()) {
       $links .= '<div class="user-login-form-reset-password-link-wrapper">' . $link . '</div>';
     }
-    if (!empty($args['show_profile_link']) && $link = static::getProfileLink($redirect)) {
+    if (!empty($args['show_profile_link']) && $link = static::getProfileLink(!empty($args['profile_path']) ? $args['profile_path'] : '')) {
       $links .= '<div class="user-login-form-account-link-wrapper">' . $link . '</div>';
     }
     if (!empty($args['show_logout_link']) && $link = static::getLogoutLink($redirect)) {
