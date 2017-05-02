@@ -44,6 +44,9 @@ class UserLoginFormWidget extends \WP_Widget {
       'redirect' => NULL,
       'profile_path' => NULL,
       'show_login_link' => 0,
+      'show_reset_link' => 0,
+      'show_profile_link' => 0,
+      'show_logout_link' => 0,
     ];
   ?>
 <p>
@@ -62,6 +65,24 @@ class UserLoginFormWidget extends \WP_Widget {
     <input type="checkbox" name="<?= $this->get_field_name('show_login_link') ?>" value="1" <?= checked($instance['show_login_link']) ?> class="checkbox" id="<?= $this->get_field_id('show_login_link') ?>"> <?= __('Show login link', Plugin::L10N) ?>
   </label>
 </p>
+<p>
+  <label for="<?= $this->get_field_id('show_reset_link') ?>">
+    <input type="hidden" name="<?= $this->get_field_name('show_reset_link') ?>" value="0">
+    <input type="checkbox" name="<?= $this->get_field_name('show_reset_link') ?>" value="1" <?= checked($instance['show_reset_link']) ?> class="checkbox" id="<?= $this->get_field_id('show_reset_link') ?>"> <?= __('Show reset link', Plugin::L10N) ?>
+  </label>
+</p>
+<p>
+  <label for="<?= $this->get_field_id('show_profile_link') ?>">
+    <input type="hidden" name="<?= $this->get_field_name('show_profile_link') ?>" value="0">
+    <input type="checkbox" name="<?= $this->get_field_name('show_profile_link') ?>" value="1" <?= checked($instance['show_profile_link']) ?> class="checkbox" id="<?= $this->get_field_id('show_profile_link') ?>"> <?= __('Show profile link', Plugin::L10N) ?>
+  </label>
+</p>
+<p>
+  <label for="<?= $this->get_field_id('show_logout_link') ?>">
+    <input type="hidden" name="<?= $this->get_field_name('show_logout_link') ?>" value="0">
+    <input type="checkbox" name="<?= $this->get_field_name('show_logout_link') ?>" value="1" <?= checked($instance['show_logout_link']) ?> class="checkbox" id="<?= $this->get_field_id('show_logout_link') ?>"> <?= __('Show logout link', Plugin::L10N) ?>
+  </label>
+</p>
   <?php
   }
 
@@ -73,6 +94,9 @@ class UserLoginFormWidget extends \WP_Widget {
     $instance['redirect'] = $new_instance['redirect'];
     $instance['profile_path'] = $new_instance['profile_path'];
     $instance['show_login_link'] = $new_instance['show_login_link'];
+    $instance['show_reset_link'] = $new_instance['show_reset_link'];
+    $instance['show_profile_link'] = $new_instance['show_profile_link'];
+    $instance['show_logout_link'] = $new_instance['show_logout_link'];
     return $instance;
   }
 
