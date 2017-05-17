@@ -61,6 +61,7 @@ class UserFrontend {
    */
   public static function login_form_defaults(array $args) {
     $args['value_remember'] = TRUE;
+    $args['remember'] = FALSE;
     return $args;
   }
 
@@ -87,6 +88,9 @@ body, html {
   background-size: auto;
   width: auto;
   height: 50px;
+}
+#loginform .forgetmenot {
+  display: none;
 }
 </style>
 
