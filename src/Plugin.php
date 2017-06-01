@@ -46,6 +46,13 @@ class Plugin {
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
 
+    // Remove size attributes from SVG images, so they scale correctly without a CSS size reset.
+    add_filter('the_content', __CLASS__ . '::the_content');
+    add_filter('wp_get_attachment_metadata', __CLASS__ . '::removeSvgSizeAttributes', 10, 2);
+    add_filter('post_thumbnail_html', __CLASS__ . '::removeSvgSizeAttributes', 10, 3);
+    // Limit to two arguments since the third parameter is the image caption.
+    add_filter('image_send_to_editor', __CLASS__ . '::removeSvgSizeAttributes', 10, 2);
+
     // Set proper From header for all emails.
     // Remove "[$blogname]" prefix in email subjects of user account mails.
     add_filter('wp_mail', __NAMESPACE__ . '\Mail::wp_mail');
@@ -83,6 +90,46 @@ class Plugin {
   public static function upload_mime_types(array $mimes) {
     $mimes['svg'] = 'image/svg+xml';
     return $mimes;
+  }
+
+  /**
+   * Removes SVG image size attributes from the content.
+   *
+   * @implements the_content
+   */
+  public static function the_content($content) {
+    $content = preg_replace_callback('@<img [^>]*src=[^>]+?.svg[^>]*>@', function ($matches) {
+      return static::removeSizeAttributes($matches[0]);
+    }, $content);
+    return $content;
+  }
+
+  /**
+   * Removes size attributes from SVG images.
+   *
+   * @implements wp_get_attachment_metadata
+   * @implements image_send_to_editor
+   * @implements post_thumbnail_html
+   */
+  public static function removeSvgSizeAttributes($data, $post_id, $attachment_id = NULL) {
+    if (!$data || get_post_mime_type($attachment_id ?? $post_id) !== 'image/svg+xml') {
+      return $data;
+    }
+    // For wp_get_attachment_metadata, $data is an array.
+    if (is_array($data)) {
+      unset($data['width'], $data['height']);
+    }
+    else {
+      $data = static::removeSizeAttributes($data);
+    }
+    return $data;
+  }
+
+  /**
+   * Removes size attributes from the given HTML string.
+   */
+  public static function removeSizeAttributes($html) {
+    return preg_replace('@(?:width|height)="1"\s*@', '', $html);
   }
 
   /**
