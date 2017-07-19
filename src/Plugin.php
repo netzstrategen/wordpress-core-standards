@@ -65,6 +65,9 @@ class Plugin {
     // Add teaser image to RSS feeds.
     add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
 
+    // Fix Facebook embeds to keep within wrapper borders.
+    add_filter('oembed_fetch_url', __CLASS__ . '::oembed_fetch_url', 10, 3);
+
     UserFrontend::init();
   }
 
@@ -151,6 +154,18 @@ class Plugin {
    */
   public static function getBasePath() {
     return dirname(__DIR__);
+  }
+
+  /**
+   * Fix Facebook embeds to keep within wrapper borders.
+   *
+   * @implements oembed_fetch_url
+   */
+  public static function oembed_fetch_url($provider, $url, $args) {
+    if (strpos($url, 'facebook.com')) {
+      $provider = add_query_arg( 'maxwidth', '100%', $provider );
+    }
+    return $provider;
   }
 
 }
