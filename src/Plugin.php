@@ -43,6 +43,9 @@ class Plugin {
     // Add wrapper to oEmbed elements.
     add_filter('embed_oembed_html', __CLASS__ . '::embed_oembed_html', 10, 4);
 
+    // Ensure that Facebook embeds do not exceed available content width.
+    add_filter('oembed_fetch_url', __CLASS__ . '::oembed_fetch_url', 10, 3);
+
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
 
@@ -64,9 +67,6 @@ class Plugin {
     }
     // Add teaser image to RSS feeds.
     add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
-
-    // Ensure that Facebook embeds do not exceed available content width.
-    add_filter('oembed_fetch_url', __CLASS__ . '::oembed_fetch_url', 10, 3);
 
     UserFrontend::init();
   }
