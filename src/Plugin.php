@@ -40,11 +40,11 @@ class Plugin {
     // @see https://developer.mozilla.org/en-US/Firefox/Privacy/Tracking_Protection
     add_filter('oembed_providers', __CLASS__ . '::oembed_providers');
 
-    // Add wrapper to oEmbed elements.
-    add_filter('embed_oembed_html', __CLASS__ . '::embed_oembed_html', 10, 4);
-
     // Ensure that Facebook embeds do not exceed available content width.
     add_filter('oembed_fetch_url', __CLASS__ . '::oembed_fetch_url', 10, 3);
+
+    // Add wrapper to oEmbed elements.
+    add_filter('embed_oembed_html', __CLASS__ . '::embed_oembed_html', 10, 4);
 
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
