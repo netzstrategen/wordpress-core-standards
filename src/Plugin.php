@@ -40,6 +40,9 @@ class Plugin {
     // @see https://developer.mozilla.org/en-US/Firefox/Privacy/Tracking_Protection
     add_filter('oembed_providers', __CLASS__ . '::oembed_providers');
 
+    // Ensure that Facebook embeds do not exceed available content width.
+    add_filter('oembed_fetch_url', __CLASS__ . '::oembed_fetch_url', 10, 3);
+
     // Add wrapper to oEmbed elements.
     add_filter('embed_oembed_html', __CLASS__ . '::embed_oembed_html', 10, 4);
 
@@ -151,6 +154,18 @@ class Plugin {
    */
   public static function getBasePath() {
     return dirname(__DIR__);
+  }
+
+  /**
+   * Fix Facebook embeds to keep within wrapper borders.
+   *
+   * @implements oembed_fetch_url
+   */
+  public static function oembed_fetch_url($provider, $url, $args) {
+    if (strpos($url, 'facebook.com')) {
+      $provider = add_query_arg('maxwidth', '100%', $provider);
+    }
+    return $provider;
   }
 
 }
