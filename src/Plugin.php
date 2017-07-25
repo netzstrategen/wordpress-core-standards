@@ -49,6 +49,9 @@ class Plugin {
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
 
+    // Prevent full-width images from getting wrapped into paragraphs.
+    add_filter('the_content', __CLASS__ . '::the_content_before', 9);
+
     // Remove size attributes from SVG images, so they scale correctly without a CSS size reset.
     add_filter('the_content', __CLASS__ . '::the_content');
     add_filter('wp_get_attachment_metadata', __CLASS__ . '::removeSvgSizeAttributes', 10, 2);
@@ -62,9 +65,6 @@ class Plugin {
 
     add_shortcode('user-login-form', __NAMESPACE__ . '\UserLoginForm::getOutput');
 
-    // Prevent full-width images from getting wrapped into paragraphs.
-    add_filter('the_content', __CLASS__ . '::the_content', 9);
-
     if (is_admin()) {
       return;
     }
@@ -72,14 +72,6 @@ class Plugin {
     add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
 
     UserFrontend::init();
-  }
-
-  /**
-   * @implements the_content
-   */
-  public static function the_content($html) {
-    $html = preg_replace('@^(?:<a [^>]+>)?<img [^>]+>(?:</a>)?\s*$@m', '<figure>$0</figure>', $html);
-    return $html;
   }
 
   /**
@@ -104,6 +96,14 @@ class Plugin {
   public static function upload_mime_types(array $mimes) {
     $mimes['svg'] = 'image/svg+xml';
     return $mimes;
+  }
+
+  /**
+   * @implements the_content
+   */
+  public static function the_content_before($html) {
+    $html = preg_replace('@^(?:<a [^>]+>)?<img [^>]+>(?:</a>)?\s*$@m', '<figure>$0</figure>', $html);
+    return $html;
   }
 
   /**
