@@ -68,10 +68,10 @@ class UserLoginForm {
    * @return string
    */
   public static function getLoginLink($redirect = '') {
-    $redirect = $redirect ?: home_url(add_query_arg());
     if (static::isLoggedIn()) {
       return static::getProfileLink($redirect);
     }
+    $redirect = $redirect ?: home_url(add_query_arg());
     $link_text = apply_filters('core_standards/user_login_form/link_text_login', __('Log in'));
     return '<a href="' . wp_login_url($redirect) . '" class="user-login-form-login-link">' . $link_text . '</a>';
   }
