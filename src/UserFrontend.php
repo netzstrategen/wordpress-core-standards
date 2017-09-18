@@ -60,19 +60,7 @@ class UserFrontend {
    * @implements login_form_defaults
    */
   public static function login_form_defaults(array $args) {
-    if (file_exists(get_stylesheet_directory() . '/dist/styles/login.css')) {
-      wp_enqueue_style('theme/login', get_stylesheet_directory_uri() . '/dist/styles/login.css');
-    }
-    else {
-      echo <<<EOD
-<style>
-#loginform .login-remember {
-  display: none;
-}
-</style
-
-EOD;
-    }
+    wp_enqueue_style('core-standards/login', Plugin::getBaseUrl() . '/assets/user-login-form.css');
     $args['value_remember'] = TRUE;
     return $args;
   }
