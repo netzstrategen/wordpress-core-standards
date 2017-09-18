@@ -60,8 +60,8 @@ class UserFrontend {
    * @implements login_form_defaults
    */
   public static function login_form_defaults(array $args) {
+    wp_enqueue_style('core-standards/login', Plugin::getBaseUrl() . '/assets/user-login-form.css');
     $args['value_remember'] = TRUE;
-    $args['remember'] = FALSE;
     return $args;
   }
 
