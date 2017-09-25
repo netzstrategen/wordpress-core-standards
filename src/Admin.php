@@ -29,12 +29,12 @@ class Admin {
     add_filter('get_sample_permalink', __CLASS__ . '::get_sample_permalink', 10, 5);
     add_filter('get_sample_permalink_html', __CLASS__ . '::get_sample_permalink_html', 10, 5);
 
+    // Prevents TinyMCE editor setting unwanted rel attribute values for links that open in new window.
+    add_filter('tiny_mce_before_init', __CLASS__ . '::tiny_mce_before_init');
+
     // Exposes SVG images in media library.
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
-
-    // Stops MCE editor setting unwanted rel attribute values for links that open in new window.
-    add_filter('tiny_mce_before_init', __CLASS__ . '::tinymce_allow_unsafe_link_target');
   }
 
   /**
@@ -212,6 +212,20 @@ class Admin {
   }
 
   /**
+   * Prevents TinyMCE editor setting unwanted rel attribute values for links.
+   *
+   * TinyMCE sets attribute rel="noopener noreferrer" for links that open in
+   * new window (target="_blank"). This would prevent affiliates from correctly
+   * tracking those links.
+   *
+   * @implements tiny_mce_before_init
+   */
+   public static function tiny_mce_before_init(array $mceInit) {
+    $mceInit['allow_unsafe_link_target'] = TRUE;
+    return $mceInit;
+  }
+
+  /**
    * Exposes SVG images in media grid views.
    *
    * @implements wp_prepare_attachment_for_js
@@ -244,19 +258,6 @@ class Admin {
   }
 </style>
 EOD;
-  }
-
-  /**
-   * Stops MCE editor setting attribute rel="noopener noreferrer"
-   * to links that opens in new window (target="_blank").
-   *
-   * @param array $mceInit MCD Editor configuration settings
-   *
-   * @return array
-   */
-  public static function tinymce_allow_unsafe_link_target($mceInit) {
-    $mceInit['allow_unsafe_link_target'] = TRUE;
-    return $mceInit;
   }
 
 }
