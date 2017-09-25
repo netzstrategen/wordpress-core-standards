@@ -29,6 +29,9 @@ class Admin {
     add_filter('get_sample_permalink', __CLASS__ . '::get_sample_permalink', 10, 5);
     add_filter('get_sample_permalink_html', __CLASS__ . '::get_sample_permalink_html', 10, 5);
 
+    // Prevents TinyMCE editor setting unwanted rel attribute values for links opening in new window.
+    add_filter('tiny_mce_before_init', __CLASS__ . '::tiny_mce_before_init');
+
     // Exposes SVG images in media library.
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
@@ -206,6 +209,22 @@ class Admin {
       return '';
     }
     return $html;
+  }
+
+  /**
+   * Prevents TinyMCE editor setting unwanted rel attribute values for links.
+   *
+   * TinyMCE sets attribute rel="noopener noreferrer" for links opening in new
+   * window (target="_blank"). This can prevent affiliate marketing tools from
+   * correctly tracking such links (e.g. in sponsored posts), potentially
+   * causing less revenue, so we disable the behavior by default.
+   *
+   * @see https://www.tinymce.com/docs/configure/content-filtering/#allow_unsafe_link_target
+   * @implements tiny_mce_before_init
+   */
+  public static function tiny_mce_before_init(array $mceInit) {
+    $mceInit['allow_unsafe_link_target'] = TRUE;
+    return $mceInit;
   }
 
   /**
