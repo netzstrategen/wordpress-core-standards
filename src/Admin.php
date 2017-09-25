@@ -29,7 +29,7 @@ class Admin {
     add_filter('get_sample_permalink', __CLASS__ . '::get_sample_permalink', 10, 5);
     add_filter('get_sample_permalink_html', __CLASS__ . '::get_sample_permalink_html', 10, 5);
 
-    // Prevents TinyMCE editor setting unwanted rel attribute values for links that open in new window.
+    // Prevents TinyMCE editor setting unwanted rel attribute values for links opening in new window.
     add_filter('tiny_mce_before_init', __CLASS__ . '::tiny_mce_before_init');
 
     // Exposes SVG images in media library.
@@ -214,8 +214,8 @@ class Admin {
   /**
    * Prevents TinyMCE editor setting unwanted rel attribute values for links.
    *
-   * TinyMCE sets attribute rel="noopener noreferrer" for links that open in
-   * new window (target="_blank"). This would prevent affiliates from correctly
+   * TinyMCE sets attribute rel="noopener noreferrer" for links opening in new
+   * window (target="_blank"). This would prevent affiliates from correctly
    * tracking those links.
    *
    * @implements tiny_mce_before_init
