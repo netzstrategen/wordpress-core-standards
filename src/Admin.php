@@ -32,6 +32,9 @@ class Admin {
     // Exposes SVG images in media library.
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
+
+    // Stops MCE editor setting unwanted rel attribute values for links that open in new window.
+    add_filter('tiny_mce_before_init', __CLASS__ . '::tinymce_allow_unsafe_link_target');
   }
 
   /**
@@ -241,6 +244,19 @@ class Admin {
   }
 </style>
 EOD;
+  }
+
+  /**
+   * Stops MCE editor setting attribute rel="noopener noreferrer"
+   * to links that opens in new window (target="_blank").
+   *
+   * @param array $mceInit MCD Editor configuration settings
+   *
+   * @return array
+   */
+  public static function tinymce_allow_unsafe_link_target($mceInit) {
+    $mceInit['allow_unsafe_link_target'] = TRUE;
+    return $mceInit;
   }
 
 }
