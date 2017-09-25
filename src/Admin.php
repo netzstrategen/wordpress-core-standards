@@ -216,13 +216,13 @@ class Admin {
    *
    * TinyMCE sets attribute rel="noopener noreferrer" for links opening in new
    * window (target="_blank"). This can prevent affiliate marketing tools from
-   * correctly tracking such links (e.g. in sponsored posts), potentially causing
-   * less revenue, so we disable the behavior by default.
+   * correctly tracking such links (e.g. in sponsored posts), potentially
+   * causing less revenue, so we disable the behavior by default.
    *
    * @see https://www.tinymce.com/docs/configure/content-filtering/#allow_unsafe_link_target
    * @implements tiny_mce_before_init
    */
-   public static function tiny_mce_before_init(array $mceInit) {
+  public static function tiny_mce_before_init(array $mceInit) {
     $mceInit['allow_unsafe_link_target'] = TRUE;
     return $mceInit;
   }
