@@ -39,3 +39,14 @@ register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Schema::uninstall');
 add_action('widgets_init', __NAMESPACE__ . '\Widgets\UserLoginFormWidget::init');
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
+
+if (defined('WP_CLI') && WP_CLI) {
+  // Subcommands that extend an existing namespace wrongly replace the whole
+  // namespace, so each subcommand needs to be registered separately.
+  // @see https://make.wordpress.org/cli/handbook/commands-cookbook/#required-registration-arguments
+  // @see https://github.com/wp-cli/wp-cli/issues/1767
+  // @see https://github.com/wp-cli/wp-cli/issues/1795
+  // @see https://github.com/wp-cli/wp-cli/pull/1877
+  \WP_CLI::add_command('user export-csv', __NAMESPACE__ . '\Commands\UserExport');
+  \WP_CLI::add_command('user import-csv-raw', __NAMESPACE__ . '\Commands\UserImport');
+}
