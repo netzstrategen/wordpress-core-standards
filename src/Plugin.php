@@ -71,6 +71,9 @@ class Plugin {
     // Add teaser image to RSS feeds.
     add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
 
+    // Disable pingbacks.
+    add_action('pre_ping', 'pre_ping');
+
     UserFrontend::init();
   }
 
@@ -177,6 +180,19 @@ class Plugin {
       $provider = add_query_arg('maxwidth', '100%', $provider);
     }
     return $provider;
+  }
+
+  /**
+   * @implements pre_ping
+   */
+  function pre_ping(&$links) {
+    $home = get_option('home');
+
+    foreach ($links as $l => $link) {
+      if (strpos($link, $home) === 0) {
+        unset($links[$l]);
+      }
+    }
   }
 
 }
