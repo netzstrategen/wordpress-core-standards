@@ -262,4 +262,10 @@ class Admin {
 EOD;
   }
 
+  /**
+   * Disables link notifications from other web sites.
+   */
+  public static function disableLinkNotifications() {
+    update_option('default_ping_status', 'closed');
+  }
 }

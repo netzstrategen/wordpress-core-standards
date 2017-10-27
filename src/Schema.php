@@ -17,6 +17,7 @@ class Schema {
    */
   public static function activate() {
     Admin::addAccessCapability();
+    Admin::disableLinkNotifications();
   }
 
   /**
