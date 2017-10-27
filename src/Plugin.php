@@ -65,10 +65,7 @@ class Plugin {
 
     add_shortcode('user-login-form', __NAMESPACE__ . '\UserLoginForm::getOutput');
 
-    // Disable self pingbacks.
-    add_action('pre_ping', __CLASS__ . '::pre_ping');
-
-    // Disable pingback functionality and remove x-pingback HTTP header
+    // Disable pingback functionality and remove x-pingback HTTP header.
     add_filter('xmlrpc_methods', __CLASS__ . '::xmlrpc_methods');
     add_filter('wp_headers', __CLASS__ . '::wp_headers');
 
@@ -190,19 +187,6 @@ class Plugin {
   }
 
   /**
-   * @implements pre_ping
-   */
-  public static function pre_ping(&$links) {
-    $home = get_option('home');
-
-    foreach ($links as $l => $link) {
-      if (strpos($link, $home) === 0) {
-        unset($links[$l]);
-      }
-    }
-  }
-
-  /**
    * @implements xmlrpc_methods
    */
   public static function xmlrpc_methods($methods) {
@@ -217,4 +201,5 @@ class Plugin {
     unset($headers['X-Pingback']);
     return $headers;
   }
+
 }

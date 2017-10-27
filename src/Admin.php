@@ -268,4 +268,5 @@ EOD;
   public static function disableLinkNotifications() {
     update_option('default_ping_status', 'closed');
   }
+
 }
