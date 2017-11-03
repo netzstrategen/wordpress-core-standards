@@ -65,27 +65,15 @@ class Plugin {
 
     add_shortcode('user-login-form', __NAMESPACE__ . '\UserLoginForm::getOutput');
 
-    // Disable self pingbacks.
-    add_action('pre_ping', __CLASS__ . '::pre_ping');
-
-    // Disable pingback functionality and remove x-pingback HTTP header.
-    add_filter('xmlrpc_methods', __CLASS__ . '::xmlrpc_methods');
-    add_filter('wp_headers', __CLASS__ . '::wp_headers');
-
     // Disables admin discussion options for pingbacks.
-    add_filter('pre_update_default_ping_status', '__return_false');
     add_filter('pre_option_default_ping_status', '__return_zero');
-    add_filter('pre_update_default_pingback_flag', '__return_false');
     add_filter('pre_option_default_pingback_flag', '__return_zero');
 
     // Disables insertion of rel="pingback" tags.
-    add_filter('bloginfo_url', __CLASS__ . '::bloginfo_url', 10, 2);
-
-    // Unchecks 'allow trackbacks and pingbacks' in the Discussion meta box of post editing page.
-    add_action('post_comment_status_meta_box-options', __CLASS__ . '::post_comment_status_meta_box_options');
+    add_filter('pings_open', '__return_false', 20, 2);
 
     // Unchecks 'allow trackbacks and pingbacks' prior to save the post.
-    add_filter( 'wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data' , '99', 2 );
+    add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 99, 2);
 
     if (is_admin()) {
       return;
@@ -199,50 +187,6 @@ class Plugin {
       $provider = add_query_arg('maxwidth', '100%', $provider);
     }
     return $provider;
-  }
-
-  /**
-   * @implements pre_ping
-   */
-  public static function pre_ping(&$links) {
-    $home = get_option('home');
-
-    foreach ($links as $l => $link) {
-      if (strpos($link, $home) === 0) {
-        unset($links[$l]);
-      }
-    }
-  }
-
-  /**
-   * @implements xmlrpc_methods
-   */
-  public static function xmlrpc_methods($methods) {
-    unset($methods['pingback.ping']);
-    return $methods;
-  }
-
-  /**
-   * @implements wp_headers
-   */
-  public static function wp_headers($headers) {
-    unset($headers['X-Pingback']);
-    return $headers;
-  }
-
-  /**
-   * @implements bloginfo_url
-   */
-  public static function pingback_url($output, $show) {
-    return $show === 'pingback_url' ? '' : $output;
-  }
-
-  /**
-   * @implements post_comment_status_meta_box_options
-   */
-  public static function post_comment_status_meta_box_options($post) {
-    $post->ping_status = 'closed';
-    return $post;
   }
 
   /**
