@@ -69,11 +69,14 @@ class Plugin {
     add_filter('pre_option_default_ping_status', '__return_zero');
     add_filter('pre_option_default_pingback_flag', '__return_zero');
 
+    // Disable pingback functionality and remove x-pingback HTTP header.
+    add_filter('xmlrpc_methods', __CLASS__ . '::xmlrpc_methods');
+
     // Disables insertion of rel="pingback" tags.
-    add_filter('pings_open', '__return_false', 20, 2);
+    add_filter('pings_open', '__return_false', 100, 0);
 
     // Unchecks 'allow trackbacks and pingbacks' prior to save the post.
-    add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 99, 2);
+    add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 100, 2);
 
     if (is_admin()) {
       return;
@@ -190,9 +193,17 @@ class Plugin {
   }
 
   /**
+   * @implements xmlrpc_methods
+   */
+  public static function xmlrpc_methods($methods) {
+    unset($methods['pingback.ping']);
+    return $methods;
+  }
+
+  /**
    * @implements wp_insert_post_data
    */
-  public static function wp_insert_post_data($data) {
+  public static function wp_insert_post_data($data, $postarr) {
     $data['ping_status'] = 'closed';
     return $data;
   }
