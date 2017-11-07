@@ -65,6 +65,14 @@ class Plugin {
 
     add_shortcode('user-login-form', __NAMESPACE__ . '\UserLoginForm::getOutput');
 
+    // Removes X-Pingback HTTP header, disables insertion of rel="pingback" tags,
+    // and disables trackbacks and pingbacks for existing and new posts.
+    add_filter('xmlrpc_methods', __CLASS__ . '::xmlrpc_methods');
+    add_filter('pings_open', '__return_false', 100);
+    add_filter('pre_option_default_ping_status', '__return_zero');
+    add_filter('pre_option_default_pingback_flag', '__return_zero');
+    add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 100);
+
     if (is_admin()) {
       return;
     }
@@ -177,6 +185,23 @@ class Plugin {
       $provider = add_query_arg('maxwidth', '100%', $provider);
     }
     return $provider;
+  }
+
+  /**
+   * @implements xmlrpc_methods
+   */
+  public static function xmlrpc_methods($methods) {
+    unset($methods['pingback.ping']);
+    unset($methods['pingback.extensions.getPingbacks']);
+    return $methods;
+  }
+
+  /**
+   * @implements wp_insert_post_data
+   */
+  public static function wp_insert_post_data($data) {
+    $data['ping_status'] = 'closed';
+    return $data;
   }
 
 }
