@@ -270,7 +270,7 @@ EOD;
    * @implements wp_dropdown_users_args
    */
   public static function wp_dropdown_users_args(array $query_args) {
-    if ($query_args['who'] !== 'authors') {
+    if (isset($query_args['who']) && $query_args['who'] !== 'authors') {
       $query_args['role__in'] = array_diff($query_args['role__in'] ?? [], ['subscriber']);
       $query_args['role__not_in'] = array_unique(array_merge($query_args['role__not_in'] ?? [], ['subscriber']));
     }
