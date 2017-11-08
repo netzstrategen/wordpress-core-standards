@@ -35,6 +35,9 @@ class Admin {
     // Exposes SVG images in media library.
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
+
+    // Excludes users with subscriber role from the author dropdown select list.
+    add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args', 10, 1);
   }
 
   /**
@@ -260,6 +263,15 @@ class Admin {
   }
 </style>
 EOD;
+  }
+
+  /**
+   * @implements wp_dropdown_users_args
+   */
+  public static function wp_dropdown_users_args($query_args) {
+    $query_args['who'] = 'author';
+    $query_args['role__not_in'] = 'subscriber';
+    return $query_args;
   }
 
 }
