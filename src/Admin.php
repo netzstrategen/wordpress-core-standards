@@ -36,8 +36,8 @@ class Admin {
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
 
-    // Excludes users with subscriber role from the author dropdown select list to avoid
-    // an extremely long list in the the case of sites with a large amount of subscribers.
+    // Exclude subscribers from post author select options to prevent a performance
+    // slowdown on sites with large amounts of non-administrative registered users.
     add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args');
   }
 
