@@ -36,8 +36,9 @@ class Admin {
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
 
-    // Excludes users with subscriber role from the author dropdown select list.
-    add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args', 10, 1);
+    // Excludes users with subscriber role from the author dropdown select list to avoid
+    // an extremely long list in the the case of sites with a large amount of subscribers.
+    add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args');
   }
 
   /**
@@ -268,9 +269,11 @@ EOD;
   /**
    * @implements wp_dropdown_users_args
    */
-  public static function wp_dropdown_users_args($query_args) {
-    $query_args['who'] = 'author';
-    $query_args['role__not_in'] = 'subscriber';
+  public static function wp_dropdown_users_args(array $query_args) {
+    if ($query_args['who'] !== 'authors') {
+      $query_args['role__in'] = array_diff($query_args['role__in'] ?? [], ['subscriber']);
+      $query_args['role__not_in'] = array_unique(array_merge($query_args['role__not_in'] ?? [], ['subscriber']));
+    }
     return $query_args;
   }
 
