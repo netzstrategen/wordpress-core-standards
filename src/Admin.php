@@ -35,6 +35,10 @@ class Admin {
     // Exposes SVG images in media library.
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
+
+    // Exclude subscribers from post author select options to prevent a performance
+    // slowdown on sites with large amounts of non-administrative registered users.
+    add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args');
   }
 
   /**
@@ -260,6 +264,17 @@ class Admin {
   }
 </style>
 EOD;
+  }
+
+  /**
+   * @implements wp_dropdown_users_args
+   */
+  public static function wp_dropdown_users_args(array $query_args) {
+    if (isset($query_args['who']) && $query_args['who'] === 'authors') {
+      $query_args['role__in'] = array_diff($query_args['role__in'] ?? [], ['subscriber']);
+      $query_args['role__not_in'] = array_unique(array_merge($query_args['role__not_in'] ?? [], ['subscriber']));
+    }
+    return $query_args;
   }
 
 }
