@@ -39,6 +39,10 @@ class Admin {
     // Exclude subscribers from post author select options to prevent a performance
     // slowdown on sites with large amounts of non-administrative registered users.
     add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args');
+
+    // Copies .htaccess template file into uploads directory.
+    add_action('wp_upgrade', __CLASS__ . '::wp_upgrade', 10, 2);
+    add_action('wp_install', __CLASS__ . '::wp_install');
   }
 
   /**
@@ -275,6 +279,28 @@ EOD;
       $query_args['role__not_in'] = array_unique(array_merge($query_args['role__not_in'] ?? [], ['subscriber']));
     }
     return $query_args;
+  }
+
+  /**
+   * @implements wp_upgrade
+   */
+  public static function wp_upgrade($wp_db_version, $wp_current_db_version) {
+    static::createUploadsHtaccessFile();
+  }
+
+  /**
+   * @implements wp_install
+   */
+  public static function wp_install($wp_user) {
+    static::createUploadsHtaccessFile();
+  }
+
+  /**
+   * Copies .htaccess template file into uploads directory.
+   */
+  public static function createUploadsHtaccessFile() {
+    $upload_dir = explode('sites/', wp_upload_dir(NULL, FALSE)['basedir'])[0];
+    copy(dirname(__DIR__) . '/conf/.htaccess.uploads', $upload_dir . '/.htaccess');
   }
 
 }

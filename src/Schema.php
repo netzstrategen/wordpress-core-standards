@@ -17,6 +17,8 @@ class Schema {
    */
   public static function activate() {
     Admin::addAccessCapability();
+    // Copies .htaccess template file into uploads directory.
+    Admin::createUploadsHtaccessFile();
   }
 
   /**
