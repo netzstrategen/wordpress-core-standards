@@ -18,7 +18,7 @@ class Schema {
   public static function activate() {
     Admin::addAccessCapability();
     // Copies .htaccess template file into uploads directory.
-    Admin::createUploadsHtaccessFile();
+    static::createUploadsHtaccessFile();
   }
 
   /**
@@ -32,6 +32,14 @@ class Schema {
    */
   public static function uninstall() {
     Admin::removeAccessCapability();
+  }
+
+  /**
+   * Ensures .htaccess exists in uploads directory and includes the template file content.
+   */
+  public static function ensureUploadsHtaccessFile() {
+    $upload_dir = explode('sites/', wp_upload_dir(NULL, FALSE)['basedir'])[0];
+    copy(dirname(__DIR__) . '/conf/.htaccess.uploads', $upload_dir . '/.htaccess');
   }
 
 }

@@ -36,6 +36,9 @@ register_activation_hook(__FILE__, __NAMESPACE__ . '\Schema::activate');
 register_deactivation_hook(__FILE__, __NAMESPACE__ . '\Schema::deactivate');
 register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Schema::uninstall');
 
+// Copies .htaccess template file into uploads directory.
+add_action('wp_upgrade', __NAMESPACE__ . '\Schema::createUploadsHtaccessFile');
+
 add_action('widgets_init', __NAMESPACE__ . '\Widgets\UserLoginFormWidget::init');
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
