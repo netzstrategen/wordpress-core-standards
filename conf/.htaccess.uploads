@@ -14,11 +14,12 @@ SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
   php_flag engine off
 </IfModule>
 
-# Returns a 404 error for all missing files and skips WordPress "File not found" page.
+# Fast 404 error responses for missing uploaded files, skipping
+# WordPress "File not found" page rendering.
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{REQUEST_FILENAME} !-f [OR]
-  RewriteCond %{REQUEST_FILENAME} !-d [OR]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
-  RewriteRule ^.*$ - [NC,R=404,L]
+  RewriteRule ^.*$ - [nocase,R=404,L]
 </IfModule>
