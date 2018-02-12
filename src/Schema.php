@@ -40,11 +40,11 @@ class Schema {
    */
   public static function ensureUploadsFiles() {
     $uploads_dir = wp_upload_dir(NULL, FALSE)['basedir'];
-    // For multisite setups, only process the master folder.
-    $uploads_dir = explode('/sites/', $uploads_dir)[0];
 
     $pathname = $uploads_dir . '/.htaccess';
-    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads');
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.fast404');
+    static::createOrPrependFile($pathname, $template, "\n");
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.noscript');
     static::createOrPrependFile($pathname, $template, "\n");
 
     if (is_dir(ABSPATH . '.git')) {
