@@ -277,11 +277,4 @@ EOD;
     return $query_args;
   }
 
-  /**
-   * @implements wp_upgrade
-   */
-  public static function wp_upgrade($wp_db_version, $wp_current_db_version) {
-    static::createUploadsHtaccessFile();
-  }
-
 }
