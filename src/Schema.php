@@ -56,7 +56,7 @@ class Schema {
     $template = "/$uploads_dir_relative/*
 !/$uploads_dir_relative/.htaccess
 ";
-    static::createOrPrependFile($pathname, $template, FALSE);
+    static::createOrPrependFile($pathname, $template);
   }
 
   /**
@@ -67,8 +67,8 @@ class Schema {
    * @param string $template
    *   The new content to create or prepend.
    * @param string $separator
-   *   (optional) A separator to add between the new and original content.
-   *   Defaults to an empty string.
+   *   (optional) Content to add between the new and original content. Defaults
+   *   to an empty string.
    */
   private static function createOrPrependFile($pathname, $template, $separator = '') {
     $write_content = FALSE;
@@ -85,8 +85,15 @@ class Schema {
     }
     if ($write_content) {
       file_put_contents($pathname, $content);
+
       if (defined('WP_CLI')) {
-        \WP_CLI::success(sprintf(__('Security has been hardened in %s.', Plugin::L10N), $pathname));
+        $content = file_get_contents($pathname);
+        if (FALSE !== strpos($content, $template)) {
+          \WP_CLI::success(sprintf(__('Security has been hardened in %s.', Plugin::L10N), $pathname));
+        }
+        else {
+          \WP_CLI::error(sprintf(__('Failed to harden security in %s.', Plugin::L10N), $pathname));
+        }
       }
     }
   }
