@@ -35,7 +35,7 @@ spl_autoload_register(__NAMESPACE__ . '\classloader');
 register_activation_hook(__FILE__, __NAMESPACE__ . '\Schema::activate');
 register_deactivation_hook(__FILE__, __NAMESPACE__ . '\Schema::deactivate');
 register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Schema::uninstall');
-add_action('wp_upgrade', __NAMESPACE__ . '\Schema::ensureUploadsFiles');
+add_action('wp_upgrade', __NAMESPACE__ . '\Schema::ensureUploadsHtaccess');
 
 add_action('widgets_init', __NAMESPACE__ . '\Widgets\UserLoginFormWidget::init');
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);

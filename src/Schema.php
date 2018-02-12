@@ -20,7 +20,7 @@ class Schema {
 
     // Ensures arbitrary script execution protection and fast 404 responses for
     // missing files in uploads folder.
-    static::ensureUploadsFiles();
+    static::ensureUploadsHtaccess();
   }
 
   /**
@@ -39,7 +39,7 @@ class Schema {
   /**
    * Ensures arbitrary script execution protection and fast 404 responses for missing files in uploads folder.
    */
-  public static function ensureUploadsFiles() {
+  public static function ensureUploadsHtaccess() {
     $uploads_dir = wp_upload_dir(NULL, FALSE)['basedir'];
 
     // Changes to .htaccess need to be performed in separate steps for each
