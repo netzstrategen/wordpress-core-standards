@@ -41,21 +41,22 @@ class Schema {
   public static function ensureUploadsFiles() {
     $uploads_dir = wp_upload_dir(NULL, FALSE)['basedir'];
 
+    // Changes to .htaccess need to be performed in separate steps for each
+    // chunk of content that needs to be ensured. Otherwise the existing chunks
+    // would be duplicated.
     $pathname = $uploads_dir . '/.htaccess';
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.fast404');
     static::createOrPrependFile($pathname, $template, "\n");
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.noscript');
     static::createOrPrependFile($pathname, $template, "\n");
 
-    if (is_dir(ABSPATH . '.git')) {
-      $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH));
-
-      $pathname = ABSPATH . '.gitignore';
-      $template = "/$uploads_dir_relative/*
+    // Ensure that .gitignore in the document root tracks the .htaccess file.
+    $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH));
+    $pathname = ABSPATH . '.gitignore';
+    $template = "/$uploads_dir_relative/*
 !/$uploads_dir_relative/.htaccess
 ";
-      static::createOrPrependFile($pathname, $template, FALSE);
-    }
+    static::createOrPrependFile($pathname, $template, FALSE);
   }
 
   /**
