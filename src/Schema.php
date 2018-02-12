@@ -18,7 +18,8 @@ class Schema {
   public static function activate() {
     Admin::addAccessCapability();
 
-    // Ensures fast 404 responses for missing files in uploads folder.
+    // Ensures arbitrary script execution protection and fast 404 responses for
+    // missing files in uploads folder.
     static::ensureUploadsFiles();
   }
 
@@ -36,7 +37,7 @@ class Schema {
   }
 
   /**
-   * Ensures fast 404 responses for missing files in uploads folder.
+   * Ensures arbitrary script execution protection and fast 404 responses for missing files in uploads folder.
    */
   public static function ensureUploadsFiles() {
     $uploads_dir = wp_upload_dir(NULL, FALSE)['basedir'];
@@ -89,10 +90,10 @@ class Schema {
       if (defined('WP_CLI')) {
         $content = file_get_contents($pathname);
         if (FALSE !== strpos($content, $template)) {
-          \WP_CLI::success(sprintf(__('Security has been hardened in %s.', Plugin::L10N), $pathname));
+          \WP_CLI::warning(sprintf('Security has been hardened in %s. Review this before committing!', $pathname));
         }
         else {
-          \WP_CLI::error(sprintf(__('Failed to harden security in %s.', Plugin::L10N), $pathname));
+          \WP_CLI::error(sprintf('Failed to harden security in %s. Fix this before proceeding!', $pathname));
         }
       }
     }
