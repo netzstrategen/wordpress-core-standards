@@ -206,6 +206,13 @@ class Plugin {
   }
 
   /**
+   * Loads the plugin textdomain.
+   */
+  public static function loadTextdomain() {
+    load_plugin_textdomain(static::L10N, FALSE, static::L10N . '/languages/');
+  }
+
+  /**
    * Renders a given plugin template, optionally overridden by the theme.
    *
    * WordPress offers no built-in function to allow plugins to render templates
