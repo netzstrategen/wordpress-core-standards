@@ -80,6 +80,7 @@ class Plugin {
     add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
 
     UserFrontend::init();
+    TrackingOptOut::init();
   }
 
   /**
