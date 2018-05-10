@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Core Standards
-  Version: 1.19.0
+  Version: 1.20.0
   Text Domain: core-standards
   Description: Standard refinements.
   Author: netzstrategen
@@ -40,3 +40,9 @@ add_action('wp_upgrade', __NAMESPACE__ . '\Schema::ensureUploadsHtaccess');
 add_action('widgets_init', __NAMESPACE__ . '\Widgets\UserLoginFormWidget::init');
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
+
+add_action('admin_menu', __NAMESPACE__ . '\TrackingOptOut::admin_menu');
+add_action('admin_init', __NAMESPACE__ . '\TrackingOptOut::admin_init');
+if (!is_admin()) {
+  add_action('init', __NAMESPACE__ . '\TrackingOptOut::init');
+}
