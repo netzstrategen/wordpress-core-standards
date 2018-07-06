@@ -10,6 +10,11 @@ namespace Netzstrategen\CoreStandards;
 class UserFrontend {
 
   public static function init() {
+    // Injects actual nonce values for each menu link that contains the query
+    // string '_wpnonce=[action]'; e.g., '_wpnonce=customer-logout' for the
+    // WooCommerce logout link.
+    add_filter('wp_nav_menu_objects', __CLASS__ . '::wp_nav_menu_objects', 20);
+
     // Increase session cookie lifetime to prevent unnecessary logouts.
     add_filter('auth_cookie_expiration', __CLASS__ . '::auth_cookie_expiration', 10, 3);
 
@@ -36,6 +41,21 @@ class UserFrontend {
     if (!Admin::currentUserHasAccess()) {
       add_filter('show_admin_bar', '__return_false');
     }
+  }
+
+  /**
+   * @implements wp_nav_menu_objects
+   */
+  public static function wp_nav_menu_objects(array $items) {
+    foreach ($items as $item) {
+      if (strpos($item->url, '_wpnonce=')) {
+        $query = parse_url($item->url, PHP_URL_QUERY);
+        parse_str($query, $args);
+        $args['_wpnonce'] = wp_create_nonce($args['_wpnonce']);
+        $item->url = strtr($item->url, [$query => http_build_query($args)]);
+      }
+    }
+    return $items;
   }
 
   /**
