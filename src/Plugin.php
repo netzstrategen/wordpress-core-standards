@@ -43,7 +43,7 @@ class Plugin {
     // Ensure that Facebook embeds do not exceed available content width.
     add_filter('oembed_fetch_url', __CLASS__ . '::oembed_fetch_url', 10, 3);
 
-    // Add wrapper to oEmbed elements.
+    // Enforce youtube-nocookie and add wrapper to oEmbed elements.
     add_filter('embed_oembed_html', __CLASS__ . '::embed_oembed_html', 10, 4);
 
     // Allow SVG files in media library.
@@ -93,9 +93,13 @@ class Plugin {
   }
 
   /**
-   * Wrap oEmbed output for styling purposes.
+   * Convert YouTube embeds and wrap oEmbed output for styling purposes.
    */
   public static function embed_oembed_html($html, $url, $attr, $post_id) {
+    // Enforce no-cookie domain for both youtube.com and youtu.be embeds.
+    if (strpos($url, 'youtu')) {
+      $html = preg_replace('@youtube\.com|youtu\.be@', 'youtube-nocookie.com', $html);
+    }
     return '<div class="oembed">' . $html . '</div>';
   }
 
