@@ -12,9 +12,10 @@ for (var i = 0; i < window.gaIdList.length; i++) {
  */
 function gaOptout() {
   var disableStr;
+  var domainName = cookieDomain.domainValue;
   for (var i = 0; i < window.gaIdList.length; i++) {
     disableStr = 'ga-disable-' + window.gaIdList[i];
-    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/; domain=.' + domainName;
     window[disableStr] = true;
   }
 }

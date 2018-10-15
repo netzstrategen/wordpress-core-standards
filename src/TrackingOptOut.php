@@ -115,6 +115,10 @@ window.gaIdList = <?= json_encode($opt_out_ids) ?>;
   public static function wp_enqueue_scripts() {
     wp_enqueue_script(Plugin::PREFIX . '-enable-opt_out', Plugin::getBaseUrl() . '/dist/scripts/enable-opt-out.js', ['jquery'], FALSE, TRUE);
     wp_localize_script(Plugin::PREFIX . '-enable-opt_out', 'core_standards', ['opt_out_confirmation_message' => __('Google Analytics tracking has been disabled.', Plugin::L10N)]);
+
+    wp_enqueue_script('ga_optout', plugins_url() . '/core-standards/dist/scripts/google-analytics-opt-out.js'); 
+    $cookiedomain = array('domainValue' => COOKIE_DOMAIN);
+    wp_localize_script('ga_optout', 'cookieDomain', $cookiedomain);
   }
 
 }

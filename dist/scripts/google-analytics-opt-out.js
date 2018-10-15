@@ -1,8 +1,9 @@
 "use strict";
 
 function gaOptout() {
-    for (var i, t = 0; t < window.gaIdList.length; t++) i = "ga-disable-" + window.gaIdList[t], 
-    document.cookie = i + "=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/", window[i] = !0;
+    for (var i, o = cookieDomain.domainValue, a = 0; a < window.gaIdList.length; a++) i = "ga-disable-" + window.gaIdList[a], 
+    document.cookie = i + "=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/; domain=." + o, 
+    window[i] = !0;
 }
 
 for (var i = 0; i < window.gaIdList.length; i++) {
