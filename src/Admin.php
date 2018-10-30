@@ -300,6 +300,11 @@ EOD;
 
   /**
    * @implements wp_revisions_to_keep
+   *
+   * Revisions of other post types are not limited and only cleaned up by a cron
+   * job.
+   *
+   * @see Admin::cron_revision_cleanup()
    */
   public static function wp_revisions_to_keep($num, \WP_Post $post) {
     // Revisions for static pages (such as about or imprint pages) should be
@@ -307,25 +312,29 @@ EOD;
     if ($post->post_type === 'page') {
       $num = -1;
     }
-    // Revisions of articles that were published a long time ago (3 months) are
-    // no longer helpful and can be cleaned up.
-    // Note: This also affects later edits unless the post's publishing date is
-    // updated.
-    elseif ($post->post_type === 'post' && time() - get_post_time('U', TRUE, $post->ID) > DAY_IN_SECONDS * static::CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS) {
-      $num = 0;
-    }
     return $num;
   }
 
   /**
    * Cron event callback to clean up obsolete revisions.
+   *
+   * @param int $limit
+   *   (optional) The maximum amount of revisions to delete. Defaults to 100 in
+   *   order to not slow down and exceed cron execution time.
    */
   public static function cron_revision_cleanup($limit = 100) {
     global $wpdb;
 
-    $post_ids = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type = 'revision' AND post_date < %s AND post_name NOT LIKE '%autosave%' LIMIT 0,%d", date('Y-m-d', strtotime('today - ' . static::CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS . ' days')), $limit));
-    foreach ($post_ids as $post_id) {
-      wp_delete_post_revision($post_id);
+    // Revisions of posts that were last modified a long time ago (3 months) are
+    // no longer necessary and can be cleaned up.
+    $revision_ids = $wpdb->get_col($wpdb->prepare("SELECT revision.ID
+FROM $wpdb->posts revision
+INNER JOIN $wpdb->posts parent ON parent.ID = revision.post_parent AND parent.post_type = %s
+WHERE revision.post_type = 'revision' AND revision.post_modified_gmt < %s AND revision.post_name NOT LIKE '%autosave%'
+LIMIT 0,%d
+", 'post', date('Y-m-d', strtotime('today - ' . static::CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS . ' days')), $limit));
+    foreach ($revision_ids as $revision_id) {
+      wp_delete_post_revision($revision_id);
     }
   }
 
