@@ -12,6 +12,20 @@ namespace Netzstrategen\CoreStandards;
  */
 class Admin {
 
+  /**
+   * Cron event name for revision cleanup.
+   *
+   * @var string
+   */
+  const CRON_EVENT_REVISION_CLEANUP = Plugin::PREFIX . '/cron/revision-cleanup';
+
+  /**
+   * Time-frame in days for which to retain all revisions (for post type 'posts).
+   *
+   * @var int
+   */
+  const CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS = 90;
+
   private static $skip_sample_permalink = [];
 
   /**
@@ -39,6 +53,13 @@ class Admin {
     // Exclude subscribers from post author select options to prevent a performance
     // slowdown on sites with large amounts of non-administrative registered users.
     add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args');
+
+    // Limit revisions per post type and age (publishing date).
+    add_filter('wp_revisions_to_keep', __CLASS__ . '::wp_revisions_to_keep', 10, 2);
+    if (!wp_next_scheduled(static::CRON_EVENT_REVISION_CLEANUP)) {
+      wp_schedule_event(time(), 'twicedaily', static::CRON_EVENT_REVISION_CLEANUP);
+    }
+    add_action(static::CRON_EVENT_REVISION_CLEANUP, __CLASS__ . '::cron_revision_cleanup');
   }
 
   /**
@@ -275,6 +296,37 @@ EOD;
       $query_args['role__not_in'] = array_unique(array_merge($query_args['role__not_in'] ?? [], ['subscriber']));
     }
     return $query_args;
+  }
+
+  /**
+   * @implements wp_revisions_to_keep
+   */
+  public static function wp_revisions_to_keep($num, \WP_Post $post) {
+    // Revisions for static pages (such as about or imprint pages) should be
+    // retained infinitely.
+    if ($post->post_type === 'page') {
+      $num = -1;
+    }
+    // Revisions of articles that were published a long time ago (3 months) are
+    // no longer helpful and can be cleaned up.
+    // Note: This also affects later edits unless the post's publishing date is
+    // updated.
+    elseif ($post->post_type === 'post' && time() - get_post_time('U', TRUE, $post->ID) > DAY_IN_SECONDS * static::CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS) {
+      $num = 0;
+    }
+    return $num;
+  }
+
+  /**
+   * Cron event callback to clean up obsolete revisions.
+   */
+  public static function cron_revision_cleanup($limit = 100) {
+    global $wpdb;
+
+    $post_ids = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type = 'revision' AND post_date < %s AND post_name NOT LIKE '%autosave%' LIMIT 0,%d", date('Y-m-d', strtotime('today - ' . static::CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS . ' days')), $limit));
+    foreach ($post_ids as $post_id) {
+      wp_delete_post_revision($post_id);
+    }
   }
 
 }
