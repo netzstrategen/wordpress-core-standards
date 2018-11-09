@@ -325,14 +325,16 @@ EOD;
   public static function cron_revision_cleanup($limit = 100) {
     global $wpdb;
 
+    $post_types = 'post, product, product_variation';
+
     // Revisions of posts that were last modified a long time ago (3 months) are
     // no longer necessary and can be cleaned up.
     $revision_ids = $wpdb->get_col($wpdb->prepare("SELECT revision.ID
 FROM $wpdb->posts revision
-INNER JOIN $wpdb->posts parent ON parent.ID = revision.post_parent AND parent.post_type = %s
+INNER JOIN $wpdb->posts parent ON parent.ID = revision.post_parent AND parent.post_type IN ($post_types)
 WHERE revision.post_type = 'revision' AND revision.post_modified_gmt < %s AND revision.post_name NOT LIKE '%autosave%'
 LIMIT 0,%d
-", 'post', date('Y-m-d', strtotime('today - ' . static::CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS . ' days')), $limit));
+", date('Y-m-d', strtotime('today - ' . static::CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS . ' days')), $limit));
     foreach ($revision_ids as $revision_id) {
       wp_delete_post_revision($revision_id);
     }
