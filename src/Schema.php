@@ -27,6 +27,8 @@ class Schema {
    * register_deactivation_hook() callback.
    */
   public static function deactivate() {
+    // Remove scheduled revision cleanup cron event.
+    wp_clear_scheduled_hook(Admin::CRON_EVENT_REVISION_CLEANUP);
   }
 
   /**
