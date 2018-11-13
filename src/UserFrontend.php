@@ -93,7 +93,7 @@ class UserFrontend {
       wp_enqueue_style('theme/login', get_stylesheet_directory_uri() . '/dist/styles/login.css');
     }
     else {
-      $url = get_stylesheet_directory_uri() . '/dist/images/logo.svg';
+      $url = apply_filters(Plugin::PREFIX . '-login-logo-url', get_stylesheet_directory_uri() . '/dist/images/logo.svg');
       echo <<<EOD
 <style>
 body, html {
@@ -102,7 +102,7 @@ body, html {
 #login {
   padding-top: 5%;
 }
-.login h1 a {
+#login h1 a {
   background-image: url("$url");
   display: block;
   background-size: auto;
