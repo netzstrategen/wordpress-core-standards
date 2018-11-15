@@ -103,6 +103,7 @@ class Admin {
     $roles = [
       'super_admin',
       'administrator',
+      'shop_manager',
       'editor',
       'author',
       'contributor',
