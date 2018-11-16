@@ -14,7 +14,7 @@ function gaOptout() {
   var disableStr;
   for (var i = 0; i < window.gaIdList.length; i++) {
     disableStr = 'ga-disable-' + window.gaIdList[i];
-    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/; domain=.' + core_standards_opt_out_cookie_domain;
+    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/; domain=.' + core_standards_opt_out.cookie_domain;
     window[disableStr] = true;
   }
 }
