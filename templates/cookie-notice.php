@@ -30,7 +30,8 @@ namespace Netzstrategen\CoreStandards;
     if (window.localStorage.getItem('cookies-accepted')) {
       cookie_notice.setAttribute('hidden', 'true');
     }
-    document.getElementById('cookies-accept').addEventListener('click', function () {
+    document.getElementById('cookies-accept').addEventListener('click', function (e) {
+      e.preventDefault();
       window.localStorage.setItem('cookies-accepted', 'true');
       cookie_notice.setAttribute('hidden', 'true');
     });
