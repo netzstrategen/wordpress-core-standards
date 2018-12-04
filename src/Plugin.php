@@ -79,6 +79,9 @@ class Plugin {
     // Add teaser image to RSS feeds.
     add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
 
+    // Output client-side cookie notice on all pages.
+    add_action('wp_footer', __CLASS__ . '::wp_footer');
+
     UserFrontend::init();
     TrackingOptOut::init();
   }
@@ -207,6 +210,15 @@ class Plugin {
   public static function wp_insert_post_data($data) {
     $data['ping_status'] = 'closed';
     return $data;
+  }
+
+  /**
+   * Output client-side cookie notice on all pages.
+   *
+   * @implements wp_footer
+   */
+  public static function wp_footer() {
+    static::renderTemplate(['templates/cookie-notice.php']);
   }
 
   /**
