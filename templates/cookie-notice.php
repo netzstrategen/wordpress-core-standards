@@ -17,7 +17,7 @@ namespace Netzstrategen\CoreStandards;
     color: #fff;
   }
 
-  <?= do_action('core_standards/cookie_notice/css') ?>
+  <?= do_action('core_standards/cookie_notice/css_extend') ?>
 </style>
 
 <div id="cookie-notice" role="banner">
