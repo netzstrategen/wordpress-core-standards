@@ -22,7 +22,7 @@ namespace Netzstrategen\CoreStandards;
 
 <div id="cookie-notice" role="banner">
   <span><?= __('Diese Website verwendet Cookies. Wenn Sie sich weiterhin auf dieser Seite aufhalten, gehen wir von Ihrem Einverständnis aus.', Plugin::L10N) ?></span>
-  <a href="#" id="cookies-accept" class="btn"><?= __('Ok') ?></a>
+  <a href="#" id="cookies-accept" class="btn"><?= __('Okay') ?></a>
   <a href="<?= apply_filters('core_standards/cookie_notice/policy_link', '/datenschutzerklaerung') ?>" target="_self" class="btn"><?= __('Mehr Infos', Plugin::L10N) ?></a>
 </div>
 
