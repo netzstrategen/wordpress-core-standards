@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2018-12-10 14:40+0100\n"
+"POT-Creation-Date: 2018-12-10 14:53+0100\n"
 "PO-Revision-Date: 2018-05-10 10:20+0200\n"
 "Last-Translator: Joan Lopez <joan@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
@@ -92,7 +92,7 @@ msgid ""
 msgstr ""
 
 #: templates/cookie-notice.php:25
-msgid "Okay"
+msgid "OK"
 msgstr ""
 
 #: templates/cookie-notice.php:26
