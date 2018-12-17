@@ -101,4 +101,30 @@ class Schema {
     }
   }
 
+  /**
+   * Cron event callback to ensure proper database indexes.
+   */
+  public static function cron_ensure_indexes() {
+    self::ensureIndex('options', 'autoload', 'autoload');
+  }
+
+  /**
+   * Helper function to check for index names and create them if needed.
+   */
+  public static function ensureIndex($table, $index_name, $index_definition) {
+    global $wpdb;
+    $table = $wpdb->{$table};
+    if (!$wpdb->get_var("SHOW INDEX FROM $table WHERE Key_name = '$index_name'")) {
+      self::createIndex($table, $index_name, $index_definition);
+    }
+  }
+
+  /**
+   * Helper function to create indexes.
+   */
+  public static function createIndex($table, $index_name, $index_definition) {
+    global $wpdb;
+    $wpdb->query("ALTER TABLE $table ADD INDEX $index_name ($index_definition)");
+  }
+
 }

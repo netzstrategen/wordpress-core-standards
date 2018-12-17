@@ -27,11 +27,11 @@ class Plugin {
   const L10N = self::PREFIX;
 
   /**
-   * Cron event name for checking database indices.
+   * Cron event name for checking database indexes.
    *
    * @var string
    */
-  const CRON_EVENT_ENSURE_INDICES = Plugin::PREFIX . '/cron/ensure-indices';
+  const CRON_EVENT_ENSURE_INDEXES = Plugin::PREFIX . '/cron/ensure-indexes';
 
 
   /**
@@ -92,9 +92,9 @@ class Plugin {
     // before other footer content.
     add_action('wp_footer', __CLASS__ . '::wp_footer', 12);
 
-    add_action(static::CRON_EVENT_ENSURE_INDICES, __CLASS__ . '::cron_ensure_indices');
-    if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_INDICES)) {
-      wp_schedule_event(time(), 'daily', static::CRON_EVENT_ENSURE_INDICES);
+    add_action(static::CRON_EVENT_ENSURE_INDEXES, __NAMESPACE__ . '\Schema::cron_ensure_indexes');
+    if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_INDEXES)) {
+      wp_schedule_event(time(), 'daily', static::CRON_EVENT_ENSURE_INDEXES);
     }
 
     UserFrontend::init();
@@ -275,32 +275,6 @@ class Plugin {
       }
       throw new \InvalidArgumentException("Missing template '$template_pathname'");
     }
-  }
-
-  /**
-   * Cron event callback to ensure proper database indices.
-   */
-  public static function cron_ensure_indices() {
-    self::ensureIndex('options', 'autoload', '(autoload)');
-  }
-
-  /**
-   * Helper function to check for index names and create them if needed.
-   */
-  public static function ensureIndex($table, $index_name, $index_definition) {
-    global $wpdb;
-    $table = $wpdb->{$table};
-    if (!$wpdb->get_var("SHOW INDEX FROM $table WHERE Key_name = '$index_name'")) {
-      self::createIndex($table, $index_name, $index_definition);
-    }
-  }
-
-  /**
-   * Helper function to create indices.
-   */
-  public static function createIndex($table, $index_name, $index_definition) {
-    global $wpdb;
-    $wpdb->query("ALTER TABLE $table ADD INDEX $index_name $index_definition");
   }
 
 }
