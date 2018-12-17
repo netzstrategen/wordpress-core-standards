@@ -27,6 +27,14 @@ class Plugin {
   const L10N = self::PREFIX;
 
   /**
+   * Cron event name for checking database indexes.
+   *
+   * @var string
+   */
+  const CRON_EVENT_ENSURE_INDEXES = Plugin::PREFIX . '/cron/ensure-indexes';
+
+
+  /**
    * @var string
    */
   private static $baseUrl;
@@ -83,6 +91,11 @@ class Plugin {
     // Use a slightly higher weight to prevent the bar being output
     // before other footer content.
     add_action('wp_footer', __CLASS__ . '::wp_footer', 12);
+
+    add_action(static::CRON_EVENT_ENSURE_INDEXES, __NAMESPACE__ . '\Schema::cron_ensure_indexes');
+    if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_INDEXES)) {
+      wp_schedule_event(time(), 'daily', static::CRON_EVENT_ENSURE_INDEXES);
+    }
 
     UserFrontend::init();
     TrackingOptOut::init();
