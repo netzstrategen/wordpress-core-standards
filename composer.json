@@ -16,5 +16,4 @@
         "php": ">=7.0.0",
         "composer/installers": "^1"
     }
-
 }
