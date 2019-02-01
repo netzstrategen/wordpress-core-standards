@@ -106,6 +106,10 @@ class Schema {
    */
   public static function cron_ensure_indexes() {
     self::ensureIndex('options', 'autoload', 'autoload');
+    self::ensureIndex('posts', 'type_status_date_gmt', 'post_type, post_status, post_date_gmt');
+    self::ensureIndex('posts', 'type_status_comment_count', 'post_type, post_status, comment_count');
+    self::ensureIndex('wp_usermeta', 'user_id_meta_key', 'user_id, meta_key');
+    self::ensureIndex('posts', 'guid', 'guid');
   }
 
   /**
