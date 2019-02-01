@@ -12,9 +12,10 @@ for (var i = 0; i < window.gaIdList.length; i++) {
  */
 function gaOptout() {
   var disableStr;
+  var cookieDomain = typeof core_standards_opt_out !== 'undefined' && typeof core_standards_opt_out.cookie_domain !== 'undefined' ? core_standards_opt_out.cookie_domain : '';
   for (var i = 0; i < window.gaIdList.length; i++) {
     disableStr = 'ga-disable-' + window.gaIdList[i];
-    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/; domain=' + core_standards_opt_out.cookie_domain;
+    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/; domain=' + cookieDomain;
     window[disableStr] = true;
   }
 }
