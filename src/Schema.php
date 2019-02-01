@@ -108,9 +108,9 @@ class Schema {
     self::ensureIndex('options', 'autoload', 'autoload');
     self::ensureIndex('posts', 'type_status_date_gmt', 'post_type, post_status, post_date_gmt');
     self::ensureIndex('posts', 'type_status_comment_count', 'post_type, post_status, comment_count');
-    self::ensureIndex('usermeta', 'user_id_meta_key', 'user_id, meta_key');
     self::ensureIndex('posts', 'guid', 'guid');
     self::ensureIndex('postmeta', 'meta_value', 'meta_value(60)');
+    self::ensureIndex('usermeta', 'user_id_meta_key', 'user_id, meta_key');
   }
 
   /**
