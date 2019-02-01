@@ -107,6 +107,9 @@ window.gaIdList = <?= json_encode($opt_out_ids) ?>;
 
   public static function enqueueScriptsFirstHead() {
     wp_enqueue_script(Plugin::PREFIX . '-google_analytics_opt_out', Plugin::getBaseUrl() . '/dist/scripts/google-analytics-opt-out.js');
+    if (COOKIE_DOMAIN) {
+      wp_localize_script(Plugin::PREFIX . '-google_analytics_opt_out', 'core_standards_opt_out', ['cookie_domain' => COOKIE_DOMAIN ? '.' . ltrim(COOKIE_DOMAIN, '.') : '']);
+    }
   }
 
   /**
@@ -114,7 +117,7 @@ window.gaIdList = <?= json_encode($opt_out_ids) ?>;
    */
   public static function wp_enqueue_scripts() {
     wp_enqueue_script(Plugin::PREFIX . '-enable-opt_out', Plugin::getBaseUrl() . '/dist/scripts/enable-opt-out.js', ['jquery'], FALSE, TRUE);
-    wp_localize_script(Plugin::PREFIX . '-enable-opt_out', 'core_standards', ['opt_out_confirmation_message' => __('Google Analytics tracking has been disabled.', Plugin::L10N)]);
+    wp_localize_script(Plugin::PREFIX . '-enable-opt_out', 'core_standards_opt_out_toggle', ['confirmation_message' => __('Google Analytics tracking has been disabled.', Plugin::L10N)]);
   }
 
 }

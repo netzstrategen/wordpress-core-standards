@@ -5,6 +5,6 @@
   $('.core-standards-opt-out-link').on('click', function (e) {
     e.preventDefault();
     gaOptout();
-    alert(core_standards.opt_out_confirmation_message);
+    alert(core_standards_opt_out_toggle.confirmation_message);
   });
 })(jQuery);
