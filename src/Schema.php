@@ -105,7 +105,32 @@ class Schema {
    * Cron event callback to ensure proper database indexes.
    */
   public static function cron_ensure_indexes() {
+    // Core queries all options with autoload=yes on every request, which becomes
+    // slower when there are plenty of rows (e.g., due to options that ought to
+    // be transients but are not).
     self::ensureIndex('options', 'autoload', 'autoload');
+
+    // Core as well as various plugins attempt to find posts having certain meta
+    // values, but there is no index on the values by default as it is a longtext
+    // column.
+    self::ensureIndex('postmeta', 'meta_value', 'meta_value(60)');
+
+    // Data migration and import scripts and plugins are trying to locate
+    // previously migrated content by its UUID, but the GUID column does not have
+    // an index.
+    self::ensureIndex('posts', 'guid', 'guid');
+
+    // Some code (probably the Dashboard) attempts to retrieve the most commented
+    // posts on the site for statistics, but there is no index for this query.
+    self::ensureIndex('posts', 'type_status_comment_count', 'post_type, post_status, comment_count');
+
+    // Some code (probably the Dashboard) retrieves the GMT date (only the
+    // timestamp without post ID) of the most recent published post of all posts,
+    // which takes long with a lot of rows.
+    self::ensureIndex('posts', 'type_status_date_gmt', 'post_type, post_status, post_date_gmt');
+
+    // Administrative user listing attempts to filter users by meta fields.
+    self::ensureIndex('usermeta', 'user_id_meta_key', 'user_id, meta_key');
   }
 
   /**
