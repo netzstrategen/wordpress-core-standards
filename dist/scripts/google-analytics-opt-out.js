@@ -6,6 +6,8 @@ function gaOptout() {
     window[o] = !0;
 }
 
+window.gaIdList = window.gaIdList || [];
+
 for (var i = 0; i < window.gaIdList.length; i++) {
     var disableStr = "ga-disable-" + window.gaIdList[i];
     document.cookie.indexOf(disableStr + "=true") > -1 && (window[disableStr] = !0);

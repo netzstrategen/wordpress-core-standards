@@ -1,5 +1,7 @@
 'use strict';
 
+window.gaIdList = window.gaIdList || [];
+
 // Disable tracking if the opt-out cookie exists.
 for (var i = 0; i < window.gaIdList.length; i++) {
   var disableStr = 'ga-disable-' + window.gaIdList[i];
