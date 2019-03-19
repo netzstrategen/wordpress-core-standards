@@ -2,8 +2,9 @@
 # WordPress "File not found" page rendering.
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME} !-l
-  RewriteRule ^.*$ - [nocase,R=404,L]
+  RewriteCond %{REQUEST_URI} ^(/wp-content/uploads).+$
+  RewriteCond %{REQUEST_URI} !-f
+  RewriteCond %{REQUEST_URI} !-d
+  RewriteCond %{REQUEST_URI} !-l
+  RewriteRule ^.*$ - [nocase,R=404,L,NS]
 </IfModule>

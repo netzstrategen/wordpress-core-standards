@@ -18,9 +18,11 @@ class Schema {
   public static function activate() {
     Admin::addAccessCapability();
 
-    // Ensures arbitrary script execution protection and fast 404 responses for
-    // missing files in uploads folder.
+    // Ensures arbitrary script execution protection.
     static::ensureUploadsHtaccess();
+
+    // Fast 404 responses for missing files in uploads folder.
+    static::ensure404FastResponse();
   }
 
   /**
@@ -39,7 +41,7 @@ class Schema {
   }
 
   /**
-   * Ensures arbitrary script execution protection and fast 404 responses for missing files in uploads folder.
+   * Ensures arbitrary script execution protection.
    */
   public static function ensureUploadsHtaccess() {
     $uploads_dir = wp_upload_dir(NULL, FALSE)['basedir'];
@@ -48,8 +50,6 @@ class Schema {
     // chunk of content that needs to be ensured. Otherwise the existing chunks
     // would be duplicated.
     $pathname = $uploads_dir . '/.htaccess';
-    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.fast404');
-    static::createOrPrependFile($pathname, $template, "\n");
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.noscript');
     static::createOrPrependFile($pathname, $template, "\n");
 
@@ -60,6 +60,17 @@ class Schema {
 !/$uploads_dir_relative/.htaccess
 ";
     static::createOrPrependFile($pathname, $template);
+  }
+
+  /**
+   * Ensures fast 404 responses for missing files in uploads folder.
+   */
+  public static function ensure404FastResponse() {
+    // Changes to .htaccess need to be performed in separate steps for each
+    // chunk of content that needs to be ensured. Otherwise the existing chunks
+    // would be duplicated.
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.fast404');
+    static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
   /**
