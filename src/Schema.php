@@ -22,7 +22,7 @@ class Schema {
     static::ensureUploadsHtaccess();
 
     // Fast 404 responses for missing files in uploads folder.
-    static::ensure404FastResponse();
+    static::ensureFast404Response();
   }
 
   /**
