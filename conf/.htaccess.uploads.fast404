@@ -1,6 +1,5 @@
 # BEGIN core-standards:fast404
 <IfModule mod_rewrite.c>
-
   # Fast 404 error responses for missing uploaded files, skipping
   # WordPress "File not found" page rendering.
   RewriteEngine On
