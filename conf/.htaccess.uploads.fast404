@@ -7,6 +7,6 @@
   RewriteCond %{REQUEST_URI} !-f
   RewriteCond %{REQUEST_URI} !-d
   RewriteCond %{REQUEST_URI} !-l
-  RewriteRule ^.*$ - [nocase,R=404,L,NS]
+  RewriteRule ^.*$ - [nocase,nosubreq,R=404,L]
 </IfModule>
 # END core-standards:fast404
