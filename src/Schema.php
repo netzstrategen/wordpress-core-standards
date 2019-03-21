@@ -65,7 +65,7 @@ class Schema {
   /**
    * Ensures fast 404 responses for missing files in uploads folder.
    */
-  public static function ensure404FastResponse() {
+  public static function ensureFast404Response() {
     // Changes to .htaccess need to be performed in separate steps for each
     // chunk of content that needs to be ensured. Otherwise the existing chunks
     // would be duplicated.
