@@ -66,10 +66,14 @@ class Schema {
    * Ensures fast 404 responses for missing files in uploads folder.
    */
   public static function ensureFast404Response() {
+    $uploads_dir = wp_upload_dir(NULL, FALSE)['basedir'];
+    $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH));
+
     // Changes to .htaccess need to be performed in separate steps for each
     // chunk of content that needs to be ensured. Otherwise the existing chunks
     // would be duplicated.
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.fast404');
+    $template = str_replace('UPLOAD_DIR_REPLACE', $uploads_dir_relative, $template);
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 

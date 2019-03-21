@@ -1,10 +1,13 @@
-# Fast 404 error responses for missing uploaded files, skipping
-# WordPress "File not found" page rendering.
+# BEGIN core-standards
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{REQUEST_URI} ^(/wp-content/uploads).+$
+
+  # Fast 404 error responses for missing uploaded files, skipping
+  # WordPress "File not found" page rendering.
+  RewriteCond %{REQUEST_URI} ^(UPLOAD_DIR_REPLACE).+$
   RewriteCond %{REQUEST_URI} !-f
   RewriteCond %{REQUEST_URI} !-d
   RewriteCond %{REQUEST_URI} !-l
   RewriteRule ^.*$ - [nocase,R=404,L,NS]
 </IfModule>
+# END core-standards
