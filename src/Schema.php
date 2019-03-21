@@ -66,7 +66,7 @@ class Schema {
    * Ensures fast 404 responses for missing files in uploads folder.
    */
   public static function ensureFast404Response() {
-    $uploads_dir = wp_upload_dir(NULL, FALSE)['basedir'];
+    $uploads_dir = wp_get_upload_dir()['basedir'];
     $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH));
 
     // Changes to .htaccess need to be performed in separate steps for each
