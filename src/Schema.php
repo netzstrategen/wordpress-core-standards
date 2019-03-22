@@ -75,6 +75,7 @@ class Schema {
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.fast404');
     $template = str_replace('UPLOAD_DIR_REPLACE', $uploads_dir_relative, $template);
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+    static::removeFromFile($uploads_dir . '/.htaccess', $template);
   }
 
   /**
@@ -114,6 +115,29 @@ class Schema {
         }
       }
     }
+  }
+
+  /**
+   * Removes content from a file.
+   *
+   * @param string $pathname
+   *   The pathname of the file to remove from.
+   * @param string $template
+   *   The content to be removed.
+   */
+  private static function removeFromFile($pathname, $template) {
+    if (!file_exists($pathname)) {
+      return;
+    }
+
+    $content = file_get_contents($pathname);
+    // There is nothing to be removed.
+    if (FALSE === strpos($content, $template)) {
+      return;
+    }
+
+    $content = str_replace($template, '', $content);
+    file_put_contents($pathname, $content);
   }
 
   /**
