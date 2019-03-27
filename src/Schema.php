@@ -18,9 +18,11 @@ class Schema {
   public static function activate() {
     Admin::addAccessCapability();
 
-    // Ensures arbitrary script execution protection and fast 404 responses for
-    // missing files in uploads folder.
+    // Ensures arbitrary script execution protection.
     static::ensureUploadsHtaccess();
+
+    // Fast 404 responses for missing files in uploads folder.
+    static::ensureFast404Response();
   }
 
   /**
@@ -39,7 +41,7 @@ class Schema {
   }
 
   /**
-   * Ensures arbitrary script execution protection and fast 404 responses for missing files in uploads folder.
+   * Ensures arbitrary script execution protection.
    */
   public static function ensureUploadsHtaccess() {
     $uploads_dir = wp_upload_dir(NULL, FALSE)['basedir'];
@@ -48,8 +50,6 @@ class Schema {
     // chunk of content that needs to be ensured. Otherwise the existing chunks
     // would be duplicated.
     $pathname = $uploads_dir . '/.htaccess';
-    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.fast404');
-    static::createOrPrependFile($pathname, $template, "\n");
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.noscript');
     static::createOrPrependFile($pathname, $template, "\n");
 
@@ -60,6 +60,23 @@ class Schema {
 !/$uploads_dir_relative/.htaccess
 ";
     static::createOrPrependFile($pathname, $template);
+  }
+
+  /**
+   * Ensures fast 404 responses for missing files in uploads folder.
+   */
+  public static function ensureFast404Response() {
+    $uploads_dir = wp_get_upload_dir()['basedir'];
+    $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH));
+
+    // Changes to .htaccess need to be performed in separate steps for each
+    // chunk of content that needs to be ensured. Otherwise the existing chunks
+    // would be duplicated.
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.fast404');
+    $template = str_replace('UPLOAD_DIR_REPLACE', $uploads_dir_relative, $template);
+    static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/remove/.htaccess.uploads.fast404');
+    static::removeFromFile($uploads_dir . '/.htaccess', $template);
   }
 
   /**
@@ -99,6 +116,29 @@ class Schema {
         }
       }
     }
+  }
+
+  /**
+   * Removes content from a file.
+   *
+   * @param string $pathname
+   *   The pathname of the file to remove from.
+   * @param string $template
+   *   The content to be removed.
+   */
+  private static function removeFromFile($pathname, $template) {
+    if (!file_exists($pathname)) {
+      return;
+    }
+
+    $content = file_get_contents($pathname);
+    // There is nothing to be removed.
+    if (FALSE === strpos($content, $template)) {
+      return;
+    }
+
+    $content = str_replace($template, '', $content);
+    file_put_contents($pathname, $content);
   }
 
   /**

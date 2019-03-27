@@ -1,6 +1,6 @@
 {
   "name": "core-standards",
-  "version": "1.22.2",
+  "version": "1.22.3",
   "description": "core-standards",
   "main": "gulpfile.js",
   "devDependencies": {
