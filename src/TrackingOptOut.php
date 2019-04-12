@@ -86,7 +86,7 @@ window.gaIdList = <?= json_encode($opt_out_ids) ?>;
    *   Shortcode parameters as attributes.
    * @param string $content
    *   Shortcode wrapped content.
-   * 
+   *
    * @return string
    */
   public static function registerOptOutShortcode ($atts, $content = NULL) {
@@ -106,7 +106,7 @@ window.gaIdList = <?= json_encode($opt_out_ids) ?>;
   }
 
   public static function enqueueScriptsFirstHead() {
-    wp_enqueue_script(Plugin::PREFIX . '-google_analytics_opt_out', Plugin::getBaseUrl() . '/dist/scripts/google-analytics-opt-out.js');
+    wp_enqueue_script(Plugin::PREFIX . '-google_analytics_opt_out', Plugin::getBaseUrl() . '/dist/scripts/google-analytics-opt-out.js', FALSE, Plugin::getGitRef());
     if (COOKIE_DOMAIN) {
       wp_localize_script(Plugin::PREFIX . '-google_analytics_opt_out', 'core_standards_opt_out', ['cookie_domain' => COOKIE_DOMAIN ? '.' . ltrim(COOKIE_DOMAIN, '.') : '']);
     }
@@ -116,7 +116,7 @@ window.gaIdList = <?= json_encode($opt_out_ids) ?>;
    * @implements wp_enqueue_scripts.
    */
   public static function wp_enqueue_scripts() {
-    wp_enqueue_script(Plugin::PREFIX . '-enable-opt_out', Plugin::getBaseUrl() . '/dist/scripts/enable-opt-out.js', ['jquery'], FALSE, TRUE);
+    wp_enqueue_script(Plugin::PREFIX . '-enable-opt_out', Plugin::getBaseUrl() . '/dist/scripts/enable-opt-out.js', ['jquery'], Plugin::getGitRef(), TRUE);
     wp_localize_script(Plugin::PREFIX . '-enable-opt_out', 'core_standards_opt_out_toggle', ['confirmation_message' => __('Google Analytics tracking has been disabled.', Plugin::L10N)]);
   }
 

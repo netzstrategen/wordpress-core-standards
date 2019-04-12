@@ -226,6 +226,35 @@ class Plugin {
   }
 
   /**
+   * Gets the reference of the last commit.
+   *
+   * Helper function to handle asset version with wp_enqueue_*
+   * functions to bust caches.
+   *
+   * @see https://developer.wordpress.org/reference/functions/wp_enqueue_script/
+   *
+   * @return string|null
+   *   The first 8 characters of the git reference.
+   */
+  public static function getGitRef() {
+    $git_version = NULL;
+    if (is_dir(ABSPATH . '.git')) {
+      $ref = trim(file_get_contents(ABSPATH . '.git/HEAD'));
+      if (strpos($ref, 'ref:') === 0) {
+        $ref = substr($ref, 5);
+        if (file_exists(ABSPATH . '.git/' . $ref)) {
+          $ref = trim(file_get_contents(ABSPATH . '.git/' . $ref));
+        }
+        else {
+          $ref = substr($ref, 11);
+        }
+      }
+      $git_version = substr($ref, 0, 8);
+    }
+    return $git_version;
+  }
+
+  /**
    * Fix Facebook embeds to keep within wrapper borders.
    *
    * @implements oembed_fetch_url
