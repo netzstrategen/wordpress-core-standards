@@ -238,7 +238,7 @@ class Plugin {
     $wp_scripts = wp_scripts();
     $default_version = $wp_scripts->default_version;
 
-    return str_replace('?ver=' . $default_version, '?ver=' . self::getGitRef(), $tag);
+    return str_replace('?ver=' . $default_version, '?ver=' . self::getGitCommitHash(), $tag);
   }
 
   /**
@@ -252,7 +252,7 @@ class Plugin {
    * @return string|null
    *   The first 8 characters of the git reference.
    */
-  public static function getGitRef() {
+  public static function getGitCommitHash() {
     $git_version = NULL;
     if (is_dir(ABSPATH . '.git')) {
       $ref = trim(file_get_contents(ABSPATH . '.git/HEAD'));
