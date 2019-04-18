@@ -100,8 +100,11 @@ class Plugin {
     add_filter('pre_option_default_pingback_flag', '__return_zero');
     add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 100);
 
-     // Transliterate filenames.
+    // Transliterates filenames.
     add_filter('sanitize_file_name', __CLASS__ . '::sanitize_file_name', 10, 2);
+
+    // Adds version string to all scripts.
+    add_filter('script_loader_tag', __CLASS__ . '::script_loader_tag', 10, 3);
 
     if (is_admin()) {
       return;
@@ -223,6 +226,19 @@ class Plugin {
    */
   public static function getBasePath() {
     return dirname(__DIR__);
+  }
+
+  /**
+   * Replaces default version to Git reference in script URL.
+   *
+   * @return string
+   *   The tag to print with the version updated.
+   */
+  public static function script_loader_tag($tag, $handle, $src) {
+    $wp_scripts = wp_scripts();
+    $default_version = $wp_scripts->default_version;
+
+    return str_replace('?ver=' . $default_version, '?ver=' . self::getGitRef(), $tag);
   }
 
   /**
