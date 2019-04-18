@@ -92,7 +92,7 @@ class UserFrontend {
    * @implements login_form_defaults
    */
   public static function login_form_defaults(array $args) {
-    wp_enqueue_style('core-standards/login', Plugin::getBaseUrl() . '/assets/user-login-form.css', FALSE, Plugin::getGitRef());
+    wp_enqueue_style('core-standards/login', Plugin::getBaseUrl() . '/assets/user-login-form.css', FALSE);
     $args['value_remember'] = TRUE;
     return $args;
   }
@@ -102,7 +102,7 @@ class UserFrontend {
    */
   public static function login_enqueue_scripts() {
     if (file_exists(get_stylesheet_directory() . '/dist/styles/login.css')) {
-      wp_enqueue_style('theme/login', get_stylesheet_directory_uri() . '/dist/styles/login.css', FALSE, Plugin::getGitRef());
+      wp_enqueue_style('theme/login', get_stylesheet_directory_uri() . '/dist/styles/login.css', FALSE);
     }
     else {
       $url = apply_filters(Plugin::PREFIX . '-login-logo-url', get_stylesheet_directory_uri() . '/dist/images/logo.svg');
