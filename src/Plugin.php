@@ -90,7 +90,9 @@ class Plugin {
     // Output client-side cookie notice on all pages.
     // Use a slightly higher weight to prevent the bar being output
     // before other footer content.
-    add_action('wp_footer', __CLASS__ . '::wp_footer', 12);
+    if (!defined('CORE_STANDARDS_COOKIE_NOTICE') || CORE_STANDARDS_COOKIE_NOTICE !== FALSE) {
+      add_action('wp_footer', __CLASS__ . '::wp_footer', 12);
+    }
 
     add_action(static::CRON_EVENT_ENSURE_INDEXES, __NAMESPACE__ . '\Schema::cron_ensure_indexes');
     if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_INDEXES)) {
