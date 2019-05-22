@@ -19,7 +19,6 @@ namespace Netzstrategen\CoreStandards;
     font-size: 14px;
     line-height: 1.6;
     color: #fff;
-    text-decoration: underline;
   }
 
   .cookie-notice[hidden] {
@@ -30,6 +29,7 @@ namespace Netzstrategen\CoreStandards;
   .cookie-notice__link:hover,
   .cookie-notice__link:focus {
     color: currentColor;
+    text-decoration: underline;
   }
 
   .cookie-notice__link:hover,
