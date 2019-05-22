@@ -19,6 +19,7 @@ namespace Netzstrategen\CoreStandards;
     font-size: 14px;
     line-height: 1.6;
     color: #fff;
+    text-decoration: underline;
   }
 
   .cookie-notice[hidden] {
