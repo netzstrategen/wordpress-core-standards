@@ -246,6 +246,15 @@ class Plugin {
   }
 
   /**
+   * Returns the plugin meta data.
+   *
+   * @todo Implement caching.
+   */
+  public static function get_plugin_data() {
+    return get_plugin_data(static::getBasePath() . '/core-standards.php', FALSE);
+  }
+
+  /**
    * Renders a given plugin template, optionally overridden by the theme.
    *
    * WordPress offers no built-in function to allow plugins to render templates

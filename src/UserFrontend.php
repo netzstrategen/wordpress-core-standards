@@ -19,7 +19,7 @@ class UserFrontend {
     add_filter('auth_cookie_expiration', __CLASS__ . '::auth_cookie_expiration', 10, 3);
 
     // Add default cookie notice styling.
-    add_action('cookie_notice_enqueue_styles', __CLASS__ . '::cookie_notice_enqueue_styles');
+    add_action('wp_enqueue_scripts', __CLASS__ . '::cookie_notice_enqueue_styles', 0);
 
     // Enable Remember Me by default.
     add_action('login_head', __CLASS__ . '::login_head');
@@ -71,11 +71,12 @@ class UserFrontend {
   }
 
   /**
-   * @implements cookie_notice_enqueue_styles
+   * @implements wp_enqueue_scripts
    */
   public static function cookie_notice_enqueue_styles() {
-    if (file_exists(Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css')) {
-      wp_enqueue_style('core-standards/cookie-notice', Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css');
+    $ver = Plugin::get_plugin_data()['Version'];
+    if (file_exists(Plugin::getBasePath() . '/dist/styles/cookie-notice.css')) {
+      wp_enqueue_style('core-standards/cookie-notice', Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css', [], $ver);
     }
   }
 
