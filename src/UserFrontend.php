@@ -19,7 +19,7 @@ class UserFrontend {
     add_filter('auth_cookie_expiration', __CLASS__ . '::auth_cookie_expiration', 10, 3);
 
     // Add default cookie notice styling.
-    add_filter('cookie_notice_enqueue_styles', __CLASS__ . '::cookie_notice_enqueue_styles');
+    add_action('cookie_notice_enqueue_styles', __CLASS__ . '::cookie_notice_enqueue_styles');
 
     // Enable Remember Me by default.
     add_action('login_head', __CLASS__ . '::login_head');
