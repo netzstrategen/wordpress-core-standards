@@ -2,61 +2,12 @@
 
 namespace Netzstrategen\CoreStandards;
 
+if (has_action('core_standards/cookie_notice/css_extend')) {
+  echo '<style>';
+  do_action('core_standards/cookie_notice/css_extend');
+  echo '</style>';
+}
 ?>
-
-<style>
-  .cookie-notice {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 100000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5em 0.75em;
-    background-color: #333;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #fff;
-  }
-
-  .cookie-notice[hidden] {
-    display: none;
-  }
-
-  .cookie-notice__link,
-  .cookie-notice__link:hover,
-  .cookie-notice__link:focus {
-    color: currentColor;
-    text-decoration: underline;
-  }
-
-  .cookie-notice__link:hover,
-  .cookie-notice__link:focus {
-    opacity: 0.8;
-  }
-
-  .cookie-notice__close {
-    padding: 5px 10px;
-    margin-left: 1em;
-  }
-
-  .cookie-notice__icon {
-    display: block;
-    width: 19px;
-    height: 19px;
-    fill: #8f8f8f;
-  }
-
-  .cookie-notice__close:hover .cookie-notice__icon,
-  .cookie-notice__close:focus .cookie-notice__icon,
-  .cookie-notice__close:active .cookie-notice__icon {
-    fill: #fff;
-  }
-
-  <?= do_action('core_standards/cookie_notice/css_extend') ?>
-</style>
 
 <div class="cookie-notice" id="cookie-notice" role="banner">
   <div class="cookie-notice__body">
