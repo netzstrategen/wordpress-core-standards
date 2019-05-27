@@ -74,8 +74,8 @@ class UserFrontend {
    * @implements cookie_notice_enqueue_styles
    */
   public static function cookie_notice_enqueue_styles() {
-    if (file_exists(get_stylesheet_directory() . '/dist/styles/cookie-notice.css')) {
-      wp_enqueue_style('core-standards/cookie-notice', get_stylesheet_directory_uri() . '/dist/styles/cookie-notice.css');
+    if (file_exists(Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css')) {
+      wp_enqueue_style('core-standards/cookie-notice', Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css');
     }
   }
 
