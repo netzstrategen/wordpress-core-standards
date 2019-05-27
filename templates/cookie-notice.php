@@ -1,12 +1,6 @@
 <?php
 
 namespace Netzstrategen\CoreStandards;
-
-if (has_action('core_standards/cookie_notice/css_extend')) {
-  echo '<style>';
-  do_action('core_standards/cookie_notice/css_extend');
-  echo '</style>';
-}
 ?>
 
 <div class="cookie-notice" id="cookie-notice" role="banner">

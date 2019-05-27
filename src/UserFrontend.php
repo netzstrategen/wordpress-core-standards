@@ -74,8 +74,7 @@ class UserFrontend {
    * @implements wp_enqueue_scripts
    */
   public static function cookie_notice_enqueue_styles() {
-    $ver = Plugin::get_plugin_data()['Version'];
-    wp_enqueue_style('core-standards/cookie-notice', Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css', [], $ver);
+    wp_enqueue_style('core-standards/cookie-notice', Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css');
   }
 
   /**
