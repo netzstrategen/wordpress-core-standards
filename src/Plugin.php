@@ -91,6 +91,7 @@ class Plugin {
     // Use a slightly higher weight to prevent the bar being output
     // before other footer content.
     if (!defined('CORE_STANDARDS_COOKIE_NOTICE') || CORE_STANDARDS_COOKIE_NOTICE !== FALSE) {
+      add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts', 1);
       add_action('wp_footer', __CLASS__ . '::wp_footer', 12);
     }
 
@@ -227,6 +228,13 @@ class Plugin {
   public static function wp_insert_post_data($data) {
     $data['ping_status'] = 'closed';
     return $data;
+  }
+
+  /**
+   * @implements wp_enqueue_scripts
+   */
+  public static function wp_enqueue_scripts() {
+    wp_enqueue_style('core-standards/cookie-notice', Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css');
   }
 
   /**

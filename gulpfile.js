@@ -12,7 +12,7 @@ const uglify = require('gulp-uglify');
 
 gulp.task('styles', () => {
   gulp.src('assets/styles/**/*.scss')
-  .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+  .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
   .pipe(autoprefixer({
     browsers: ['last 2 versions']
   }))
