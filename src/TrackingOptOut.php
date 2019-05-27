@@ -106,7 +106,7 @@ window.gaIdList = <?= json_encode($opt_out_ids) ?>;
   }
 
   public static function enqueueScriptsFirstHead() {
-    wp_enqueue_script(Plugin::PREFIX . '-google_analytics_opt_out', Plugin::getBaseUrl() . '/dist/scripts/google-analytics-opt-out.js', FALSE);
+    wp_enqueue_script(Plugin::PREFIX . '-google_analytics_opt_out', Plugin::getBaseUrl() . '/dist/scripts/google-analytics-opt-out.js');
     if (COOKIE_DOMAIN) {
       wp_localize_script(Plugin::PREFIX . '-google_analytics_opt_out', 'core_standards_opt_out', ['cookie_domain' => COOKIE_DOMAIN ? '.' . ltrim(COOKIE_DOMAIN, '.') : '']);
     }

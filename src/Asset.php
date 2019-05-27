@@ -8,9 +8,16 @@
 namespace Netzstrategen\CoreStandards;
 
 /**
- * Administrative back-end functionality.
+ * Asset-handling functionality.
  */
 class Asset {
+
+  /**
+   * The current commit hash.
+   *
+   * @var string
+   */
+  private static $gitVersion = NULL;
 
   /**
    * Replaces default version to Git reference in script URL.
@@ -37,7 +44,11 @@ class Asset {
    *   The first 8 characters of the git reference.
    */
   public static function getGitCommitHash() {
-    $git_version = NULL;
+    // Reuse the value if already calculated.
+    if (self::$gitVersion != NULL) {
+      return self::$gitVersion;
+    }
+
     if (is_dir(ABSPATH . '.git')) {
       $ref = trim(file_get_contents(ABSPATH . '.git/HEAD'));
       if (strpos($ref, 'ref:') === 0) {
@@ -49,9 +60,10 @@ class Asset {
           $ref = substr($ref, 11);
         }
       }
-      $git_version = substr($ref, 0, 8);
+      self::$gitVersion = substr($ref, 0, 8);
     }
-    return $git_version;
+
+    return self::$gitVersion;
   }
 
 }
