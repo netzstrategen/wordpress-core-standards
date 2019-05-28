@@ -1,9 +1,9 @@
 .cookie-notice {
   position: fixed;
+  z-index: 100000;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 100000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,25 +16,20 @@
   &[hidden] {
     display: none;
   }
-}
 
-.cookie-notice__link {
-  &,
-  &:hover,
-  &:focus {
-    color: currentColor;
-    text-decoration: underline;
+  a {
+    &,
+    &:hover,
+    &:focus {
+      color: currentColor;
+      text-decoration: underline;
+    }
+
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+    }
   }
-
-  &:hover,
-  &:focus {
-    opacity: 0.8;
-  }
-}
-
-.cookie-notice__close {
-  padding: 5px 10px;
-  margin-left: 1em;
 }
 
 .cookie-notice__icon {
@@ -45,6 +40,9 @@
 }
 
 .cookie-notice__close {
+  margin-left: 1em;
+  padding: 5px 10px;
+
   &:hover,
   &:focus,
   &:active {
