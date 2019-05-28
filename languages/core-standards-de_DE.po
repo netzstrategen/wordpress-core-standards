@@ -1,23 +1,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2018-12-10 14:53+0100\n"
-"PO-Revision-Date: 2018-12-10 14:53+0100\n"
-"Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
+"POT-Creation-Date: 2019-05-28 11:26+0200\n"
+"PO-Revision-Date: 2019-05-28 11:27+0200\n"
+"Last-Translator: Joan López <joan@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
 "Language: de_DE@formal\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.10\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: core-standards.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
-"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Google Analytics IDs"
 msgstr ""
 
-#: src/TrackingOptOut.php:117
+#: src/TrackingOptOut.php:120
 msgid "Google Analytics tracking has been disabled."
 msgstr "Google Analytics-Tracking wurde deaktiviert."
 
@@ -85,21 +85,19 @@ msgstr ""
 msgid "Show logout link"
 msgstr ""
 
-#: templates/cookie-notice.php:24
+#: templates/cookie-notice.php:8
+#, php-format
 msgid ""
-"This website uses cookies to give you the best possible service. By "
-"continuing to use the website, you agree to the use of cookies."
+"To give you the best possible service, this website uses cookies. By "
+"continuing to use it, you agree to our <a href=\"%s\">privacy policy</a>."
 msgstr ""
-"Diese Website verwendet Cookies. Wenn Sie sich weiterhin auf dieser Seite "
-"aufhalten, gehen wir von Ihrem Einverständnis aus."
+"Um Ihnen den bestmöglichen Service zu bieten, verwendet diese Website "
+"Cookies. Mit der weiteren Nutzung akzeptieren Sie unsere <a href=\"%s"
+"\">Datenschutzrichtlinie</a>."
 
-#: templates/cookie-notice.php:25
+#: templates/cookie-notice.php:10
 msgid "OK"
 msgstr ""
-
-#: templates/cookie-notice.php:26
-msgid "Learn more"
-msgstr "Mehr Infos"
 
 #. Plugin Name of the plugin/theme
 msgid "Core Standards"
