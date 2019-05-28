@@ -114,13 +114,3 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.netzstrategen.com"
 msgstr ""
-
-#~ msgid ""
-#~ "This website uses cookies to give you the best possible service. By "
-#~ "continuing to use the website, you agree to the use of cookies."
-#~ msgstr ""
-#~ "Diese Website verwendet Cookies. Wenn Sie sich weiterhin auf dieser Seite "
-#~ "aufhalten, gehen wir von Ihrem Einverständnis aus."
-
-#~ msgid "Learn more"
-#~ msgstr "Mehr Infos"
