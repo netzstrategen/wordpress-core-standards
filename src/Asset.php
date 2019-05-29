@@ -45,7 +45,7 @@ class Asset {
    */
   public static function getGitCommitHash() {
     // Reuse the value if already calculated.
-    if (self::$gitVersion != NULL) {
+    if (isset(self::$gitVersion)) {
       return self::$gitVersion;
     }
 
