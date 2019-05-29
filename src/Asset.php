@@ -29,7 +29,10 @@ class Asset {
     $wp_scripts = wp_scripts();
     $default_version = $wp_scripts->default_version;
 
-    return str_replace('?ver=' . $default_version, '?ver=' . self::getGitCommitHash(), $tag);
+    if ($git_version = self::getGitCommitHash()) {
+      $tag = str_replace('?ver=' . $default_version, '?ver=' . $git_version, $tag);
+    }
+    return $tag;
   }
 
   /**
