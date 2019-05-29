@@ -17,7 +17,7 @@ class Asset {
    *
    * @var string
    */
-  private static $gitVersion = NULL;
+  private static $gitVersion;
 
   /**
    * Replaces default version to Git reference in script URL.
