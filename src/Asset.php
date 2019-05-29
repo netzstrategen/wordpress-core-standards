@@ -62,6 +62,9 @@ class Asset {
       }
       self::$gitVersion = substr($ref, 0, 8);
     }
+    else {
+      self::$gitVersion = 0;
+    }
 
     return self::$gitVersion;
   }
