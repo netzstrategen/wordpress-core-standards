@@ -25,7 +25,7 @@ class UserFrontend {
     // Remove WordPress promotion on /wp-login.php.
     add_action('login_enqueue_scripts', __CLASS__ . '::login_enqueue_scripts');
     add_filter('login_headerurl', 'site_url', 10, 0);
-    add_filter('login_headertitle', __CLASS__ . '::login_headertitle');
+    add_filter('login_headertext', __CLASS__ . '::login_headertext');
 
     // Beautify intro text on wp-login.php?action=lostpassword
     add_filter('login_message', __CLASS__ . '::login_message');
@@ -119,9 +119,9 @@ EOD;
   }
 
   /**
-   * @implements login_headertitle
+   * @implements login_headertext
    */
-  public static function login_headertitle($login_header_title) {
+  public static function login_headertext($login_header_text) {
     return get_bloginfo('name');
   }
 
