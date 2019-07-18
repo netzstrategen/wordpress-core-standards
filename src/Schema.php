@@ -23,6 +23,9 @@ class Schema {
 
     // Fast 404 responses for missing files in uploads folder.
     static::ensureFast404Response();
+
+    // Rename /wp-login.php into /login.php and deny access to XML-RPC API.
+    static::ensureFrontControllerAccess();
   }
 
   /**
@@ -77,6 +80,14 @@ class Schema {
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
     $template = file_get_contents(Plugin::getBasePath() . '/conf/remove/.htaccess.uploads.fast404');
     static::removeFromFile($uploads_dir . '/.htaccess', $template);
+  }
+
+  /**
+   * Ensures fast 404 responses for missing files in uploads folder.
+   */
+  public static function ensureFrontControllerAccess() {
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.security');
+    Schema::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
   /**

@@ -38,7 +38,7 @@ register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Schema::uninstall');
 add_action('wp_upgrade', __NAMESPACE__ . '\Schema::ensureUploadsHtaccess');
 
 add_action('widgets_init', __NAMESPACE__ . '\Widgets\UserLoginFormWidget::init');
-add_action('plugins_loaded', __NAMESPACE__ . '\Plugin::loadTextdomain');
+add_action('plugins_loaded', __NAMESPACE__ . '\Plugin::plugins_loaded');
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
 // Adds settings fields to 'Reading' settings page, after 'Search Engine visibility'.

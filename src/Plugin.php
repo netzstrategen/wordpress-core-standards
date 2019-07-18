@@ -40,6 +40,18 @@ class Plugin {
   private static $baseUrl;
 
   /**
+   * @implements plugins_loaded
+   */
+  public static function plugins_loaded() {
+    // Change URLs pointing to /wp-login.php into /login.php.
+    add_filter('network_site_url', __NAMESPACE__ . '\Security::site_url', 100, 3);
+    add_filter('site_url', __NAMESPACE__ . '\Security::site_url', 100, 3);
+    add_filter('wp_redirect', __NAMESPACE__ . '\Security::wp_redirect', 1);
+
+    Plugin::loadTextdomain();
+  }
+
+  /**
    * @implements init
    */
   public static function init() {

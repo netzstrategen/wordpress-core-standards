@@ -1,0 +1,9 @@
+# BEGIN core-standards:security
+<IfModule mod_rewrite.c>
+  # Rename /wp-login.php into /login.php and deny access to XML-RPC API.
+  RewriteEngine On
+  RewriteRule ^login\.php$ /wp-login.php [QSA,END]
+  RewriteRule ^wp-login\.php$ - [NS,F,END]
+  RewriteRule ^xmlrpc\.php$ - [F,END]
+</IfModule>
+# END core-standards:security
