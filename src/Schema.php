@@ -83,11 +83,11 @@ class Schema {
   }
 
   /**
-   * Ensures fast 404 responses for missing files in uploads folder.
+   * Ensures no access to slow front controllers and creates route for login.php.
    */
   public static function ensureFrontControllerAccess() {
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.security');
-    Schema::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+    static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
   /**
