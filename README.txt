@@ -1,9 +1,9 @@
 === Core Standards ===
-Contributors: netzstrategen, tha_sun, fabianmarz, juanlopez4691, lucapipolo
+Contributors: netzstrategen, tha_sun, fabianmarz, juanlopez4691, lucapipolo, colourgarden
 Tags: core, standards, defaults, enhancements, security
 Requires at least: 4.5
 Tested up to: 4.9.8
-Stable tag: 1.24.0
+Stable tag: 1.25.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
