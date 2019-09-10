@@ -68,6 +68,7 @@ class Plugin {
 
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
+    add_filter('wp_check_filetype_and_ext', __CLASS__ . '::wp_check_filetype_and_ext', 10, 4);
 
     // Prevent full-width images from getting wrapped into paragraphs.
     add_filter('the_content', __CLASS__ . '::the_content_before', 9);
@@ -142,6 +143,16 @@ class Plugin {
   public static function upload_mime_types(array $mimes) {
     $mimes['svg'] = 'image/svg+xml';
     return $mimes;
+  }
+
+  /**
+   * @implements wp_check_filetype_and_ext
+   */
+  public static function wp_check_filetype_and_ext(array $data, $file, $filename, $mimes) {
+    if (isset($data['ext']) && $data['ext'] === 'svg') {
+      $data['type'] = 'image/svg+xml';
+    }
+    return $data;
   }
 
   /**
