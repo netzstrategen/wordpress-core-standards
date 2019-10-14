@@ -5,9 +5,38 @@ namespace Netzstrategen\CoreStandards;
 
 <div class="cookie-notice" id="cookie-notice" role="banner">
   <div class="cookie-notice__body">
-    <?= sprintf(__('To give you the best possible service, this website uses cookies. By continuing to use it, you agree to our <a href="%s">privacy policy</a>.', Plugin::L10N), apply_filters('core_standards/cookie_notice/policy_link', '/privacy')); ?>
+    <h1>Kekse?</h1>
+    <p><?= sprintf(__('Für den bestmöglichen Service bietet Ihnen diese Website Cookies. Mehr Infos finden Sie in unserer <a href="%s">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_notice/policy_link', '/privacy')); ?></p>
+<div class="options">
+
+<div class="form-item form-checkbox">
+<input id="cookie-accept" type="checkbox" value="1" checked disabled />
+<label for="cookie-accept">Nur Butterkekse
+<br><small>Erforderliche Funktionen</small>
+</label>
+</div>
+<div class="form-item form-checkbox">
+<input id="cookie-accept" type="checkbox" value="1" />
+<label for="cookie-accept">Schokokekse
+<br><small>Statistiken</small>
+</label>
+</div>
+<div class="form-item form-checkbox">
+<input id="cookie-accept" type="checkbox" value="1" />
+<label for="cookie-accept">Space-Cookies
+<br><small>Personalisierung</small>
+</label>
+</div>
+
+</div>
+
+<div class="form-actions">
+<button class="button btn">Meine Auswahl bestätigen</button>
+<button class="button button--primary btn btn--primary">Gönn ich mir alle</button>
+</div>
+
   </div>
-  <a class="cookie-notice__close" href="#" id="cookies-accept" aria-label="<?= __('OK', Plugin::L10N) ?>"><svg class="cookie-notice__icon" viewBox="0 0 25.156 25.078"><path d="M13.672 12.578l11.25-11.25a.756.756 0 0 0 0-1.094.755.755 0 0 0-1.094 0l-11.25 11.25L1.328.234a1.337 1.337 0 0 0-1.094 0 1.337 1.337 0 0 0 0 1.094l11.25 11.25-11.25 11.25a.756.756 0 0 0 0 1.094c.156.156.469.156.625.156.156 0 .312 0 .469-.156l11.25-11.25 11.25 11.25c.156.156.312.156.469.156.157 0 .312 0 .469-.156a.756.756 0 0 0 0-1.094l-11.094-11.25z"></path></svg></a>
+  <!--a class="cookie-notice__close" href="#" id="cookies-accept" aria-label="<?= __('OK', Plugin::L10N) ?>"></a-->
 </div>
 
 <script>
