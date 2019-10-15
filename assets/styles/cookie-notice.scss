@@ -1,4 +1,11 @@
+.has-cookie-notice {
+  overflow: hidden;
+}
+
 .cookie-notice {
+  top: 0;
+  background-color: hsla(202, 100%, 30%, 0.92) !important;
+  zoom: 150%;
   position: fixed;
   z-index: 100000;
   right: 0;
@@ -12,6 +19,43 @@
   font-size: 14px;
   line-height: 1.6;
   color: #fff;
+
+  h1 {
+    margin-top: 0.3em;
+  }
+
+  .options {
+    text-align: center;
+    margin: 2em 0;
+  }
+  .form-item {
+    display: inline-block;
+    text-align: left;
+    margin: 0 2em;
+  }
+  small {
+    margin-left: 1.5em;
+  }
+  .form-actions {
+    text-align: right;
+  }
+  .form-item:last {
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .button:not(.button--primary),
+  .btn:not(.button--primary) {
+    background-color: transparent;
+    text-transform: none;
+    font-weight: normal;
+    letter-spacing: normal;
+    text-decoration: underline;
+  }
+  .button--primary,
+  .btn--primary {
+    color: #fff;
+  }
 
   &[hidden] {
     display: none;
@@ -30,6 +74,12 @@
       opacity: 0.8;
     }
   }
+}
+
+.cookie-notice__body {
+  background-color: white;
+  padding: 1em 2em;
+  color: #666;
 }
 
 .cookie-notice__icon {
