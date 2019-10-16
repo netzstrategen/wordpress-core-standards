@@ -3,11 +3,9 @@
 }
 
 .cookie-notice {
-  top: 0;
-  background-color: hsla(202, 100%, 30%, 0.92) !important;
-  zoom: 150%;
   position: fixed;
   z-index: 100000;
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
@@ -15,6 +13,8 @@
   align-items: center;
   justify-content: center;
   padding: 0.5em 0.75em;
+  background-color: hsla(202, 100%, 30%, 0.92) !important;
+  zoom: 150%;
   background-color: #333;
   font-size: 14px;
   line-height: 1.6;
@@ -25,25 +25,30 @@
   }
 
   .options {
-    text-align: center;
     margin: 2em 0;
+    text-align: center;
   }
+
   .form-item {
     display: inline-block;
-    text-align: left;
     margin: 0 2em;
+    text-align: left;
   }
+
   small {
     margin-left: 1.5em;
   }
+
   .form-actions {
     text-align: right;
   }
-  .form-item:last {
+
+  .form-item:last-of-type {
     background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-≤text-fill-color: transparent;
   }
+
   .button:not(.button--primary),
   .btn:not(.button--primary) {
     background-color: transparent;
@@ -52,6 +57,7 @@
     letter-spacing: normal;
     text-decoration: underline;
   }
+
   .button--primary,
   .btn--primary {
     color: #fff;
@@ -77,8 +83,8 @@
 }
 
 .cookie-notice__body {
-  background-color: white;
   padding: 1em 2em;
+  background-color: white;
   color: #666;
 }
 
@@ -90,8 +96,8 @@
 }
 
 .cookie-notice__close {
-  margin-left: 1em;
   padding: 5px 10px;
+  margin-left: 1em;
 
   &:hover,
   &:focus,
