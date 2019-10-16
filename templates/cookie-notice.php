@@ -4,7 +4,7 @@ namespace Netzstrategen\CoreStandards;
 
 $options = [
   [
-    'name' => 'basic',
+    'name' => 'essentials',
     'title' => __('Nur Butterkekse', Plugin::L10N),
     'desc' => __('Erforderliche Funktionen', Plugin::L10N),
     'atts' => [
@@ -24,6 +24,13 @@ $options = [
   ],
 ];
 
+$texts = [
+  'title' => __('Cookies?', Plugin::L10N),
+  'desc' => sprintf(__('For the best possible service, this website offers you cookies. More information can be found in our <a href="%s">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_notice/policy_link', '/privacy')),
+  'button_confirm' => __('Confirm selection', Plugin::L10N),
+  'button_confirm_all' => __('Get me anything', Plugin::L10N),
+];
+
 function create_attributes($atts) {
   $attributes = [];
   foreach ($atts as $name => $value) {
@@ -35,8 +42,8 @@ function create_attributes($atts) {
 
 <div class="cookie-notice" id="cookie-notice" role="banner">
   <div class="cookie-notice__body">
-    <h1><?= __('Kekse?', Plugin::L10N) ?></h1>
-    <p><?= sprintf(__('Für den bestmöglichen Service bietet Ihnen diese Website Cookies. Mehr Infos finden Sie in unserer <a href="%s">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_notice/policy_link', '/privacy')); ?></p>
+    <h1><?= esc_html($texts['title']) ?></h1>
+    <p><?= esc_html($texts['desc']) ?></p>
     <?php if ($options): ?>
       <div class="options">
         <?php foreach ($options as $option): ?>
@@ -51,50 +58,12 @@ function create_attributes($atts) {
       </div>
     <?php endif; ?>
     <div class="form-actions">
-      <button class="button btn" data-js="confirm"><?= __('Meine Auswahl bestätigen', Plugin::L10N) ?></button>
-      <button class="button button--primary btn btn--primary" data-js="confirm-all"><?= __('Gönn ich mir alle', Plugin::L10N) ?></button>
+      <button class="button btn" data-js="confirm"><?= esc_html($texts['button_confirm']) ?></button>
+      <button class="button button--primary btn btn--primary" data-js="confirm-all"><?= esc_html($texts['button_confirm_all']) ?></button>
     </div>
   </div>
 </div>
 
 <script>
-(function () {
-  if (typeof window.localStorage === 'undefined') {
-    return;
-  }
-
-  function hideCookieNotice() {
-    const cookie_notice = document.getElementById('cookie-notice');
-    cookie_notice.setAttribute('hidden', 'true');
-    document.body.classList.remove('has-cookie-notice');
-  }
-
-  function DOMContentLoaded() {
-    document.body.classList.add('has-cookie-notice');
-    document.addEventListener('click', (event) => {
-      if (event.target.dataset.js !== 'confirm' && event.target.dataset.js !== 'confirm-all') {
-        return;
-      }
-      const values = [];
-      const checkboxes = document.querySelectorAll('input[name=cookies]');
-      for (checkbox of checkboxes) {
-        if (event.target.dataset.js === 'confirm-all') {
-          checkbox.checked = true;
-        }
-        if (checkbox.checked) {
-          values.push(checkbox.value);
-        }
-      }
-      window.localStorage.setItem('cookies-accepted', JSON.stringify(values));
-      hideCookieNotice();
-    });
-  }
-
-  if (JSON.parse(window.localStorage.getItem('cookies-accepted'))) {
-    hideCookieNotice();
-    return false;
-  }
-
-  document.addEventListener('DOMContentLoaded', DOMContentLoaded);
-})();
+  <?= file_get_contents(Plugin::getBasePath() . '/assets/scripts/cookies.js'); ?>
 </script>
