@@ -3,6 +3,11 @@
     return;
   }
 
+  if (JSON.parse(window.localStorage.getItem('cookies-accepted'))) {
+    hideCookieNotice();
+    return false;
+  }
+
   function hideCookieNotice() {
     const cookie_notice = document.getElementById('cookie-notice');
     cookie_notice.setAttribute('hidden', 'true');
@@ -17,7 +22,7 @@
       }
       const values = {};
       const checkboxes = document.querySelectorAll('input[name=cookies]');
-      for (checkbox of checkboxes) {
+      for (const checkbox of checkboxes) {
         if (event.target.dataset.js === 'confirm-all') {
           checkbox.checked = true;
         }
@@ -26,11 +31,6 @@
       window.localStorage.setItem('cookies-accepted', JSON.stringify(values));
       hideCookieNotice();
     });
-  }
-
-  if (JSON.parse(window.localStorage.getItem('cookies-accepted'))) {
-    hideCookieNotice();
-    return false;
   }
 
   document.addEventListener('DOMContentLoaded', DOMContentLoaded);

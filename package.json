@@ -41,6 +41,7 @@
         "./assets/styles/**/*.scss"
       ],
       "dest": "./dist/styles"
-    }
+    },
+    "templates": ""
   }
 }
