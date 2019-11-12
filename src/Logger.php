@@ -7,16 +7,29 @@
 
 namespace Netzstrategen\CoreStandards;
 
+/**
+ * Class for logging cookie consent actions.
+ */
 class Logger {
 
-  const LOG_FILE = 'cookie-consent.log';
-
+  /**
+   * Returns cookie consent log file path.
+   *
+   * @return string
+   */
   public static function getLogFile(): string {
     $log_file = apply_filters('core-standards/cookie-consent/logfile', wp_upload_dir()['path'] . '/cookie-consent.log');
     return $log_file;
   }
 
-  public static function writelog($message, $level = 'info') {
+
+  /**
+   * Writes the given message into the cookie consent log file.
+   *
+   * @param array $message
+   *   The message to write into the log file.
+   */
+  public static function writelog(array $message) {
     $log_file = static::getLogFile();
     $file_handle = fopen($log_file, 'a');
     fwrite($file_handle, json_encode($message) . "\r\n");
