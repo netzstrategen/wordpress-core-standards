@@ -93,16 +93,21 @@ class Plugin {
     add_filter('pre_option_default_pingback_flag', '__return_zero');
     add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 100);
 
+    add_action('wp_head', __CLASS__ . '::wp_head');
+
+    add_action('wp_ajax_core-standards/log_cookie_consent', __CLASS__ . '::log_cookie_consent');
+    add_action('wp_ajax_nopriv_core-standards/log_cookie_consent', __CLASS__ . '::log_cookie_consent');
+
     if (is_admin()) {
       return;
     }
     // Add teaser image to RSS feeds.
     add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
 
-    // Output client-side cookie notice on all pages.
+    // Output client-side cookie consent on all pages.
     // Use a slightly higher weight to prevent the bar being output
     // before other footer content.
-    if (!defined('CORE_STANDARDS_COOKIE_NOTICE') || CORE_STANDARDS_COOKIE_NOTICE !== FALSE) {
+    if (!defined('CORE_STANDARDS_COOKIE_CONSENT') || CORE_STANDARDS_COOKIE_CONSENT !== FALSE) {
       add_action('wp_enqueue_scripts', __CLASS__ . '::wp_enqueue_scripts', 1);
       add_action('wp_footer', __CLASS__ . '::wp_footer', 12);
     }
@@ -235,6 +240,34 @@ class Plugin {
   }
 
   /**
+   * @implements wp_head
+   */
+  public static function wp_head() {
+    $data = [
+      'ajaxurl' => admin_url('admin-ajax.php'),
+      'consent_version' => CORE_STANDARDS_COOKIE_CONSENT_VERSION,
+    ];
+    echo '<script>var core_standards = ' . json_encode($data) . ';</script>';
+  }
+
+  /**
+   * Logs cookie consent message.
+   */
+  public static function log_cookie_consent() {
+    $consent = $_POST['consent'] ?? [];
+    $data = [
+      'consent' => $consent,
+      'timestamp' => current_time('timestamp'),
+      'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
+      'version' => CORE_STANDARDS_COOKIE_CONSENT_VERSION,
+      'placed_url' => wp_get_raw_referer(),
+      'user' => get_current_user_id(),
+    ];
+    Logger::writelog($data);
+    wp_die();
+  }
+
+  /**
    * @implements wp_insert_post_data
    */
   public static function wp_insert_post_data($data) {
@@ -246,16 +279,16 @@ class Plugin {
    * @implements wp_enqueue_scripts
    */
   public static function wp_enqueue_scripts() {
-    wp_enqueue_style('core-standards/cookie-notice', Plugin::getBaseUrl() . '/dist/styles/cookie-notice.css');
+    wp_enqueue_style('core-standards/cookie-consent', Plugin::getBaseUrl() . '/dist/styles/cookie-consent.css');
   }
 
   /**
-   * Output client-side cookie notice on all pages.
+   * Output client-side cookie consent on all pages.
    *
    * @implements wp_footer
    */
   public static function wp_footer() {
-    static::renderTemplate(['templates/cookie-notice.php']);
+    static::renderTemplate(['templates/cookie-consent.php']);
   }
 
   /**

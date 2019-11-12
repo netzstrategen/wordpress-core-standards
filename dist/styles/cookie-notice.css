@@ -1,8 +1,8 @@
 @charset "UTF-8";
-.has-cookie-notice {
+.has-cookie-consent {
   overflow: hidden; }
 
-.cookie-notice {
+.cookie-consent {
   position: fixed;
   z-index: 100000;
   top: 0;
@@ -25,55 +25,55 @@
   font-size: 14px;
   line-height: 1.6;
   color: #fff; }
-  .cookie-notice h1 {
+  .cookie-consent h1 {
     margin-top: 0.3em; }
-  .cookie-notice .options {
+  .cookie-consent .options {
     margin: 2em 0;
     text-align: center; }
-  .cookie-notice .form-item {
+  .cookie-consent .form-item {
     display: inline-block;
     margin: 0 2em;
     text-align: left; }
-  .cookie-notice small {
+  .cookie-consent small {
     margin-left: 1.5em; }
-  .cookie-notice .form-actions {
+  .cookie-consent .form-actions {
     text-align: right; }
-  .cookie-notice .form-item:last-of-type {
+  .cookie-consent .form-item:last-of-type {
     background-image: -webkit-gradient(linear, right top, left top, from(violet), color-stop(indigo), color-stop(blue), color-stop(green), color-stop(yellow), color-stop(orange), to(red));
     background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
     background-clip: text;
     -webkit-≤text-fill-color: transparent; }
-  .cookie-notice .button:not(.button--primary),
-  .cookie-notice .btn:not(.button--primary) {
+  .cookie-consent .button:not(.button--primary),
+  .cookie-consent .btn:not(.button--primary) {
     background-color: transparent;
     text-transform: none;
     font-weight: normal;
     letter-spacing: normal;
     text-decoration: underline; }
-  .cookie-notice .button--primary,
-  .cookie-notice .btn--primary {
+  .cookie-consent .button--primary,
+  .cookie-consent .btn--primary {
     color: #fff; }
-  .cookie-notice[hidden] {
+  .cookie-consent[hidden] {
     display: none; }
-  .cookie-notice a, .cookie-notice a:hover, .cookie-notice a:focus {
+  .cookie-consent a, .cookie-consent a:hover, .cookie-consent a:focus {
     color: currentColor;
     text-decoration: underline; }
-  .cookie-notice a:hover, .cookie-notice a:focus {
+  .cookie-consent a:hover, .cookie-consent a:focus {
     opacity: 0.8; }
 
-.cookie-notice__body {
+.cookie-consent__body {
   padding: 1em 2em;
   background-color: white;
   color: #666; }
 
-.cookie-notice__icon {
+.cookie-consent__icon {
   display: block;
   width: 19px;
   height: 19px;
   fill: #8f8f8f; }
 
-.cookie-notice__close {
+.cookie-consent__close {
   padding: 5px 10px;
   margin-left: 1em; }
-  .cookie-notice__close:hover .cookie-notice__icon, .cookie-notice__close:focus .cookie-notice__icon, .cookie-notice__close:active .cookie-notice__icon {
+  .cookie-consent__close:hover .cookie-consent__icon, .cookie-consent__close:focus .cookie-consent__icon, .cookie-consent__close:active .cookie-consent__icon {
     fill: #fff; }
