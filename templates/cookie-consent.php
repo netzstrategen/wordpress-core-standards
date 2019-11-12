@@ -5,8 +5,8 @@ namespace Netzstrategen\CoreStandards;
 $options = [
   [
     'name' => 'essentials',
-    'title' => __('Nur Butterkekse', Plugin::L10N),
-    'desc' => __('Erforderliche Funktionen', Plugin::L10N),
+    'title' => __('Butter cookies only', Plugin::L10N),
+    'desc' => __('Required functioanlity', Plugin::L10N),
     'atts' => [
       'disabled' => TRUE,
       'checked' => TRUE,
@@ -14,19 +14,19 @@ $options = [
   ],
   [
     'name' => 'statistics',
-    'title' => __('Schokokekse', Plugin::L10N),
-    'desc' => __('Statistiken', Plugin::L10N),
+    'title' => __('Chocolate cookies', Plugin::L10N),
+    'desc' => __('Statistics', Plugin::L10N),
   ],
   [
     'name' => 'personalization',
-    'title' => __('Space-Cookies', Plugin::L10N),
-    'desc' => __('Personalisierung', Plugin::L10N),
+    'title' => __('Space cookies', Plugin::L10N),
+    'desc' => __('Personalization', Plugin::L10N),
   ],
 ];
 
 $texts = [
   'title' => __('Cookies?', Plugin::L10N),
-  'desc' => sprintf(__('For the best possible service, this website offers you cookies. More information can be found in our <a href="%s">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_notice/policy_link', '/privacy')),
+  'desc' => sprintf(__('For the best possible service, this website offers you cookies. More information can be found in our <a href="%s">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_consent/policy_link', '/privacy')),
   'button_confirm' => __('Confirm selection', Plugin::L10N),
   'button_confirm_all' => __('Get me anything', Plugin::L10N),
 ];
@@ -40,8 +40,8 @@ function create_attributes($atts) {
 }
 ?>
 
-<div class="cookie-notice" id="cookie-notice" role="banner">
-  <div class="cookie-notice__body">
+<div class="cookie-consent" id="cookie-consent" role="banner" hidden="hidden">
+  <div class="cookie-consent__body">
     <h1><?= esc_html($texts['title']) ?></h1>
     <p><?= esc_html($texts['desc']) ?></p>
     <?php if ($options): ?>
@@ -67,6 +67,6 @@ function create_attributes($atts) {
 <script>
 <?php
   $min = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-  echo file_get_contents(Plugin::getBasePath() . '/dist/scripts/cookie-notice' . $min . '.js');
+  echo file_get_contents(Plugin::getBasePath() . '/dist/scripts/cookie-consent' . $min . '.js');
 ?>
 </script>

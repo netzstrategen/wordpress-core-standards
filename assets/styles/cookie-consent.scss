@@ -1,8 +1,8 @@
-.has-cookie-notice {
+.has-cookie-consent {
   overflow: hidden;
 }
 
-.cookie-notice {
+.cookie-consent {
   position: fixed;
   z-index: 100000;
   top: 0;
@@ -82,27 +82,27 @@
   }
 }
 
-.cookie-notice__body {
+.cookie-consent__body {
   padding: 1em 2em;
   background-color: white;
   color: #666;
 }
 
-.cookie-notice__icon {
+.cookie-consent__icon {
   display: block;
   width: 19px;
   height: 19px;
   fill: #8f8f8f;
 }
 
-.cookie-notice__close {
+.cookie-consent__close {
   padding: 5px 10px;
   margin-left: 1em;
 
   &:hover,
   &:focus,
   &:active {
-    .cookie-notice__icon {
+    .cookie-consent__icon {
       fill: #fff;
     }
   }
