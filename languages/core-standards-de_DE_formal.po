@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2019-12-17 16:21+0100\n"
-"PO-Revision-Date: 2019-12-17 16:22+0100\n"
+"POT-Creation-Date: 2020-01-07 12:48+0100\n"
+"PO-Revision-Date: 2020-01-07 12:48+0100\n"
 "Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
 "Language: de_DE@formal\n"
@@ -29,11 +29,11 @@ msgstr ""
 msgid "Google Analytics tracking has been disabled."
 msgstr "Google Analytics-Tracking wurde deaktiviert."
 
-#: src/UserFrontend.php:145
+#: src/UserFrontend.php:157
 msgid "Register"
 msgstr ""
 
-#: src/UserFrontend.php:156
+#: src/UserFrontend.php:168
 msgid "Register For This Site"
 msgstr ""
 
