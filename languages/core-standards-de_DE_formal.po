@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2019-11-12 11:32+0100\n"
-"PO-Revision-Date: 2019-11-12 11:37+0100\n"
-"Last-Translator: Joan López <joan@netzstrategen.com>\n"
+"POT-Creation-Date: 2019-11-12 12:01+0100\n"
+"PO-Revision-Date: 2019-11-12 12:02+0100\n"
+"Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
 "Language: de_DE@formal\n"
 "MIME-Version: 1.0\n"
@@ -114,17 +114,14 @@ msgid "Cookies?"
 msgstr ""
 
 #: templates/cookie-consent.php:29
-#, fuzzy, php-format
-#| msgid ""
-#| "To give you the best possible service, this website uses cookies. By "
-#| "continuing to use it, you agree to our <a href=\"%s\">privacy policy</a>."
+#, php-format
 msgid ""
 "For the best possible service, this website offers you cookies. More "
-"information can be found in our <a href=\"%s\">Cookie-Bar</a>."
+"information can be found in our <a href=%s>Cookie-Bar</a>."
 msgstr ""
 "Um Ihnen den bestmöglichen Service zu bieten, verwendet diese Website "
-"Cookies. Mit der weiteren Nutzung akzeptieren Sie unsere <a href=\"%s"
-"\">Datenschutzrichtlinie</a>."
+"Cookies. Mit der weiteren Nutzung akzeptieren Sie unsere <a href="
+"%s>Datenschutzrichtlinie</a>."
 
 #: templates/cookie-consent.php:30
 msgid "Confirm selection"
