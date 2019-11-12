@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2019-11-12 11:32+0100\n"
+"POT-Creation-Date: 2019-11-12 12:01+0100\n"
 "PO-Revision-Date: 2018-05-10 10:20+0200\n"
 "Last-Translator: Joan Lopez <joan@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
@@ -117,7 +117,7 @@ msgstr ""
 #, php-format
 msgid ""
 "For the best possible service, this website offers you cookies. More "
-"information can be found in our <a href=\"%s\">Cookie-Bar</a>."
+"information can be found in our <a href=%s>Cookie-Bar</a>."
 msgstr ""
 
 #: templates/cookie-consent.php:30

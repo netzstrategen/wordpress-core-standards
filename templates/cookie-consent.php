@@ -26,7 +26,7 @@ $options = [
 
 $texts = [
   'title' => __('Cookies?', Plugin::L10N),
-  'desc' => sprintf(__('For the best possible service, this website offers you cookies. More information can be found in our <a href="%s">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_consent/policy_link', '/privacy')),
+  'desc' => sprintf(__('For the best possible service, this website offers you cookies. More information can be found in our <a href=%s>Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_consent/policy_link', '/privacy')),
   'button_confirm' => __('Confirm selection', Plugin::L10N),
   'button_confirm_all' => __('Get me anything', Plugin::L10N),
 ];
@@ -43,7 +43,7 @@ function create_attributes($atts) {
 <div class="cookie-consent" id="cookie-consent" role="banner" hidden="hidden">
   <div class="cookie-consent__body">
     <h1><?= esc_html($texts['title']) ?></h1>
-    <p><?= esc_html($texts['desc']) ?></p>
+    <p><?= $texts['desc'] ?></p>
     <?php if ($options): ?>
       <div class="options">
         <?php foreach ($options as $option): ?>
