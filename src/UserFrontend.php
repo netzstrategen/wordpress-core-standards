@@ -9,6 +9,13 @@ namespace Netzstrategen\CoreStandards;
 
 class UserFrontend {
 
+  /**
+   * Admin bar (front-end) should be shown at bottom of viewport.
+   *
+   * @var boolean
+   */
+  const SHOW_ADMIN_BAR_AT_BOTTOM = FALSE;
+
   public static function init() {
     // Injects actual nonce values for each menu link that contains the query
     // string '_wpnonce=[action]'; e.g., '_wpnonce=customer-logout' for the
@@ -40,6 +47,11 @@ class UserFrontend {
     // Remove admin bar for users with no backend access.
     if (!Admin::currentUserHasAccess()) {
       add_filter('show_admin_bar', '__return_false');
+    }
+
+    // Moves WP admin bar to bottom of page.
+    if (apply_filters(Plugin::PREFIX . '-admin-bar-bottom', static::SHOW_ADMIN_BAR_AT_BOTTOM)) {
+      add_action('admin_bar_init', __CLASS__ . '::move_admin_bar_to_bottom');
     }
   }
 
@@ -157,6 +169,16 @@ EOD;
       }
     }
     return $translation;
+  }
+
+  /**
+   * @implements move_admin_bar_to_bottom
+   */
+  public static function move_admin_bar_to_bottom() {
+    remove_action('wp_head', '_admin_bar_bump_cb');
+    if (is_user_logged_in() && current_user_can('admin_access')) {
+      wp_enqueue_style('core-standards/admin-bar', Plugin::getBaseUrl() . '/dist/styles/admin-bar.css');
+    }
   }
 
 }
