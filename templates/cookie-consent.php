@@ -6,7 +6,7 @@ $options = [
   [
     'name' => 'essentials',
     'title' => __('Butter cookies only', Plugin::L10N),
-    'desc' => __('Required functioanlity', Plugin::L10N),
+    'desc' => __('Required functionality', Plugin::L10N),
     'atts' => [
       'disabled' => TRUE,
       'checked' => TRUE,
@@ -58,7 +58,7 @@ function create_attributes($atts) {
       </div>
     <?php endif; ?>
     <div class="form-actions">
-      <button class="button btn" data-js="confirm"><?= esc_html($texts['button_confirm']) ?></button>
+      <a href="" class="link" data-js="confirm"><?= esc_html($texts['button_confirm']) ?></a>
       <button class="button button--primary btn btn--primary" data-js="confirm-all"><?= esc_html($texts['button_confirm_all']) ?></button>
     </div>
   </div>

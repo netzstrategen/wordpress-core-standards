@@ -29,7 +29,8 @@
 
       var data = {
         version: window.core_standards.consent_version,
-        consent: {}
+        consent: {},
+        id: generate_uuid()
       };
       var checkboxes = document.querySelectorAll('input[name=cookies]');
       var _iteratorNormalCompletion = true;
@@ -64,7 +65,11 @@
       window.localStorage.setItem('cookie-consent', JSON.stringify(data));
       $.post(window.core_standards.ajaxurl, {
         action: 'core-standards/log_cookie_consent',
-        consent: data.consent
+        consent: data.consent,
+        id: generate_uuid()
+      });
+      dataLayer.push({
+        'event': 'Consent Submitted'
       });
       hideCookieNotice();
     });
@@ -72,3 +77,11 @@
 
   document.addEventListener('DOMContentLoaded', DOMContentLoaded);
 })();
+
+function generate_uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : r & 0x3 | 0x8;
+    return v.toString(16);
+  });
+}
