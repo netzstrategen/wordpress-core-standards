@@ -273,6 +273,7 @@ class Plugin {
       'version' => CORE_STANDARDS_COOKIE_CONSENT_VERSION,
       'placed_url' => wp_get_raw_referer(),
       'user' => get_current_user_id(),
+      'id' => uniqid(rand(), TRUE),
     ];
     Logger::writelog($data);
     wp_die();
