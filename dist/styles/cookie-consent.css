@@ -3,7 +3,7 @@
   --cookie-notice-checkbox-color: #333;
   --cookie-notice-button-color: #bebdbd;
   --cookie-notice-button-color-hover: #aaa;
-  --cookie-notice-border-bottom-color: #aaa; }
+  --cookie-notice-border-button-color: #aaa; }
 
 .has-cookie-consent {
   overflow: hidden; }
@@ -64,28 +64,30 @@
   .cookie-consent .form-item:last-of-type {
     background-clip: text;
     -webkit-≤text-fill-color: transparent; }
+  @media screen and (max-width: 990px) {
+    .cookie-consent .btn.btn {
+      padding-top: 0.8em;
+      padding-right: calc(2em - 0.2em);
+      padding-bottom: calc(0.8em - 3px);
+      padding-left: 2em;
+      font-size: 0.75em; } }
   .cookie-consent .button:not(.button--primary),
   .cookie-consent .btn:not(.button--primary) {
     background-color: transparent;
     text-transform: none;
     font-weight: normal;
-    letter-spacing: normal;
-    text-decoration: underline; }
+    letter-spacing: normal; }
+    @media screen and (max-width: 600px) {
+      .cookie-consent .button:not(.button--primary),
+      .cookie-consent .btn:not(.button--primary) {
+        margin-bottom: 0.2em; } }
   .cookie-consent .button--primary.button--primary,
   .cookie-consent .btn--primary.btn--primary {
-    border-bottom: var(--cookie-notice-border-bottom-color);
+    border-bottom: 3px solid var(--cookie-notice-border-button-color);
     color: #fff;
     background-color: var(--cookie-notice-button-color);
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, var(--cookie-notice-button-color)), color-stop(50%, var(--cookie-notice-button-color-hover)));
     background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%); }
-    @media screen and (max-width: 990px) {
-      .cookie-consent .button--primary.button--primary,
-      .cookie-consent .btn--primary.btn--primary {
-        padding-top: 0.8em;
-        padding-right: calc(2em - 0.2em);
-        padding-bottom: calc(0.8em - 3px);
-        padding-left: 2em;
-        font-size: 0.75em; } }
   .cookie-consent .link {
     margin-right: 1em;
     font-size: 0.786em; }
@@ -133,7 +135,6 @@ input[type="checkbox"] {
   input[type="checkbox"]:hover:before {
     background: var(--cookie-notice-checkbox-color); }
   input[type="checkbox"]:checked:before {
-    border-color: var(--cookie-notice-checkbox-color);
     background: var(--cookie-notice-checkbox-color); }
   input[type="checkbox"]:checked:after {
     position: absolute;

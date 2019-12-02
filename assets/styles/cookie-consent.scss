@@ -2,7 +2,7 @@
   --cookie-notice-checkbox-color: #333;
   --cookie-notice-button-color: #bebdbd;
   --cookie-notice-button-color-hover: #aaa;
-  --cookie-notice-border-bottom-color: #aaa;
+  --cookie-notice-border-button-color: #aaa;
 }
 
 .has-cookie-consent {
@@ -70,22 +70,7 @@
     -webkit-≤text-fill-color: transparent;
   }
 
-  .button:not(.button--primary),
-  .btn:not(.button--primary) {
-    background-color: transparent;
-    text-transform: none;
-    font-weight: normal;
-    letter-spacing: normal;
-    text-decoration: underline;
-  }
-
-  .button--primary.button--primary,
-  .btn--primary.btn--primary {
-    border-bottom: var(--cookie-notice-border-bottom-color);
-    color: #fff;
-    background-color: var(--cookie-notice-button-color);
-    background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%);
-
+  .btn.btn {
     @media screen and (max-width: 990px) {
       padding-top: 0.8em;
       padding-right: calc(2em - 0.2em);
@@ -93,6 +78,30 @@
       padding-left: 2em;
       font-size: 0.75em;
     }
+  }
+
+  .button:not(.button--primary),
+  .btn:not(.button--primary) {
+    background-color: transparent;
+    text-transform: none;
+    font-weight: normal;
+    letter-spacing: normal;
+
+    @media screen and (max-width: 600px) {
+      margin-bottom: 0.2em;
+    }
+  }
+
+  // .btn--secondary.btn--secondary {
+  //   padding-bottom: calc(1em - 6px);
+  // }
+
+  .button--primary.button--primary,
+  .btn--primary.btn--primary {
+    border-bottom: 3px solid var(--cookie-notice-border-button-color);
+    color: #fff;
+    background-color: var(--cookie-notice-button-color);
+    background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%);
   }
 
   .link {
@@ -169,7 +178,6 @@ input[type="checkbox"] {
   }
 
   &:checked:before {
-    border-color: var(--cookie-notice-checkbox-color);
     background: var(--cookie-notice-checkbox-color);
   }
 
