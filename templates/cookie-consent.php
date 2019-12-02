@@ -58,7 +58,7 @@ function create_attributes($atts) {
       </div>
     <?php endif; ?>
     <div class="form-actions">
-      <button class="button button--secondary btn btn--secondary" data-js="confirm"><?= esc_html($texts['button_confirm']) ?></button>
+      <button class="button--link btn--link" data-js="confirm"><?= esc_html($texts['button_confirm']) ?></button>
       <button class="button button--primary btn btn--primary" data-js="confirm-all"><?= esc_html($texts['button_confirm_all']) ?></button>
     </div>
   </div>
