@@ -71,16 +71,6 @@
       padding-bottom: calc(0.8em - 3px);
       padding-left: 2em;
       font-size: 0.75em; } }
-  .cookie-consent .button:not(.button--primary),
-  .cookie-consent .btn:not(.button--primary) {
-    background-color: transparent;
-    text-transform: none;
-    font-weight: normal;
-    letter-spacing: normal; }
-    @media screen and (max-width: 600px) {
-      .cookie-consent .button:not(.button--primary),
-      .cookie-consent .btn:not(.button--primary) {
-        margin-bottom: 0.2em; } }
   .cookie-consent .button--primary.button--primary,
   .cookie-consent .btn--primary.btn--primary {
     border-bottom: 3px solid var(--cookie-notice-border-button-color);
@@ -88,9 +78,31 @@
     background-color: var(--cookie-notice-button-color);
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, var(--cookie-notice-button-color)), color-stop(50%, var(--cookie-notice-button-color-hover)));
     background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%); }
-  .cookie-consent .link {
-    margin-right: 1em;
-    font-size: 0.786em; }
+    @media screen and (max-width: 550px) {
+      .cookie-consent .button--primary.button--primary,
+      .cookie-consent .btn--primary.btn--primary {
+        width: 100%; } }
+  .cookie-consent .btn--link,
+  .cookie-consent .button--link {
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    background: none;
+    color: #333;
+    text-decoration: underline;
+    text-align: center; }
+    @media screen and (max-width: 990px) {
+      .cookie-consent .btn--link,
+      .cookie-consent .button--link {
+        font-size: 80%; } }
+    @media screen and (max-width: 550px) {
+      .cookie-consent .btn--link,
+      .cookie-consent .button--link {
+        width: 100%;
+        margin-right: 0; } }
   .cookie-consent[hidden] {
     display: none; }
   .cookie-consent a, .cookie-consent a:hover, .cookie-consent a:focus {
