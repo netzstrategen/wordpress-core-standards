@@ -80,33 +80,39 @@
     }
   }
 
-  .button:not(.button--primary),
-  .btn:not(.button--primary) {
-    background-color: transparent;
-    text-transform: none;
-    font-weight: normal;
-    letter-spacing: normal;
-
-    @media screen and (max-width: 600px) {
-      margin-bottom: 0.2em;
-    }
-  }
-
-  // .btn--secondary.btn--secondary {
-  //   padding-bottom: calc(1em - 6px);
-  // }
-
   .button--primary.button--primary,
   .btn--primary.btn--primary {
     border-bottom: 3px solid var(--cookie-notice-border-button-color);
     color: #fff;
     background-color: var(--cookie-notice-button-color);
     background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%);
+
+    @media screen and (max-width: 550px) {
+      width: 100%;
+    }
   }
 
-  .link {
-    margin-right: 1em;
-    font-size: 0.786em;
+  .btn--link,
+  .button--link {
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    background: none;
+    color: #333;
+    text-decoration: underline;
+    text-align: center;
+
+    @media screen and (max-width: 990px) {
+      font-size: 80%;
+    }
+
+    @media screen and (max-width: 550px) {
+      width: 100%;
+      margin-right: 0;
+    }
   }
 
   &[hidden] {
