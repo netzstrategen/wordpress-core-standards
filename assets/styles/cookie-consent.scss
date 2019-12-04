@@ -23,16 +23,14 @@
   background-color: hsla(240, 6.4%, 21.4%, 0.62) !important;
   zoom: 150%;
   background-color: #333;
-  font-size: 1em;
+  font-size: 1rem;
   line-height: 1.6;
   color: #fff;
 
-  @media screen and (max-width: 990px) {
-    font-size: 0.825em;
-  }
-
-  h1 {
+  .h1 {
     margin-top: 0.3em;
+    font-size: 2rem;
+    font-weight: bold;
   }
 
   .options {
@@ -54,10 +52,11 @@
   }
 
   small {
-    margin-left: 2.7em;
+    margin-left: 3.9rem;
 
     @media screen and (max-width: 990px) {
-      margin-left: 2.325em;
+      margin-left: 3.7rem;
+      font-size: 80%;
     }
   }
 
@@ -71,12 +70,13 @@
   }
 
   .btn.btn {
+    font-size: 0.875rem;
+
     @media screen and (max-width: 990px) {
       padding-top: 0.8em;
       padding-right: calc(2em - 0.2em);
       padding-bottom: calc(0.8em - 3px);
       padding-left: 2em;
-      font-size: 0.75em;
     }
   }
 
@@ -99,15 +99,11 @@
     border: 0;
     margin-right: 8px;
     margin-bottom: 8px;
-    font-size: 11px;
+    font-size: 0.875rem;
     background: none;
     color: #666;
     text-decoration: underline;
     text-align: center;
-
-    @media screen and (max-width: 990px) {
-      font-size: 80%;
-    }
 
     @media screen and (max-width: 550px) {
       width: 100%;
@@ -120,13 +116,6 @@
   }
 
   a {
-    &,
-    &:hover,
-    &:focus {
-      color: currentColor;
-      text-decoration: underline;
-    }
-
     &:hover,
     &:focus {
       opacity: 0.8;
