@@ -48,8 +48,8 @@ function create_attributes($atts) {
       <div class="options">
         <?php foreach ($options as $option): ?>
           <div class="form-item form-checkbox">
+           <input id="<?= esc_attr(sanitize_title($option['name'])) ?>" name="cookies" type="checkbox" value="<?= esc_attr($option['name']) ?>" <?= create_attributes($option['atts'] ?? []); ?> />
             <label for="<?= esc_attr(sanitize_title($option['name'])) ?>">
-              <input id="<?= esc_attr(sanitize_title($option['name'])) ?>" name="cookies" type="checkbox" value="<?= esc_attr($option['name']) ?>" <?= create_attributes($option['atts'] ?? []); ?> />
               <?= esc_html($option['title']) ?>
               <br><small><?= esc_html($option['desc']) ?></small>
             </label>
