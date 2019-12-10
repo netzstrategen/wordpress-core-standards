@@ -73,6 +73,10 @@
       });
       hideCookieNotice();
     });
+
+    if (window.location.href.indexOf("?nobanner") !== -1) {
+      hideCookieNotice();
+    }
   }
 
   document.addEventListener('DOMContentLoaded', DOMContentLoaded);
