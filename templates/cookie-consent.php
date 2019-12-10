@@ -26,7 +26,7 @@ $options = [
 
 $texts = [
   'title' => __('Cookies?', Plugin::L10N),
-  'desc' => sprintf(__('For the best possible service, this website offers you cookies. More information can be found in our <a href=%s target="_blank">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_consent/policy_link', '/privacy')),
+  'desc' => sprintf(__('For the best possible service, this website offers you cookies. More information can be found in our <a href=%s target="_blank">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_consent/policy_link', '/privacy?nobanner')),
   'button_confirm' => __('Confirm selection', Plugin::L10N),
   'button_confirm_all' => __('Get me anything', Plugin::L10N),
 ];

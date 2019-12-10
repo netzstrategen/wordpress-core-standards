@@ -47,10 +47,15 @@
             -ms-flex-direction: column;
                 flex-direction: column; } }
   .cookie-consent .form-item {
+    padding-right: 2em;
+    padding-left: 2em;
     text-align: left; }
     @media screen and (max-width: 990px) {
       .cookie-consent .form-item {
         margin-bottom: 1.2em; } }
+    @media screen and (max-width: 767px) {
+      .cookie-consent .form-item {
+        padding: 0; } }
   .cookie-consent small {
     margin-left: 3.2rem; }
     @media screen and (max-width: 990px) {
