@@ -42,10 +42,16 @@
   }
 
   .form-item {
+    padding-right: 2em;
+    padding-left: 2em;
     text-align: left;
 
     @media screen and (max-width: 990px) {
       margin-bottom: 1.2em;
+    }
+
+    @media screen and (max-width: 767px) {
+      padding: 0;
     }
   }
 
