@@ -110,6 +110,7 @@
     opacity: 0.8; }
 
 .cookie-consent__body {
+  max-width: 60%;
   padding: 1em 2em;
   background-color: white;
   color: #666; }
