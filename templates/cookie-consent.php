@@ -5,7 +5,7 @@ namespace Netzstrategen\CoreStandards;
 $options = [
   [
     'name' => 'essentials',
-    'title' => __('Butter cookies only', Plugin::L10N),
+    'title' => __('Only necessary', Plugin::L10N),
     'desc' => __('Required functionality', Plugin::L10N),
     'atts' => [
       'disabled' => TRUE,
@@ -14,19 +14,21 @@ $options = [
   ],
   [
     'name' => 'statistics',
-    'title' => __('Chocolate cookies', Plugin::L10N),
+    'title' => __('Behavior', Plugin::L10N),
     'desc' => __('Statistics', Plugin::L10N),
   ],
   [
     'name' => 'personalization',
-    'title' => __('Space cookies', Plugin::L10N),
+    'title' => __('Marketing', Plugin::L10N),
     'desc' => __('Personalization', Plugin::L10N),
   ],
 ];
 
+$cookiepolicy_url = WP_SITETERMPATH ?? '';
+
 $texts = [
-  'title' => __('Cookies?', Plugin::L10N),
-  'desc' => sprintf(__('For the best possible service, this website offers you cookies. More information can be found in our <a href=%s target="_blank">Cookie-Bar</a>.', Plugin::L10N), apply_filters('core_standards/cookie_consent/policy_link', '/privacy?nobanner')),
+  'title' => __('Cookie Settings', Plugin::L10N),
+  'desc' => sprintf(__('For the best possible service, this website offers you cookies. Please make your choice to use the site. More information can be found in our <a href=%s target="_blank">privacy policy</a>.', Plugin::L10N), apply_filters('core_standards/cookie_consent/policy_link', $cookiepolicy_url . '?nobanner')),
   'button_confirm' => __('Confirm selection', Plugin::L10N),
   'button_confirm_all' => __('Get me anything', Plugin::L10N),
 ];
