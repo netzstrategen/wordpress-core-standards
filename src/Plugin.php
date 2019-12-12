@@ -56,6 +56,8 @@ class Plugin {
    * @implements init
    */
   public static function init() {
+    //Creates global variable for unique cookie consent id.
+    // static::$log_consent_id = md5(uniqid(rand(), TRUE));
 
     // Add Facebook to oEmbed providers.
     // @see https://developers.facebook.com/docs/plugins/oembed-endpoints
