@@ -25,7 +25,7 @@
       const data = {
         version: window.core_standards.consent_version,
         consent: {},
-        id: generate_uuid(),
+        consent_id: generate_uuid(),
       };
       const checkboxes = document.querySelectorAll('input[name=cookies]');
       for (const checkbox of checkboxes) {
@@ -38,9 +38,9 @@
       $.post(window.core_standards.ajaxurl, {
         action: 'core-standards/log_cookie_consent',
         consent: data.consent,
-        id: generate_uuid(),
+        consent_id: data.consent_id
       });
-      dataLayer.push({'event':'Consent Submitted'});
+      dataLayer.push({'event': 'Consent Submitted'});
       hideCookieNotice();
     });
     if (window.location.href.indexOf("?nobanner") !== -1) {

@@ -30,7 +30,7 @@
       var data = {
         version: window.core_standards.consent_version,
         consent: {},
-        id: generate_uuid()
+        consent_id: generate_uuid()
       };
       var checkboxes = document.querySelectorAll('input[name=cookies]');
       var _iteratorNormalCompletion = true;
@@ -66,7 +66,7 @@
       $.post(window.core_standards.ajaxurl, {
         action: 'core-standards/log_cookie_consent',
         consent: data.consent,
-        id: generate_uuid()
+        consent_id: data.consent_id
       });
       dataLayer.push({
         'event': 'Consent Submitted'
