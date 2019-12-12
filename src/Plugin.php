@@ -248,7 +248,7 @@ class Plugin {
    */
   public static function wp_head() {
     $data = [
-      'ajaxurl' => admin_url('admin-ajax.php'),
+      'ajaxurl_cookie_consent' => admin_url('admin-ajax.php'),
       'consent_version' => CORE_STANDARDS_COOKIE_CONSENT_VERSION,
     ];
     echo '<script>var core_standards = ' . json_encode($data) . ';</script>';
@@ -263,10 +263,10 @@ class Plugin {
       'consent' => $consent,
       'timestamp' => current_time('timestamp'),
       'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
-      'version' => CORE_STANDARDS_COOKIE_CONSENT_VERSION,
+      'version' => $_POST['consent']['version'],
       'placed_url' => wp_get_raw_referer(),
       'user' => get_current_user_id(),
-      'id' => $_POST['consent_id'],
+      'id' => $_POST['consent']['consent_id'],
     ];
     Logger::writelog($data);
     wp_die();

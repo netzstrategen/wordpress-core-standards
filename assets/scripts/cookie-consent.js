@@ -35,10 +35,9 @@
         data.consent[checkbox.value] = checkbox.checked;
       }
       window.localStorage.setItem('cookie-consent', JSON.stringify(data));
-      $.post(window.core_standards.ajaxurl, {
+      $.post(window.core_standards.ajaxurl_cookie_consent, {
         action: 'core-standards/log_cookie_consent',
-        consent: data.consent,
-        consent_id: data.consent_id
+        consent: data
       });
       dataLayer.push({'event': 'Consent Submitted'});
       hideCookieNotice();
