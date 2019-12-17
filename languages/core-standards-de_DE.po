@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2019-12-12 12:21+0100\n"
-"PO-Revision-Date: 2019-12-12 12:21+0100\n"
-"Last-Translator: Evelia Molina <evelia@netzstrategen.com>\n"
+"POT-Creation-Date: 2019-12-17 16:21+0100\n"
+"PO-Revision-Date: 2019-12-17 16:22+0100\n"
+"Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
 "Language: de_DE@formal\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
@@ -91,7 +91,7 @@ msgstr "Nur notwendige"
 
 #: templates/cookie-consent.php:9
 msgid "Required functionality"
-msgstr "benötigte Funktionalitäten"
+msgstr "Benötigte Funktionalitäten"
 
 #: templates/cookie-consent.php:17
 msgid "Behavior"
@@ -145,14 +145,5 @@ msgid "netzstrategen"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://www.netzstrategen.com"
+msgid "https://www.netzstrategen.com"
 msgstr ""
-
-#~ msgid "Butter cookies only"
-#~ msgstr "Nur Butterkekse"
-
-#~ msgid "Chocolate cookies"
-#~ msgstr "Schokokekse"
-
-#~ msgid "Space cookies"
-#~ msgstr "Space-Cookies"
