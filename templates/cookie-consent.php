@@ -65,10 +65,3 @@ function create_attributes($atts) {
     </div>
   </div>
 </div>
-
-<script>
-<?php
-  $min = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-  echo file_get_contents(Plugin::getBasePath() . '/dist/scripts/cookie-consent' . $min . '.js');
-?>
-</script>
