@@ -31,9 +31,8 @@ class Logger {
    */
   public static function writelog(array $message) {
     $log_file = static::getLogFile();
-    $file_handle = fopen($log_file, 'a');
-    fwrite($file_handle, json_encode($message) . "\r\n");
-    fclose($file_handle);
+    $message = json_encode($message, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    file_put_contents($log_file, $message . "\n", FILE_APPEND);
     File::chmod($log_file);
   }
 
