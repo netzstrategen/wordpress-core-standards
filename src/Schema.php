@@ -56,6 +56,14 @@ class Schema {
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.noscript');
     static::createOrPrependFile($pathname, $template, "\n");
 
+    // Ensure files in plugin specific folder are not publicly accessible.
+    $logs_dir = $uploads_dir . '/' . Plugin::PREFIX;
+    if (!is_dir($logs_dir)) {
+      wp_mkdir_p($logs_dir);
+    }
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.logs.deny');
+    static::createOrPrependFile($logs_dir . '/.htaccess', $template, "\n");
+
     // Ensure that .gitignore in the document root tracks the .htaccess file.
     $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH));
     $pathname = ABSPATH . '.gitignore';

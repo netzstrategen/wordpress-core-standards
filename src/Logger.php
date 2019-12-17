@@ -18,7 +18,8 @@ class Logger {
    * @return string
    */
   public static function getLogFile(): string {
-    $log_file = apply_filters('core-standards/cookie-consent/logfile', wp_upload_dir()['path'] . '/cookie-consent.log');
+    $uploads_dir = wp_upload_dir()['basedir'] . '/' . Plugin::PREFIX;
+    $log_file = apply_filters('core-standards/cookie-consent/logfile', $uploads_dir . '/cookie-consent.log');
     return $log_file;
   }
 
@@ -29,7 +30,7 @@ class Logger {
    * @param array $message
    *   The message to write into the log file.
    */
-  public static function writelog(array $message) {
+  public static function writelog(array $message): void {
     $log_file = static::getLogFile();
     $message = json_encode($message, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     file_put_contents($log_file, $message . "\n", FILE_APPEND);
