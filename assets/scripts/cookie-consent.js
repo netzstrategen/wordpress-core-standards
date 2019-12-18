@@ -27,9 +27,10 @@
     const consent = JSON.parse(window.localStorage.getItem('cookie-consent'));
     if (consent && consent.version === window.core_standards.consent_version) {
       hideCookieNotice();
-      return;
     }
-    showCookieNotice();
+    else {
+      showCookieNotice();
+    }
     document.addEventListener('click', (event) => {
       if (event.target.dataset.js !== 'confirm' && event.target.dataset.js !== 'confirm-all') {
         return;
@@ -58,6 +59,7 @@
     if (window.location.href.indexOf("?nobanner") !== -1) {
       hideCookieNotice();
     }
+
   }
 
   document.addEventListener('DOMContentLoaded', DOMContentLoaded);
