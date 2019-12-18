@@ -28,7 +28,9 @@
     if (consent && consent.version === window.core_standards.consent_version) {
       hideCookieNotice();
     }
-    showCookieNotice();
+    else {
+      showCookieNotice();
+    }
     document.addEventListener('click', (event) => {
       if (event.target.dataset.js !== 'confirm' && event.target.dataset.js !== 'confirm-all') {
         return;
