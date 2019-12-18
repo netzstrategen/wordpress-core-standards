@@ -9,15 +9,22 @@
     document.body.classList.remove('has-cookie-consent');
   }
 
+  function showCookieNotice() {
+    const cookie_notice = document.getElementById('cookie-consent');
+    cookie_notice.removeAttribute('hidden');
+    document.body.classList.add('has-cookie-consent');
+  }
+
   function DOMContentLoaded() {
     const consent = JSON.parse(window.localStorage.getItem('cookie-consent'));
     if (consent && consent.version === window.core_standards.consent_version) {
       hideCookieNotice();
       return;
     }
-    const cookie_notice = document.getElementById('cookie-consent');
-    cookie_notice.removeAttribute('hidden');
-    document.body.classList.add('has-cookie-consent');
+    showCookieNotice();
+    const button = document.querySelector('[data-trigger-cookie-consent]');
+    console.log(button);
+    button.addEventListener('click', showCookieNotice);
     document.addEventListener('click', (event) => {
       if (event.target.dataset.js !== 'confirm' && event.target.dataset.js !== 'confirm-all') {
         return;
