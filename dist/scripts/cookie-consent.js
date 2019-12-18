@@ -11,6 +11,12 @@
     document.body.classList.remove('has-cookie-consent');
   }
 
+  function showCookieNotice() {
+    var cookie_notice = document.getElementById('cookie-consent');
+    cookie_notice.removeAttribute('hidden');
+    document.body.classList.add('has-cookie-consent');
+  }
+
   function DOMContentLoaded() {
     var consent = JSON.parse(window.localStorage.getItem('cookie-consent'));
 
@@ -19,9 +25,10 @@
       return;
     }
 
-    var cookie_notice = document.getElementById('cookie-consent');
-    cookie_notice.removeAttribute('hidden');
-    document.body.classList.add('has-cookie-consent');
+    showCookieNotice();
+    var button = document.querySelector('[data-trigger-cookie-consent]');
+    console.log(button);
+    button.addEventListener('click', showCookieNotice);
     document.addEventListener('click', function (event) {
       if (event.target.dataset.js !== 'confirm' && event.target.dataset.js !== 'confirm-all') {
         return;
