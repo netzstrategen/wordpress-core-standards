@@ -29,9 +29,6 @@
       hideCookieNotice();
     }
     showCookieNotice();
-    const button = document.querySelector('[data-trigger-cookie-consent]');
-    console.log(button);
-    button.addEventListener('click', showCookieNotice);
     document.addEventListener('click', (event) => {
       if (event.target.dataset.js !== 'confirm' && event.target.dataset.js !== 'confirm-all') {
         return;
