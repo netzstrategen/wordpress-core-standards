@@ -129,14 +129,10 @@
 }
 
 .cookie-consent__body {
-  max-width: 60%;
+  max-width: 767px;
   padding: 1em 2em;
   background-color: white;
   color: #666;
-
-  @media screen and (max-width: 550px) {
-    max-width: 100%;
-  }
 }
 
 .cookie-consent__icon {
