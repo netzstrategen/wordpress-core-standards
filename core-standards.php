@@ -2,13 +2,13 @@
 
 /*
   Plugin Name: Core Standards
-  Version: 1.26.0
+  Version: 2.0.0
   Text Domain: core-standards
   Description: Standard refinements.
   Author: netzstrategen
-  Author URI: http://www.netzstrategen.com
+  Author URI: https://www.netzstrategen.com
   License: GPL-2.0+
-  License URI: http://www.gnu.org/licenses/gpl-2.0
+  License URI: https://www.gnu.org/licenses/gpl-2.0
 */
 
 namespace Netzstrategen\CoreStandards;

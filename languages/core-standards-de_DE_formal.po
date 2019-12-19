@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2019-05-28 11:26+0200\n"
-"PO-Revision-Date: 2019-05-28 11:27+0200\n"
-"Last-Translator: Joan López <joan@netzstrategen.com>\n"
+"POT-Creation-Date: 2019-12-17 16:21+0100\n"
+"PO-Revision-Date: 2019-12-17 16:22+0100\n"
+"Last-Translator: Fabian Marz <fabian@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
 "Language: de_DE@formal\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
@@ -85,19 +85,57 @@ msgstr ""
 msgid "Show logout link"
 msgstr ""
 
-#: templates/cookie-notice.php:8
-#, php-format
+#: templates/cookie-consent.php:8
+msgid "Only necessary"
+msgstr ""
+
+#: templates/cookie-consent.php:9
+#, fuzzy
+#| msgid "Required functioanlity"
+msgid "Required functionality"
+msgstr "Erforderliche Funktionen"
+
+#: templates/cookie-consent.php:17
+msgid "Behavior"
+msgstr ""
+
+#: templates/cookie-consent.php:18
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: templates/cookie-consent.php:22
+msgid "Marketing"
+msgstr ""
+
+#: templates/cookie-consent.php:23
+msgid "Personalization"
+msgstr "Personalisierung"
+
+#: templates/cookie-consent.php:30
+msgid "Cookie Settings"
+msgstr ""
+
+#: templates/cookie-consent.php:31
+#, fuzzy, php-format
+#| msgid ""
+#| "For the best possible service, this website offers you cookies. More "
+#| "information can be found in our <a href=%s>Cookie-Bar</a>."
 msgid ""
-"To give you the best possible service, this website uses cookies. By "
-"continuing to use it, you agree to our <a href=\"%s\">privacy policy</a>."
+"For the best possible service, this website offers you cookies. Please make "
+"your choice to use the site. More information can be found in our <a href=%s "
+"target=\"_blank\">privacy policy</a>."
 msgstr ""
 "Um Ihnen den bestmöglichen Service zu bieten, verwendet diese Website "
-"Cookies. Mit der weiteren Nutzung akzeptieren Sie unsere <a href=\"%s"
-"\">Datenschutzrichtlinie</a>."
+"Cookies. Mit der weiteren Nutzung akzeptieren Sie unsere <a href="
+"%s>Datenschutzrichtlinie</a>."
 
-#: templates/cookie-notice.php:10
-msgid "OK"
-msgstr ""
+#: templates/cookie-consent.php:32
+msgid "Confirm selection"
+msgstr "Auswahl bestätigen"
+
+#: templates/cookie-consent.php:33
+msgid "Get me anything"
+msgstr "Alle bestätigen"
 
 #. Plugin Name of the plugin/theme
 msgid "Core Standards"
@@ -112,5 +150,5 @@ msgid "netzstrategen"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://www.netzstrategen.com"
+msgid "https://www.netzstrategen.com"
 msgstr ""

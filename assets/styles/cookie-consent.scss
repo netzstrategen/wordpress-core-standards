@@ -1,0 +1,212 @@
+:root {
+  --cookie-notice-checkbox-color: #333;
+  --cookie-notice-button-color: #bebdbd;
+  --cookie-notice-button-color-hover: #aaa;
+  --cookie-notice-border-button-color: #aaa;
+}
+
+.has-cookie-consent {
+  overflow: hidden;
+}
+
+.cookie-consent {
+  position: fixed;
+  z-index: 100000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em 0.75em;
+  background-color: hsla(240, 6.4%, 21.4%, 0.62) !important;
+  background-color: #333;
+  line-height: 1.6;
+  color: #fff;
+
+  .h1 {
+    margin-top: 0.3em;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .options {
+    display: flex;
+    justify-content: space-around;
+    margin: 2em 0;
+
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+    }
+  }
+
+  .form-item {
+    padding-right: 2em;
+    padding-left: 2em;
+    text-align: left;
+
+    @media screen and (max-width: 990px) {
+      margin-bottom: 1.2em;
+    }
+
+    @media screen and (max-width: 767px) {
+      padding: 0;
+    }
+  }
+
+  small {
+    margin-left: 3.2rem;
+
+    @media screen and (max-width: 990px) {
+      font-size: 80%;
+    }
+  }
+
+  .form-actions {
+    text-align: right;
+  }
+
+  .form-item:last-of-type {
+    background-clip: text;
+    -webkit-≤text-fill-color: transparent;
+  }
+
+  .btn.btn {
+    font-size: 1.25rem;
+
+    @media screen and (max-width: 990px) {
+      padding-top: 0.8em;
+      padding-right: calc(2em - 0.2em);
+      padding-bottom: calc(0.8em - 3px);
+      padding-left: 2em;
+      font-size: 0.825em;
+    }
+  }
+
+  .button--primary.button--primary,
+  .btn--primary.btn--primary {
+    border-bottom: 3px solid var(--cookie-notice-border-button-color);
+    color: #fff;
+    background-color: var(--cookie-notice-button-color);
+    background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%);
+
+    @media screen and (max-width: 550px) {
+      width: 100%;
+    }
+  }
+
+  .btn--link,
+  .button--link {
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-size: 80%;
+    background: none;
+    color: #666;
+    text-decoration: underline;
+    text-align: center;
+    font-size: 0.825em;
+
+    @media screen and (max-width: 550px) {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  a {
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+    }
+  }
+}
+
+.cookie-consent__body {
+  max-width: 60%;
+  padding: 1em 2em;
+  background-color: white;
+  color: #666;
+
+  @media screen and (max-width: 550px) {
+    max-width: 100%;
+  }
+}
+
+.cookie-consent__icon {
+  display: block;
+  width: 19px;
+  height: 19px;
+  fill: #8f8f8f;
+}
+
+.cookie-consent__close {
+  padding: 5px 10px;
+  margin-left: 1em;
+
+  &:hover,
+  &:focus,
+  &:active {
+    .cookie-consent__icon {
+      fill: #fff;
+    }
+  }
+}
+
+/* Custom checkboxes */
+.form-checkbox {
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+
+  label {
+    position: relative;
+    padding-left: 15px;
+    line-height: 1.25rem;
+  }
+
+  input[type="checkbox"] + label:before {
+    position: absolute;
+    top: 1px;
+    left: -20px;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 22px;
+    height: 22px;
+    padding: 2px 2px 5px 2px;
+    border: 2px solid var(--cookie-notice-checkbox-color);
+    border-radius: 2px;
+    margin-top: -0.083em;
+    line-height: 14px;
+    background: #fff;
+    content: ' ';
+    cursor: pointer;
+    text-align: center;
+    vertical-align: top;
+    color: #555;
+    font-size: 18px;
+  }
+
+  input[type="checkbox"]:checked + label {
+    font-weight: normal;
+  }
+
+  input[type="checkbox"]:checked + label:before {
+    padding: 2px 2px 5px 0;
+    content: '\2713';
+    color: var(--cookie-notice-checkbox-color);
+  }
+
+  input[type="checkbox"]:checked:disabled + label:before {
+    border: 2px solid #b8b8b8;
+    color: #b8b8b8;
+  }
+}

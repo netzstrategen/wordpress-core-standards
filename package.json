@@ -1,24 +1,11 @@
 {
   "name": "core-standards",
-  "version": "1.26.0",
+  "version": "2.0.0",
+  "title": "WordPress Core Refinements",
   "description": "Various features and adjustments for WordPress Core that do not need configuration.",
   "main": "gulpfile.js",
   "devDependencies": {
-    "gulp": "3.9.1",
-    "gulp-autoprefixer": "3.1.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-eol": "0.1.2",
-    "gulp-eslint": "3.0.1",
-    "gulp-filter": "^5.1.0",
-    "gulp-npm-dist": "^1.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.2.1",
-    "gulp-uglify": "2.1.2",
-    "gulp-yarn": "^1.0.1",
-    "run-sequence": "1.2.2"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "@netzstrategen/gulp-task-collection": "^1.5.0"
   },
   "repository": {
     "type": "git",
@@ -30,5 +17,31 @@
     "url": "https://github.com/netzstrategen/wordpress-core-standards/issues"
   },
   "homepage": "https://github.com/netzstrategen/wordpress-core-standards#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "browserslist": [
+    "last 2 versions"
+  ],
+  "gulpPaths": {
+    "destDir": "./dist",
+    "fonts": {
+      "src": "./assets/fonts/**/*.{eot,svg,ttf,woff,woff2}",
+      "dest": "./dist/fonts"
+    },
+    "images": {
+      "src": "./assets/img/**/*.{jpg,jpeg,png,gif,svg}",
+      "dest": "./dist/img"
+    },
+    "scripts": {
+      "src": "./assets/scripts/**/*.js",
+      "dest": "./dist/scripts"
+    },
+    "styles": {
+      "srcDir": "./assets/styles",
+      "src": [
+        "./assets/styles/**/*.scss"
+      ],
+      "dest": "./dist/styles"
+    },
+    "templates": ""
+  }
 }
