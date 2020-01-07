@@ -114,6 +114,9 @@
   padding: 1em 2em;
   background-color: white;
   color: #666; }
+  @media screen and (max-width: 550px) {
+    .cookie-consent__body {
+      max-width: 100%; } }
 
 .cookie-consent__icon {
   display: block;
