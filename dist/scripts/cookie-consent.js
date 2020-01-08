@@ -5,6 +5,14 @@
     return;
   }
 
+  function addCookieSettingsButton() {
+    var cookie_settings_button = document.querySelector('[data-trigger-cookie-consent]');
+
+    if (cookie_settings_button) {
+      cookie_settings_button.addEventListener('click', showCookieNotice);
+    }
+  }
+
   function hideCookieNotice() {
     var cookie_notice = document.getElementById('cookie-consent');
     cookie_notice.setAttribute('hidden', 'true');
@@ -18,17 +26,15 @@
   }
 
   function DOMContentLoaded() {
+    addCookieSettingsButton();
     var consent = JSON.parse(window.localStorage.getItem('cookie-consent'));
 
     if (consent && consent.version === window.core_standards.consent_version) {
       hideCookieNotice();
-      return;
+    } else {
+      showCookieNotice();
     }
 
-    showCookieNotice();
-    var button = document.querySelector('[data-trigger-cookie-consent]');
-    console.log(button);
-    button.addEventListener('click', showCookieNotice);
     document.addEventListener('click', function (event) {
       if (event.target.dataset.js !== 'confirm' && event.target.dataset.js !== 'confirm-all') {
         return;
