@@ -42,10 +42,6 @@
   }
 
   .form-item {
-    padding-right: 2em;
-    padding-left: 2em;
-    text-align: left;
-
     @media screen and (max-width: 990px) {
       margin-bottom: 1.2em;
     }
@@ -73,8 +69,6 @@
   }
 
   .btn.btn {
-    font-size: 1.25rem;
-
     @media screen and (max-width: 990px) {
       padding-top: 0.8em;
       padding-right: calc(2em - 0.2em);
@@ -86,11 +80,6 @@
 
   .button--primary.button--primary,
   .btn--primary.btn--primary {
-    border-bottom: 3px solid var(--cookie-notice-border-button-color);
-    color: #fff;
-    background-color: var(--cookie-notice-button-color);
-    background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%);
-
     @media screen and (max-width: 550px) {
       width: 100%;
     }

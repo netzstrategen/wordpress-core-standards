@@ -46,16 +46,12 @@
         -webkit-box-direction: normal;
             -ms-flex-direction: column;
                 flex-direction: column; } }
-  .cookie-consent .form-item {
-    padding-right: 2em;
-    padding-left: 2em;
-    text-align: left; }
-    @media screen and (max-width: 990px) {
-      .cookie-consent .form-item {
-        margin-bottom: 1.2em; } }
-    @media screen and (max-width: 767px) {
-      .cookie-consent .form-item {
-        padding: 0; } }
+  @media screen and (max-width: 990px) {
+    .cookie-consent .form-item {
+      margin-bottom: 1.2em; } }
+  @media screen and (max-width: 767px) {
+    .cookie-consent .form-item {
+      padding: 0; } }
   .cookie-consent small {
     margin-left: 3.2rem; }
     @media screen and (max-width: 990px) {
@@ -66,26 +62,17 @@
   .cookie-consent .form-item:last-of-type {
     background-clip: text;
     -webkit-≤text-fill-color: transparent; }
-  .cookie-consent .btn.btn {
-    font-size: 1.25rem; }
-    @media screen and (max-width: 990px) {
-      .cookie-consent .btn.btn {
-        padding-top: 0.8em;
-        padding-right: calc(2em - 0.2em);
-        padding-bottom: calc(0.8em - 3px);
-        padding-left: 2em;
-        font-size: 0.825em; } }
-  .cookie-consent .button--primary.button--primary,
-  .cookie-consent .btn--primary.btn--primary {
-    border-bottom: 3px solid var(--cookie-notice-border-button-color);
-    color: #fff;
-    background-color: var(--cookie-notice-button-color);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, var(--cookie-notice-button-color)), color-stop(50%, var(--cookie-notice-button-color-hover)));
-    background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%); }
-    @media screen and (max-width: 550px) {
-      .cookie-consent .button--primary.button--primary,
-      .cookie-consent .btn--primary.btn--primary {
-        width: 100%; } }
+  @media screen and (max-width: 990px) {
+    .cookie-consent .btn.btn {
+      padding-top: 0.8em;
+      padding-right: calc(2em - 0.2em);
+      padding-bottom: calc(0.8em - 3px);
+      padding-left: 2em;
+      font-size: 0.825em; } }
+  @media screen and (max-width: 550px) {
+    .cookie-consent .button--primary.button--primary,
+    .cookie-consent .btn--primary.btn--primary {
+      width: 100%; } }
   .cookie-consent .btn--link,
   .cookie-consent .button--link {
     display: inline-block;
