@@ -29,20 +29,29 @@
     margin-top: 0.3em;
     font-size: 3rem;
     font-weight: bold;
+
+    @media screen and (max-width: 767px) {
+      font-size: 2rem;
+    }
   }
 
   .options {
     display: flex;
     justify-content: space-around;
-    margin: 2em 0;
+    margin: 1em 0;
 
     @media screen and (max-width: 767px) {
+
+    }
+
+    @media screen and (max-width: 550px) {
       flex-direction: column;
+      margin-left: 2em;
     }
   }
 
   .form-item {
-    input[type="checkbox"]{
+    input[type="checkbox"] {
       display: none;
     }
     @media screen and (max-width: 990px) {
@@ -92,7 +101,7 @@
   .btn--link,
   .button--link {
     display: inline-block;
-    padding: 0;
+    padding: 1em 0;
     border: 0;
     margin-right: 8px;
     margin-bottom: 8px;
@@ -126,7 +135,11 @@
   padding: 1em 2em;
   background-color: white;
   color: #666;
+  font-size: 1.5rem;
 
+  @media screen and (max-width: 767px) {
+    font-size: 1.25rem;
+  }
   @media screen and (max-width: 550px) {
     max-width: 100%;
   }
@@ -174,9 +187,8 @@
     box-sizing: border-box;
     width: 22px;
     height: 22px;
-    padding: 2px 2px 5px 2px;
+    padding: 2px;
     border: 2px solid var(--cookie-notice-checkbox-color);
-    border-radius: 2px;
     margin-top: -0.083em;
     line-height: 14px;
     background: #fff;
@@ -185,7 +197,7 @@
     text-align: center;
     vertical-align: top;
     color: #555;
-    font-size: 18px;
+    font-size: 20px;
   }
 
   input[type="checkbox"]:checked + label {
@@ -193,7 +205,7 @@
   }
 
   input[type="checkbox"]:checked + label:before {
-    padding: 2px 2px 5px 0;
+    padding: 2px;
     content: '\2713';
     color: var(--cookie-notice-checkbox-color);
   }
