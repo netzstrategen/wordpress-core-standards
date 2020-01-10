@@ -42,6 +42,9 @@
   }
 
   .form-item {
+    input[type="checkbox"]{
+      display: none;
+    }
     @media screen and (max-width: 990px) {
       margin-bottom: 1.2em;
     }
@@ -52,7 +55,8 @@
   }
 
   small {
-    margin-left: 32px;
+    margin-left: 15px;
+    line-height: 2em;
 
     @media screen and (max-width: 990px) {
       font-size: 80%;
