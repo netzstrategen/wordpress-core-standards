@@ -97,7 +97,8 @@
       .cookie-consent .btn--link,
       .cookie-consent .button--link {
         width: 100%;
-        margin-right: 0; } }
+        margin-right: 0;
+        margin-bottom: 12px; } }
   .cookie-consent[hidden] {
     display: none; }
   .cookie-consent a:hover, .cookie-consent a:focus {

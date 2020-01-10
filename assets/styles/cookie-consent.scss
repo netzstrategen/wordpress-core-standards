@@ -40,10 +40,6 @@
     justify-content: space-around;
     margin: 1em 0;
 
-    @media screen and (max-width: 767px) {
-
-    }
-
     @media screen and (max-width: 550px) {
       flex-direction: column;
       margin-left: 2em;
@@ -115,6 +111,7 @@
     @media screen and (max-width: 550px) {
       width: 100%;
       margin-right: 0;
+      margin-bottom: 12px;
     }
   }
 
