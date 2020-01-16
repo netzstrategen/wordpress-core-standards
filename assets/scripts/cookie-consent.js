@@ -22,11 +22,22 @@
     document.body.classList.add('has-cookie-consent');
   }
 
+  function loadExistingConsent(selected) {
+    const checkboxes = document.getElementById('cookie-consent').querySelectorAll('input[name="cookies"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+      const checkbox = checkboxes[i];
+      if (selected[checkbox.value] === true) {
+        checkbox.checked = true;
+      }
+    }
+  }
+
   function DOMContentLoaded() {
     addCookieSettingsButton();
     const consent = JSON.parse(window.localStorage.getItem('cookie-consent'));
     if (consent && consent.version === window.core_standards.consent_version) {
       hideCookieNotice();
+      loadExistingConsent(consent.consent);
     }
     else {
       showCookieNotice();
@@ -41,7 +52,8 @@
         consent_id: generate_uuid(),
       };
       const checkboxes = document.querySelectorAll('input[name=cookies]');
-      for (const checkbox of checkboxes) {
+      for (var i = 0; i < checkboxes.length; i++) {
+        const checkbox = checkboxes[i];
         if (event.target.dataset.js === 'confirm-all') {
           checkbox.checked = true;
         }

@@ -25,12 +25,25 @@
     document.body.classList.add('has-cookie-consent');
   }
 
+  function loadExistingConsent(selected) {
+    var checkboxes = document.getElementById('cookie-consent').querySelectorAll('input[name="cookies"]');
+
+    for (var i = 0; i < checkboxes.length; i++) {
+      var checkbox = checkboxes[i];
+
+      if (selected[checkbox.value] === true) {
+        checkbox.checked = true;
+      }
+    }
+  }
+
   function DOMContentLoaded() {
     addCookieSettingsButton();
     var consent = JSON.parse(window.localStorage.getItem('cookie-consent'));
 
     if (consent && consent.version === window.core_standards.consent_version) {
       hideCookieNotice();
+      loadExistingConsent(consent.consent);
     } else {
       showCookieNotice();
     }
@@ -46,37 +59,19 @@
         consent_id: generate_uuid()
       };
       var checkboxes = document.querySelectorAll('input[name=cookies]');
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
 
-      try {
-        for (var _iterator = checkboxes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var checkbox = _step.value;
+      for (var i = 0; i < checkboxes.length; i++) {
+        var checkbox = checkboxes[i];
 
-          if (event.target.dataset.js === 'confirm-all') {
-            checkbox.checked = true;
-          }
-
-          data.consent[checkbox.value] = checkbox.checked;
+        if (event.target.dataset.js === 'confirm-all') {
+          checkbox.checked = true;
         }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+
+        data.consent[checkbox.value] = checkbox.checked;
       }
 
       window.localStorage.setItem('cookie-consent', JSON.stringify(data));
-      $.post(window.core_standards.ajaxurl, {
+      jQuery.post(window.core_standards.ajaxurl, {
         action: 'core-standards/log_cookie_consent',
         consent: data,
         referer: window.location.pathname

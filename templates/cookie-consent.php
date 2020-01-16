@@ -50,7 +50,7 @@ function create_attributes($atts) {
       <div class="cookie-consent-options">
         <?php foreach ($options as $option): ?>
           <div class="cookie-consent-option">
-            <input class="cookie-consent-option__input" id="<?= esc_attr(sanitize_title($option['name'])) ?>" name="cookies" type="checkbox" value="<?= esc_attr($option['name']) ?>" <?= create_attributes($option['atts'] ?? []); ?> />
+            <input class="cookie-consent-option__input" id="<?= esc_attr(sanitize_title($option['name'])) ?>" name="cookies" type="checkbox" value="<?= esc_attr($option['name']) ?>" <?= create_attributes($option['atts'] ?? []); ?> autocomplete="off">
             <label class="cookie-consent-option__label" for="<?= esc_attr(sanitize_title($option['name'])) ?>">
               <?= esc_html($option['title']) ?>
               <br><small><?= esc_html($option['desc']) ?></small>
