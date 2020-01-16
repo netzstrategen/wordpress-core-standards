@@ -129,20 +129,21 @@
   }
 }
 
-.cookie-consent__input {
+.cookie-consent-option__input {
   position: absolute;
   z-index: -1;
   opacity: 0;
 }
 
-.cookie-consent__label {
+.cookie-consent-option__label {
   position: relative;
   display: block;
   padding-left: 35px; // Checkbox icon plus spacing.
+  font-weight: 400;
   line-height: 1.75;
   cursor: pointer;
 
-  & + .cookie-consent__label:before {
+  & + .cookie-consent-option__label:before {
     position: absolute;
     top: 3px;
     left: 0;
@@ -165,7 +166,7 @@
 
   &:checked {
 
-    & + .cookie-consent__label {
+    & + .cookie-consent-option__label {
       font-weight: normal;
 
       &:before {
@@ -175,7 +176,7 @@
       }
     }
 
-    &:disabled + .cookie-consent__label:before {
+    &:disabled + .cookie-consent-option__label:before {
       border: 2px solid currentColor;
       color: #aaa;
     }
