@@ -129,12 +129,6 @@
   }
 }
 
-.cookie-consent-option__input {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
-}
-
 .cookie-consent-option__label {
   position: relative;
   display: block;
@@ -142,6 +136,12 @@
   font-weight: 400;
   line-height: 1.75;
   cursor: pointer;
+}
+
+.cookie-consent-option__input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
 
   & + .cookie-consent-option__label:before {
     position: absolute;
