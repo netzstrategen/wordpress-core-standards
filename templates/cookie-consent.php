@@ -43,15 +43,15 @@ function create_attributes($atts) {
 ?>
 
 <div class="cookie-consent" id="cookie-consent" role="banner" hidden="hidden">
-  <div class="cookie-consent__body">
-    <span class="h1"><?= esc_html($texts['title']) ?></span>
-    <p><?= $texts['desc'] ?></p>
+  <div class="cookie-consent-body">
+    <span class="cookie-consent-title"><?= esc_html($texts['title']) ?></span>
+    <div class="cookie-consent-text"><?= $texts['desc'] ?></div>
     <?php if ($options): ?>
-      <div class="options">
+      <div class="cookie-consent-options">
         <?php foreach ($options as $option): ?>
-          <div class="form-item form-checkbox">
-           <input id="<?= esc_attr(sanitize_title($option['name'])) ?>" name="cookies" type="checkbox" value="<?= esc_attr($option['name']) ?>" <?= create_attributes($option['atts'] ?? []); ?> />
-            <label for="<?= esc_attr(sanitize_title($option['name'])) ?>">
+          <div class="cookie-consent-option">
+            <input class="cookie-consent-option__input" id="<?= esc_attr(sanitize_title($option['name'])) ?>" name="cookies" type="checkbox" value="<?= esc_attr($option['name']) ?>" <?= create_attributes($option['atts'] ?? []); ?> />
+            <label class="cookie-consent-option__label" for="<?= esc_attr(sanitize_title($option['name'])) ?>">
               <?= esc_html($option['title']) ?>
               <br><small><?= esc_html($option['desc']) ?></small>
             </label>
@@ -59,9 +59,9 @@ function create_attributes($atts) {
         <?php endforeach; ?>
       </div>
     <?php endif; ?>
-    <div class="form-actions">
-      <button class="button--link btn--link" data-js="confirm"><?= esc_html($texts['button_confirm']) ?></button>
-      <button class="button button--primary btn btn--primary" data-js="confirm-all"><?= esc_html($texts['button_confirm_all']) ?></button>
+    <div class="cookie-consent-actions">
+      <button class="cookie-consent-button cookie-consent-button--link" data-js="confirm"><?= esc_html($texts['button_confirm']) ?></button>
+      <button class="cookie-consent-button cookie-consent-button--primary" data-js="confirm-all"><?= esc_html($texts['button_confirm_all']) ?></button>
     </div>
   </div>
 </div>
