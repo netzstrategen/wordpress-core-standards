@@ -284,7 +284,6 @@ class Plugin {
    */
   public static function addConsentAssets() {
     $min = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-    $min = '';
     wp_enqueue_script('core-standards/cookie-consent', Plugin::getBaseUrl() . '/dist/scripts/cookie-consent' . $min . '.js');
     wp_enqueue_style('core-standards/cookie-consent', Plugin::getBaseUrl() . '/dist/styles/cookie-consent' . $min . '.css');
 
