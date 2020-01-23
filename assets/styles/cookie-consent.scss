@@ -1,8 +1,26 @@
 :root {
-  --cookie-notice-checkbox-color: #333;
-  --cookie-notice-button-color: #bebdbd;
+  --cookie-notice-font-size: 15px;
+  --cookie-notice-line-height: 1.6;
+  --cookie-notice-color: #666;
+
+  --cookie-notice-link-color: inherit;
+
+  --cookie-notice-checkbox-color: #76b320;
+
+  --cookie-notice-button-padding: 1em 3em;
+  --cookie-notice-button-border-width: 0;
+  --cookie-notice-button-border-color: transparent;
+  --cookie-notice-button-color: inherit;
   --cookie-notice-button-color-hover: #aaa;
-  --cookie-notice-border-button-color: #aaa;
+  --cookie-notice-button-font-size: 0.85em;
+  --cookie-notice-button-font-weight: inherit;
+
+  --cookie-notice-button-primary-background: #76b320;
+  --cookie-notice-button-primary-background-hover: #689d1c;
+  --cookie-notice-button-primary-color: #fff;
+
+  --cookie-notice-button-link-color: inherit;
+  --cookie-notice-button-link-color-hover: inherit;
 }
 
 .has-cookie-consent {
@@ -19,108 +37,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   padding: 0.5em 0.75em;
-  background-color: hsla(240, 6.4%, 21.4%, 0.62) !important;
   background-color: #333;
+  background-color: hsla(240, 6.4%, 21.4%, 0.62);
+  font-size: 15px;
+  font-size: var(--cookie-notice-font-size);
   line-height: 1.6;
-  color: #fff;
-
-  .h1 {
-    margin-top: 0.3em;
-    font-size: 3rem;
-    font-weight: bold;
-  }
-
-  .options {
-    display: flex;
-    justify-content: space-around;
-    margin: 2em 0;
-
-    @media screen and (max-width: 767px) {
-      flex-direction: column;
-    }
-  }
-
-  .form-item {
-    padding-right: 2em;
-    padding-left: 2em;
-    text-align: left;
-
-    @media screen and (max-width: 990px) {
-      margin-bottom: 1.2em;
-    }
-
-    @media screen and (max-width: 767px) {
-      padding: 0;
-    }
-  }
-
-  small {
-    margin-left: 3.2rem;
-
-    @media screen and (max-width: 990px) {
-      font-size: 80%;
-    }
-  }
-
-  .form-actions {
-    text-align: right;
-  }
-
-  .form-item:last-of-type {
-    background-clip: text;
-    -webkit-≤text-fill-color: transparent;
-  }
-
-  .btn.btn {
-    font-size: 1.25rem;
-
-    @media screen and (max-width: 990px) {
-      padding-top: 0.8em;
-      padding-right: calc(2em - 0.2em);
-      padding-bottom: calc(0.8em - 3px);
-      padding-left: 2em;
-      font-size: 0.825em;
-    }
-  }
-
-  .button--primary.button--primary,
-  .btn--primary.btn--primary {
-    border-bottom: 3px solid var(--cookie-notice-border-button-color);
-    color: #fff;
-    background-color: var(--cookie-notice-button-color);
-    background-image: linear-gradient(to bottom, var(--cookie-notice-button-color) 50%, var(--cookie-notice-button-color-hover) 50%);
-
-    @media screen and (max-width: 550px) {
-      width: 100%;
-    }
-  }
-
-  .btn--link,
-  .button--link {
-    display: inline-block;
-    padding: 0;
-    border: 0;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    font-size: 80%;
-    background: none;
-    color: #666;
-    text-decoration: underline;
-    text-align: center;
-    font-size: 0.825em;
-
-    @media screen and (max-width: 550px) {
-      width: 100%;
-      margin-right: 0;
-    }
-  }
+  line-height: var(--cookie-notice-line-height);
+  color: #666;
+  color: var(--cookie-notice-color);
 
   &[hidden] {
     display: none;
   }
 
+  * {
+    box-sizing: inherit;
+  }
+
   a {
+    color: var(--cookie-notice-link-color);
+
     &:hover,
     &:focus {
       opacity: 0.8;
@@ -128,62 +66,93 @@
   }
 }
 
-.cookie-consent__body {
-  max-width: 767px;
-  padding: 1em 2em;
-  background-color: white;
-  color: #666;
+.cookie-consent-body {
+  width: 100%;
+  max-width: 768px;
+  padding: 1.25em 1.75em;
+  background-color: #fff;
 
-  @media screen and (max-width: 550px) {
-    max-width: 100%;
+  // Reduce all text sizes on mobile devices.
+  @media screen and (max-width: 768px) {
+    font-size: 0.9em;
   }
 }
 
-.cookie-consent__icon {
-  display: block;
-  width: 19px;
-  height: 19px;
-  fill: #8f8f8f;
+.cookie-consent-title {
+  margin-top: 0.3em;
+  font-size: 1.5em;
+  font-weight: 700;
+
+  @media screen and (min-width: 768px) {
+    font-size: 1.875em;
+  }
 }
 
-.cookie-consent__close {
-  padding: 5px 10px;
-  margin-left: 1em;
+.cookie-consent-text {
+  margin: 1em 0;
+}
 
-  &:hover,
-  &:focus,
-  &:active {
-    .cookie-consent__icon {
-      fill: #fff;
+.cookie-consent-options {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5em 0 0;
+
+  @media screen and (max-width: 599px) {
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: 600px) {
+    margin: 1.5em 0 1em;
+  }
+}
+
+.cookie-consent-actions {
+  text-align: right;
+}
+
+// Custom checkboxes.
+.cookie-consent-option {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1em;
+
+  &:not(:last-child) {
+    margin-right: 2em;
+  }
+
+  // On desktop, push last item away from right-hand side.
+  // Helps better align with surrounding content.
+  @media screen and (min-width: 768px) {
+    &:last-child {
+      margin-right: 3em;
     }
   }
 }
 
-/* Custom checkboxes */
-.form-checkbox {
+.cookie-consent-option__label {
   position: relative;
-  display: inline-block;
-  overflow: visible;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
+  display: block;
+  padding-left: 35px; // Checkbox icon plus spacing.
+  font-weight: 400;
+  line-height: 1.75;
+  cursor: pointer;
+}
 
-  label {
-    position: relative;
-    padding-left: 15px;
-    line-height: 1.25rem;
-  }
+.cookie-consent-option__input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
 
-  input[type="checkbox"] + label:before {
+  & + .cookie-consent-option__label:before {
     position: absolute;
-    top: 1px;
-    left: -20px;
+    top: 3px;
+    left: 0;
     display: inline-block;
     box-sizing: border-box;
     width: 22px;
     height: 22px;
-    padding: 2px 2px 5px 2px;
+    padding: 2px;
     border: 2px solid var(--cookie-notice-checkbox-color);
-    border-radius: 2px;
     margin-top: -0.083em;
     line-height: 14px;
     background: #fff;
@@ -192,21 +161,72 @@
     text-align: center;
     vertical-align: top;
     color: #555;
-    font-size: 18px;
+    font-size: 20px;
   }
 
-  input[type="checkbox"]:checked + label {
-    font-weight: normal;
-  }
+  &:checked {
 
-  input[type="checkbox"]:checked + label:before {
-    padding: 2px 2px 5px 0;
-    content: '\2713';
-    color: var(--cookie-notice-checkbox-color);
-  }
+    & + .cookie-consent-option__label {
+      font-weight: normal;
 
-  input[type="checkbox"]:checked:disabled + label:before {
-    border: 2px solid #b8b8b8;
-    color: #b8b8b8;
+      &:before {
+        padding: 2px;
+        content: '\2713';
+        color: var(--cookie-notice-checkbox-color);
+      }
+    }
+
+    &:disabled + .cookie-consent-option__label:before {
+      border: 2px solid currentColor;
+      color: #aaa;
+    }
+  }
+}
+
+// 'Accept' and 'Accept all' buttons.
+.cookie-consent-button {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: var(--cookie-notice-button-padding);
+  border-width: var(--cookie-notice-button-border-width);
+  border-style: solid;
+  border-color: var(--cookie-notice-button-border-color);
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  background: var(--cookie-notice-button-background);
+  font: inherit;
+  font-size: var(--cookie-notice-button-font-size);
+  font-weight: var(--cookie-notice-button-font-weight);
+  color: var(--cookie-notice-button-color);
+  text-decoration: none;
+
+  // Stretch and stack buttons on mobile devices.
+  @media screen and (max-width: 599px) {
+    width: 100%;
+  }
+}
+
+.cookie-consent-button--primary {
+  background: var(--cookie-notice-button-primary-background);
+  font-weight: 700;
+  color: var(--cookie-notice-button-primary-color);
+  text-transform: uppercase;
+
+  &:hover,
+  &:focus {
+    background: var(--cookie-notice-button-primary-background-hover);
+  }
+}
+
+.cookie-consent-button--link {
+  padding-right: 1em;
+  padding-left: 1em;
+  color: var(--cookie-notice-button-link-color);
+
+  &:hover,
+  &:focus {
+    color: var(--cookie-notice-button-link-color-hover);
+    text-decoration: underline;
   }
 }

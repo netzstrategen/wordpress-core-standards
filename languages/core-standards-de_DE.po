@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2020-01-07 13:39+0100\n"
-"PO-Revision-Date: 2020-01-09 10:33+0100\n"
-"Last-Translator: Andreas Blumberg <andreas@netzstrategen.com>\n"
+"POT-Creation-Date: 2020-01-23 11:26+0100\n"
+"PO-Revision-Date: 2020-01-23 11:26+0100\n"
+"Last-Translator: Tom Hare <tom@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
 "Language: de_DE@formal\n"
 "MIME-Version: 1.0\n"
@@ -95,7 +95,7 @@ msgstr "Benötigte Funktionalitäten"
 
 #: templates/cookie-consent.php:17
 msgid "Behavior"
-msgstr "Nutzerverhalten"
+msgstr "Nutzungsanalyse"
 
 #: templates/cookie-consent.php:18
 msgid "Statistics"
@@ -120,9 +120,9 @@ msgid ""
 "your choice to use the site. More information can be found in our <a href=%s "
 "target=\"_blank\">privacy policy</a>."
 msgstr ""
-"Um Dir den bestmöglichen Service zu bieten, nutzt diese Webseite Cookies. "
-"Bitte wähle Deine Einstellungen, um diese Seite zu nutzen. Mehr "
-"Informationen findest Du in <a href=%s>unseren Datenschutzbestimmungen</a>."
+"Wir möchten Dir den bestmöglichen Service bieten. Bitte wähle, welche "
+"Cookies Du nutzen willst. Details findest Du in unseren <a href="
+"%s>Datenschutzbestimmungen</a>."
 
 #: templates/cookie-consent.php:32
 msgid "Confirm selection"
