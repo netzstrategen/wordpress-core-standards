@@ -99,6 +99,10 @@ class Plugin {
     add_action('wp_ajax_core-standards/log_cookie_consent', __CLASS__ . '::log_cookie_consent');
     add_action('wp_ajax_nopriv_core-standards/log_cookie_consent', __CLASS__ . '::log_cookie_consent');
 
+    // Sets admin email.
+    add_filter('option_admin_email', __CLASS__ . '::customAdminEmail', 99, 1);
+    add_filter('site_option_admin_email', __CLASS__ . '::customAdminEmail', 99, 1);
+
     if (is_admin()) {
       return;
     }
@@ -269,6 +273,19 @@ class Plugin {
     ];
     Logger::writelog($data);
     wp_die();
+  }
+
+  /**
+   * Sets site admin email.
+   *
+   * @param string $value
+   *   Admin email saved in wp_options table.
+   *
+   * @return string
+   *   Admin email.
+   */
+  public static function customAdminEmail($value) {
+    return defined('ADMIN_EMAIL') ? ADMIN_EMAIL : $value;
   }
 
   /**
