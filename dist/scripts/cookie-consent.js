@@ -1,6 +1,8 @@
 "use strict";
 
 (function () {
+  var dataLayer = window.dataLayer = window.dataLayer || [];
+
   if (typeof window.localStorage === 'undefined') {
     return;
   }
