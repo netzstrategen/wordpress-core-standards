@@ -21,6 +21,21 @@ Core already but are not for different reasons (as the name implies).
   access to `wp-login.php` and `xmlrpc.php` to prevent Denial-of-Service (DoS)
   and brute-force attacks.
 
+= Customization =
+
+By default, /wp-login.php is replaced with /login.php. You can use a custom path
+by setting the constant CORE_STANDARDS_LOGIN_PATH in wp-config.php:
+```
+const CORE_STANDARDS_LOGIN_PATH = '/user/login';
+```
+and routing inbound requests on that path into the original /wp-login.php file
+by adding the following lines to the top of .htaccess:
+```
+# Route /user/login into /wp-login.php.
+RewriteEngine On
+RewriteRule ^/?user/login$ /wp-login.php [QSA,END]
+```
+
 
 == Installation ==
 
