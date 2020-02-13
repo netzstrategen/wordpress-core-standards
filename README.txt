@@ -21,6 +21,10 @@ Core already but are not for different reasons (as the name implies).
   access to `wp-login.php` and `xmlrpc.php` to prevent Denial-of-Service (DoS)
   and brute-force attacks.
 
+  For Apache, this requires `AllowOverride all` to be set for the directory of the
+  virtual host or the whole server (the latter is not recommended for production
+  servers).
+
 = Customization =
 
 By default, /wp-login.php is replaced with /login.php. You can use a custom path
