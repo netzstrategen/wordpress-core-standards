@@ -9,6 +9,19 @@ namespace Netzstrategen\CoreStandards;
 
 /**
  * Protects the site against DoS and brute-force attacks.
+ *
+ * By default, /wp-login.php is replaced with /login.php. You can use a custom path
+ * by setting the constant CORE_STANDARDS_LOGIN_PATH in wp-config.php:
+ * ```
+ * const CORE_STANDARDS_LOGIN_PATH = '/user/login';
+ * ```
+ * and routing inbound requests on that path into the original /wp-login.php file
+ * by adding the following lines to the top of .htaccess:
+ * ```
+ * # Route /user/login into /wp-login.php.
+ * RewriteEngine On
+ * RewriteRule ^/?user/login$ /wp-login.php [QSA,END]
+ * ```
  */
 class Security {
 
@@ -18,7 +31,8 @@ class Security {
    */
   public static function site_url($url, $path, $scheme) {
     if ($scheme === 'login' || $scheme === 'login_post') {
-      $url = strtr($url, ['/wp-login.php' => '/login.php']);
+      $custom_path = defined('CORE_STANDARDS_LOGIN_PATH') ? CORE_STANDARDS_LOGIN_PATH : '/login.php';
+      $url = strtr($url, ['/wp-login.php' => $custom_path]);
     }
     return $url;
   }
@@ -27,7 +41,8 @@ class Security {
    * @implements wp_redirect
    */
   public static function wp_redirect($url) {
-    $url = strtr($url, ['wp-login.php' => 'login.php']);
+    $custom_path = defined('CORE_STANDARDS_LOGIN_PATH') ? CORE_STANDARDS_LOGIN_PATH : '/login.php';
+    $url = strtr($url, ['/wp-login.php' => $custom_path]);
     return $url;
   }
 
