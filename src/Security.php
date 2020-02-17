@@ -42,12 +42,13 @@ class Security {
    */
   public static function wp_redirect($url) {
     $custom_path = defined('CORE_STANDARDS_LOGIN_PATH') ? CORE_STANDARDS_LOGIN_PATH : '/login.php';
+
+    // wp-login.php calls wp_safe_redirect() with a relative path, which causes
+    // wp_validate_redirect() to automatically prepend the current folder name
+    // of the request URI to it. Prevent the path from being duplicated.
     if (strpos($url, dirname($custom_path)) === FALSE) {
       $url = strtr($url, ['/wp-login.php' => $custom_path]);
     }
-    // wp-login.php calls wp_safe_redirect() with a relative path, which causes
-    // wp_validate_redirect() to automatically prepend the current folder name
-    // of the request URI to it.
     else {
       $url = strtr($url, ['/wp-login.php' => '/' . basename($custom_path)]);
     }
