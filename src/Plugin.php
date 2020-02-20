@@ -96,9 +96,6 @@ class Plugin {
     add_filter('pre_option_default_pingback_flag', '__return_zero');
     add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 100);
 
-    add_action('wp_ajax_core-standards/log_cookie_consent', __CLASS__ . '::log_cookie_consent');
-    add_action('wp_ajax_nopriv_core-standards/log_cookie_consent', __CLASS__ . '::log_cookie_consent');
-
     // Sets admin email.
     add_filter('option_admin_email', __CLASS__ . '::customAdminEmail', 99, 1);
     add_filter('site_option_admin_email', __CLASS__ . '::customAdminEmail', 99, 1);
@@ -108,14 +105,6 @@ class Plugin {
     }
     // Add teaser image to RSS feeds.
     add_action('rss2_item', __NAMESPACE__ . '\Feed::rss2_item');
-
-    // Output client-side cookie consent on all pages.
-    // Use a slightly higher weight to prevent the bar being output
-    // before other footer content.
-    if (!defined('CORE_STANDARDS_COOKIE_CONSENT') || CORE_STANDARDS_COOKIE_CONSENT !== FALSE) {
-      add_action('wp_enqueue_scripts', __CLASS__ . '::addConsentAssets', 1);
-      add_action('wp_footer', __CLASS__ . '::renderConsentModal', 12);
-    }
 
     add_action(static::CRON_EVENT_ENSURE_INDEXES, __NAMESPACE__ . '\Schema::cron_ensure_indexes');
     if (!wp_next_scheduled(static::CRON_EVENT_ENSURE_INDEXES)) {
@@ -255,27 +244,6 @@ class Plugin {
   }
 
   /**
-   * Logs cookie consent message.
-   */
-  public static function log_cookie_consent() {
-    if (!$consent = $_POST['consent']) {
-      Logger::writelog(['The consent is empty somehow.']);
-      return;
-    }
-    $data = [
-      'timestamp' => date_i18n('c'),
-      'version' => $consent['version'],
-      'url' => $_POST['referer'] ?? '',
-      'consent_id' => $consent['consent_id'],
-      'user' => get_current_user_id(),
-      'consent' => $consent['consent'],
-      'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
-    ];
-    Logger::writelog($data);
-    wp_die();
-  }
-
-  /**
    * Sets site admin email.
    *
    * Allows to override the site admin email address to block
@@ -298,29 +266,6 @@ class Plugin {
   public static function wp_insert_post_data($data) {
     $data['ping_status'] = 'closed';
     return $data;
-  }
-
-  /**
-   * @implements wp_enqueue_scripts
-   */
-  public static function addConsentAssets() {
-    $min = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-    wp_enqueue_script('core-standards/cookie-consent', Plugin::getBaseUrl() . '/dist/scripts/cookie-consent' . $min . '.js');
-    wp_enqueue_style('core-standards/cookie-consent', Plugin::getBaseUrl() . '/dist/styles/cookie-consent' . $min . '.css');
-
-    wp_localize_script('core-standards/cookie-consent', 'core_standards', [
-      'ajaxurl' => admin_url('admin-ajax.php'),
-      'consent_version' => CORE_STANDARDS_COOKIE_CONSENT_VERSION,
-    ]);
-  }
-
-  /**
-   * Output client-side cookie consent on all pages.
-   *
-   * @implements wp_footer
-   */
-  public static function renderConsentModal() {
-    static::renderTemplate(['templates/cookie-consent.php']);
   }
 
   /**

@@ -1,23 +1,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-standards\n"
-"POT-Creation-Date: 2020-01-23 11:26+0100\n"
-"PO-Revision-Date: 2020-01-23 11:26+0100\n"
+"POT-Creation-Date: 2020-02-20 14:17+0100\n"
+"PO-Revision-Date: 2020-02-20 14:19+0100\n"
 "Last-Translator: Tom Hare <tom@netzstrategen.com>\n"
 "Language-Team: Joan Lopez <joan@netzstrategen.com>\n"
 "Language: de_DE@formal\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: core-standards.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
@@ -84,53 +84,6 @@ msgstr ""
 #: src/Widgets/UserLoginFormWidget.php:83
 msgid "Show logout link"
 msgstr ""
-
-#: templates/cookie-consent.php:8
-msgid "Only necessary"
-msgstr "Nur notwendige"
-
-#: templates/cookie-consent.php:9
-msgid "Required functionality"
-msgstr "Benötigte Funktionalitäten"
-
-#: templates/cookie-consent.php:17
-msgid "Behavior"
-msgstr "Nutzungsanalyse"
-
-#: templates/cookie-consent.php:18
-msgid "Statistics"
-msgstr "Statistiken"
-
-#: templates/cookie-consent.php:22
-msgid "Marketing"
-msgstr "Marketing"
-
-#: templates/cookie-consent.php:23
-msgid "Personalization"
-msgstr "Personalisierung"
-
-#: templates/cookie-consent.php:30
-msgid "Cookie Settings"
-msgstr "Cookie-Präferenzen"
-
-#: templates/cookie-consent.php:31
-#, php-format
-msgid ""
-"For the best possible service, this website offers you cookies. Please make "
-"your choice to use the site. More information can be found in our <a href=%s "
-"target=\"_blank\">privacy policy</a>."
-msgstr ""
-"Wir möchten Dir den bestmöglichen Service bieten. Bitte wähle, welche "
-"Cookies Du nutzen willst. Details findest Du in unseren <a href="
-"%s>Datenschutzbestimmungen</a>."
-
-#: templates/cookie-consent.php:32
-msgid "Confirm selection"
-msgstr "Auswahl bestätigen"
-
-#: templates/cookie-consent.php:33
-msgid "Get me anything"
-msgstr "Alle auswählen"
 
 #. Plugin Name of the plugin/theme
 msgid "Core Standards"
