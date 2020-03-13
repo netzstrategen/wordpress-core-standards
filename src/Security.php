@@ -41,7 +41,7 @@ class Security {
    * @implements wp_redirect
    */
   public static function wp_redirect($url) {
-    $custom_path = defined('CORE_STANDARDS_LOGIN_PATH') ? CORE_STANDARDS_LOGIN_PATH : 'login.php';
+    $custom_path = defined('CORE_STANDARDS_LOGIN_PATH') ? CORE_STANDARDS_LOGIN_PATH : '/login.php';
 
     // wp-login.php calls wp_safe_redirect() with a relative path, which causes
     // wp_validate_redirect() to automatically prepend the current folder name
