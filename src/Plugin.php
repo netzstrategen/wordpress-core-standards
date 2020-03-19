@@ -86,6 +86,10 @@ class Plugin {
     // Remove "[$blogname]" prefix in email subjects of user account mails.
     add_filter('wp_mail', __NAMESPACE__ . '\Mail::wp_mail');
 
+    // Sets admin email.
+    add_filter('option_admin_email', __NAMESPACE__ . '\Mail::customAdminEmail', 99, 1);
+    add_filter('site_option_admin_email', __NAMESPACE__ . '\Mail::customAdminEmail', 99, 1);
+
     add_shortcode('user-login-form', __NAMESPACE__ . '\UserLoginForm::getOutput');
 
     // Removes X-Pingback HTTP header, disables insertion of rel="pingback" tags,
@@ -95,10 +99,6 @@ class Plugin {
     add_filter('pre_option_default_ping_status', '__return_zero');
     add_filter('pre_option_default_pingback_flag', '__return_zero');
     add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 100);
-
-    // Sets admin email.
-    add_filter('option_admin_email', __CLASS__ . '::customAdminEmail', 99, 1);
-    add_filter('site_option_admin_email', __CLASS__ . '::customAdminEmail', 99, 1);
 
     if (is_admin()) {
       return;
@@ -241,23 +241,6 @@ class Plugin {
     unset($methods['pingback.ping']);
     unset($methods['pingback.extensions.getPingbacks']);
     return $methods;
-  }
-
-  /**
-   * Sets site admin email.
-   *
-   * Allows to override the site admin email address to block
-   * error notices/emails sent from development or staging
-   * environments.
-   *
-   * @param string $value
-   *   Admin email saved in wp_options table.
-   *
-   * @return string
-   *   Admin email.
-   */
-  public static function customAdminEmail($value) {
-    return defined('ADMIN_EMAIL') && ADMIN_EMAIL ? ADMIN_EMAIL : $value;
   }
 
   /**
