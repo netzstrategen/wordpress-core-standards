@@ -45,4 +45,21 @@ class Mail {
     return $message;
   }
 
+  /**
+   * Sets site admin email.
+   *
+   * Allows to override the site admin email address to block
+   * error notices/emails sent from development or staging
+   * environments.
+   *
+   * @param string $value
+   *   Admin email saved in wp_options table.
+   *
+   * @return string
+   *   Admin email.
+   */
+  public static function customAdminEmail($value) {
+    return defined('ADMIN_EMAIL') && ADMIN_EMAIL ? ADMIN_EMAIL : $value;
+  }
+
 }
