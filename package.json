@@ -1,6 +1,6 @@
 {
   "name": "core-standards",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "title": "WordPress Core Refinements",
   "description": "Various features and adjustments for WordPress Core that do not need configuration.",
   "main": "gulpfile.js",

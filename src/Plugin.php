@@ -257,7 +257,7 @@ class Plugin {
    *   Admin email.
    */
   public static function customAdminEmail($value) {
-    return defined('ADMIN_EMAIL') ? ADMIN_EMAIL : $value;
+    return defined('ADMIN_EMAIL') && ADMIN_EMAIL ? ADMIN_EMAIL : $value;
   }
 
   /**
