@@ -100,6 +100,9 @@ class Plugin {
     add_filter('pre_option_default_pingback_flag', '__return_zero');
     add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 100);
 
+     // Transliterate filenames.
+    add_filter('sanitize_file_name', __CLASS__ . '::sanitize_file_name', 10, 2);
+
     if (is_admin()) {
       return;
     }
@@ -290,6 +293,15 @@ class Plugin {
       }
       throw new \InvalidArgumentException("Missing template '$template_pathname'");
     }
+  }
+
+  /**
+   * Safari 5 and some mobile browsers do not support umlauts in image URLs yet.
+   *
+   * @implements sanitize_file_name
+   */
+  public static function sanitize_file_name($filename) {
+    return preg_replace('/[^A-Za-z0-9.,_-]+/', '', remove_accents($filename));
   }
 
 }
