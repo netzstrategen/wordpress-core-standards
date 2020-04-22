@@ -100,8 +100,12 @@ class Plugin {
     add_filter('pre_option_default_pingback_flag', '__return_zero');
     add_filter('wp_insert_post_data' , __CLASS__ . '::wp_insert_post_data', 100);
 
-     // Transliterate filenames.
+    // Transliterates filenames.
     add_filter('sanitize_file_name', __CLASS__ . '::sanitize_file_name', 10, 2);
+
+    // Adds version string to all scripts.
+    add_filter('script_loader_tag', __NAMESPACE__ . '\Asset::loader_tag', 10, 3);
+    add_filter('style_loader_tag', __NAMESPACE__ . '\Asset::loader_tag', 10, 3);
 
     if (is_admin()) {
       return;

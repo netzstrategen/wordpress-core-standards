@@ -86,7 +86,7 @@ window.gaIdList = <?= json_encode($opt_out_ids) ?>;
    *   Shortcode parameters as attributes.
    * @param string $content
    *   Shortcode wrapped content.
-   * 
+   *
    * @return string
    */
   public static function registerOptOutShortcode ($atts, $content = NULL) {
