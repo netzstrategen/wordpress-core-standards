@@ -30,7 +30,16 @@ class Asset {
     $default_version = $wp_scripts->default_version;
 
     if ($git_version = self::getGitCommitHash()) {
-      $tag = str_replace('?ver=' . $default_version, '?ver=' . $git_version, $tag);
+      $parsed_src = parse_url($src);
+      if (!empty($parsed_src['query'])) {
+        parse_str($parsed_src['query'], $get_args);
+        $get_args['ver'] = $git_version;
+        $new_src = $parsed_src['scheme'] . '://' . $parsed_src['host'] . $parsed_src['path'] . '?' . http_build_query($get_args);
+      }
+      else {
+        $new_src = add_query_arg('ver', $git_version, $src);
+      }
+      $tag = str_replace($src, $new_src, $tag);
     }
     return $tag;
   }
