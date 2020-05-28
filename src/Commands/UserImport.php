@@ -12,8 +12,8 @@ class UserImport extends \WP_CLI_Command {
   /**
    * Import users from a CSV file with no password hashing.
    *
-   * Implement the filter hook 'user_contactmethods' to control which user meta
-   * fields are imported.
+   * Note: You can implement the filter hook 'user_contactmethods' to control
+   * which user meta fields are imported.
    *
    * WARNING: Even though the `wp user import-csv` command attempts to disable
    * email notifications for password and email changes by default, your site
@@ -31,6 +31,8 @@ class UserImport extends \WP_CLI_Command {
       exit;
     }
 
+    // Inject a stub for the password hashing service of WordPress Core
+    // to not re-hash the password on saving.
     $GLOBALS['wp_hasher'] = new class {
       function HashPassword($password) {
         return $password;
@@ -46,7 +48,6 @@ class UserImport extends \WP_CLI_Command {
     // });
 
     \WP_CLI::run_command(array_merge(['user', 'import-csv'], $args), $options);
-    // \User_Command::import_csv($args, $options);
   }
 
 }
