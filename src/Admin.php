@@ -12,6 +12,20 @@ namespace Netzstrategen\CoreStandards;
  */
 class Admin {
 
+  /**
+   * Cron event name for revision cleanup.
+   *
+   * @var string
+   */
+  const CRON_EVENT_REVISION_CLEANUP = Plugin::PREFIX . '/cron/revision-cleanup';
+
+  /**
+   * Time-frame in days for which to retain all revisions (for post type 'posts).
+   *
+   * @var int
+   */
+  const CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS = 90;
+
   private static $skip_sample_permalink = [];
 
   /**
@@ -29,9 +43,23 @@ class Admin {
     add_filter('get_sample_permalink', __CLASS__ . '::get_sample_permalink', 10, 5);
     add_filter('get_sample_permalink_html', __CLASS__ . '::get_sample_permalink_html', 10, 5);
 
+    // Prevents TinyMCE editor setting unwanted rel attribute values for links opening in new window.
+    add_filter('tiny_mce_before_init', __CLASS__ . '::tiny_mce_before_init');
+
     // Exposes SVG images in media library.
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
+
+    // Exclude subscribers from post author select options to prevent a performance
+    // slowdown on sites with large amounts of non-administrative registered users.
+    add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args');
+
+    // Limit revisions per post type and age (publishing date).
+    add_filter('wp_revisions_to_keep', __CLASS__ . '::wp_revisions_to_keep', 10, 2);
+    if (!wp_next_scheduled(static::CRON_EVENT_REVISION_CLEANUP)) {
+      wp_schedule_event(time(), 'twicedaily', static::CRON_EVENT_REVISION_CLEANUP);
+    }
+    add_action(static::CRON_EVENT_REVISION_CLEANUP, __CLASS__ . '::cron_revision_cleanup');
   }
 
   /**
@@ -75,6 +103,7 @@ class Admin {
     $roles = [
       'super_admin',
       'administrator',
+      'shop_manager',
       'editor',
       'author',
       'contributor',
@@ -209,6 +238,22 @@ class Admin {
   }
 
   /**
+   * Prevents TinyMCE editor setting unwanted rel attribute values for links.
+   *
+   * TinyMCE sets attribute rel="noopener noreferrer" for links opening in new
+   * window (target="_blank"). This can prevent affiliate marketing tools from
+   * correctly tracking such links (e.g. in sponsored posts), potentially
+   * causing less revenue, so we disable the behavior by default.
+   *
+   * @see https://www.tinymce.com/docs/configure/content-filtering/#allow_unsafe_link_target
+   * @implements tiny_mce_before_init
+   */
+  public static function tiny_mce_before_init(array $mceInit) {
+    $mceInit['allow_unsafe_link_target'] = TRUE;
+    return $mceInit;
+  }
+
+  /**
    * Exposes SVG images in media grid views.
    *
    * @implements wp_prepare_attachment_for_js
@@ -241,6 +286,59 @@ class Admin {
   }
 </style>
 EOD;
+  }
+
+  /**
+   * @implements wp_dropdown_users_args
+   */
+  public static function wp_dropdown_users_args(array $query_args) {
+    if (isset($query_args['who']) && $query_args['who'] === 'authors') {
+      $query_args['role__in'] = array_diff($query_args['role__in'] ?? [], ['subscriber']);
+      $query_args['role__not_in'] = array_unique(array_merge($query_args['role__not_in'] ?? [], ['subscriber']));
+    }
+    return $query_args;
+  }
+
+  /**
+   * @implements wp_revisions_to_keep
+   *
+   * Revisions of other post types are not limited and only cleaned up by a cron
+   * job.
+   *
+   * @see Admin::cron_revision_cleanup()
+   */
+  public static function wp_revisions_to_keep($num, \WP_Post $post) {
+    // Revisions for static pages (such as about or imprint pages) should be
+    // retained infinitely.
+    if ($post->post_type === 'page') {
+      $num = -1;
+    }
+    return $num;
+  }
+
+  /**
+   * Cron event callback to clean up obsolete revisions.
+   *
+   * @param int $limit
+   *   (optional) The maximum amount of revisions to delete. Defaults to 100 in
+   *   order to not slow down and exceed cron execution time.
+   */
+  public static function cron_revision_cleanup($limit = 100) {
+    global $wpdb;
+
+    $post_types = 'post, product, product_variation';
+
+    // Revisions of posts that were last modified a long time ago (3 months) are
+    // no longer necessary and can be cleaned up.
+    $revision_ids = $wpdb->get_col($wpdb->prepare("SELECT revision.ID
+FROM $wpdb->posts revision
+INNER JOIN $wpdb->posts parent ON parent.ID = revision.post_parent AND parent.post_type IN ($post_types)
+WHERE revision.post_type = 'revision' AND revision.post_modified_gmt < %s AND revision.post_name NOT LIKE '%autosave%'
+LIMIT 0,%d
+", date('Y-m-d', strtotime('today - ' . static::CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS . ' days')), $limit));
+    foreach ($revision_ids as $revision_id) {
+      wp_delete_post_revision($revision_id);
+    }
   }
 
 }

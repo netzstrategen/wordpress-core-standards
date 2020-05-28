@@ -1,0 +1,1 @@
+html.admin-bar{margin-top:0 !important;margin-bottom:32px !important}@media (max-width: 600px){html.admin-bar{margin-bottom:46px !important}}#wpadminbar{z-index:1000001;top:auto;bottom:0}@media (max-width: 600px){#wpadminbar{position:fixed}}#wpadminbar .menupop .ab-sub-wrapper{bottom:100%}#wp-admin-bar-wp-logo{display:none}

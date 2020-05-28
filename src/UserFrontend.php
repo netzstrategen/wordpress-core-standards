@@ -9,7 +9,19 @@ namespace Netzstrategen\CoreStandards;
 
 class UserFrontend {
 
+  /**
+   * Admin bar (front-end) should be shown at bottom of viewport.
+   *
+   * @var boolean
+   */
+  const SHOW_ADMIN_BAR_AT_BOTTOM = FALSE;
+
   public static function init() {
+    // Injects actual nonce values for each menu link that contains the query
+    // string '_wpnonce=[action]'; e.g., '_wpnonce=customer-logout' for the
+    // WooCommerce logout link.
+    add_filter('wp_nav_menu_objects', __CLASS__ . '::wp_nav_menu_objects', 20);
+
     // Increase session cookie lifetime to prevent unnecessary logouts.
     add_filter('auth_cookie_expiration', __CLASS__ . '::auth_cookie_expiration', 10, 3);
 
@@ -20,7 +32,7 @@ class UserFrontend {
     // Remove WordPress promotion on /wp-login.php.
     add_action('login_enqueue_scripts', __CLASS__ . '::login_enqueue_scripts');
     add_filter('login_headerurl', 'site_url', 10, 0);
-    add_filter('login_headertitle', __CLASS__ . '::login_headertitle');
+    add_filter('login_headertext', __CLASS__ . '::login_headertext');
 
     // Beautify intro text on wp-login.php?action=lostpassword
     add_filter('login_message', __CLASS__ . '::login_message');
@@ -36,6 +48,26 @@ class UserFrontend {
     if (!Admin::currentUserHasAccess()) {
       add_filter('show_admin_bar', '__return_false');
     }
+
+    // Moves WP admin bar to bottom of page.
+    if (apply_filters(Plugin::PREFIX . '-admin-bar-bottom', static::SHOW_ADMIN_BAR_AT_BOTTOM)) {
+      add_action('admin_bar_init', __CLASS__ . '::move_admin_bar_to_bottom');
+    }
+  }
+
+  /**
+   * @implements wp_nav_menu_objects
+   */
+  public static function wp_nav_menu_objects(array $items) {
+    foreach ($items as $item) {
+      if (strpos($item->url, '_wpnonce=')) {
+        $query = parse_url($item->url, PHP_URL_QUERY);
+        parse_str($query, $args);
+        $args['_wpnonce'] = wp_create_nonce($args['_wpnonce']);
+        $item->url = strtr($item->url, [$query => http_build_query($args)]);
+      }
+    }
+    return $items;
   }
 
   /**
@@ -60,8 +92,8 @@ class UserFrontend {
    * @implements login_form_defaults
    */
   public static function login_form_defaults(array $args) {
+    wp_enqueue_style('core-standards/login', Plugin::getBaseUrl() . '/assets/user-login-form.css');
     $args['value_remember'] = TRUE;
-    $args['remember'] = FALSE;
     return $args;
   }
 
@@ -73,7 +105,7 @@ class UserFrontend {
       wp_enqueue_style('theme/login', get_stylesheet_directory_uri() . '/dist/styles/login.css');
     }
     else {
-      $url = get_stylesheet_directory_uri() . '/dist/images/logo.svg';
+      $url = apply_filters(Plugin::PREFIX . '-login-logo-url', get_stylesheet_directory_uri() . '/dist/images/logo.svg');
       echo <<<EOD
 <style>
 body, html {
@@ -82,7 +114,7 @@ body, html {
 #login {
   padding-top: 5%;
 }
-.login h1 a {
+#login h1 a {
   background-image: url("$url");
   display: block;
   background-size: auto;
@@ -99,9 +131,9 @@ EOD;
   }
 
   /**
-   * @implements login_headertitle
+   * @implements login_headertext
    */
-  public static function login_headertitle($login_header_title) {
+  public static function login_headertext($login_header_text) {
     return get_bloginfo('name');
   }
 
@@ -137,6 +169,16 @@ EOD;
       }
     }
     return $translation;
+  }
+
+  /**
+   * @implements move_admin_bar_to_bottom
+   */
+  public static function move_admin_bar_to_bottom() {
+    remove_action('wp_head', '_admin_bar_bump_cb');
+    if (is_user_logged_in() && current_user_can('admin_access')) {
+      wp_enqueue_style('core-standards/admin-bar', Plugin::getBaseUrl() . '/dist/styles/admin-bar.css');
+    }
   }
 
 }

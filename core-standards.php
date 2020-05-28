@@ -2,13 +2,13 @@
 
 /*
   Plugin Name: Core Standards
-  Version: 1.13.1
+  Version: 2.3.3
   Text Domain: core-standards
   Description: Standard refinements.
   Author: netzstrategen
-  Author URI: http://www.netzstrategen.com
+  Author URI: https://www.netzstrategen.com
   License: GPL-2.0+
-  License URI: http://www.gnu.org/licenses/gpl-2.0
+  License URI: https://www.gnu.org/licenses/gpl-2.0
 */
 
 namespace Netzstrategen\CoreStandards;
@@ -35,10 +35,14 @@ spl_autoload_register(__NAMESPACE__ . '\classloader');
 register_activation_hook(__FILE__, __NAMESPACE__ . '\Schema::activate');
 register_deactivation_hook(__FILE__, __NAMESPACE__ . '\Schema::deactivate');
 register_uninstall_hook(__FILE__, __NAMESPACE__ . '\Schema::uninstall');
+add_action('wp_upgrade', __NAMESPACE__ . '\Schema::ensureUploadsHtaccess');
 
 add_action('widgets_init', __NAMESPACE__ . '\Widgets\UserLoginFormWidget::init');
+add_action('plugins_loaded', __NAMESPACE__ . '\Plugin::plugins_loaded');
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
+// Adds settings fields to 'Reading' settings page, after 'Search Engine visibility'.
+add_action('admin_init', __NAMESPACE__ . '\TrackingOptOut::admin_init', 9);
 
 if (defined('WP_CLI') && WP_CLI) {
   \WP_CLI::add_command('user export-csv', __NAMESPACE__ . '\Commands\UserExport');

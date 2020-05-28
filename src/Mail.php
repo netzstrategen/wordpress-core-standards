@@ -19,9 +19,7 @@ class Mail {
     $from_name = get_bloginfo('name');
     $from_email = get_option('admin_email');
     // Ensure that emails from staging site instances can still be identified.
-    if (isset($_SERVER['SERVER_NAME'])) {
-      $from_email = strtok($from_email, '@') . '@' . str_replace('www.', '', $_SERVER['SERVER_NAME']);
-    }
+    $from_email = strtok($from_email, '@') . '@' . str_replace('www.', '', parse_url(network_home_url(), PHP_URL_HOST));
     $from_header = "From: $from_name <$from_email>";
     if (empty($message['headers'])) {
       $message['headers'] = [$from_header];
@@ -45,6 +43,23 @@ class Mail {
       $message['subject'] = preg_replace('@^' . preg_quote("[$blogname] ", '@') . '@', '', $message['subject']);
     }
     return $message;
+  }
+
+  /**
+   * Sets site admin email.
+   *
+   * Allows to override the site admin email address to block
+   * error notices/emails sent from development or staging
+   * environments.
+   *
+   * @param string $value
+   *   Admin email saved in wp_options table.
+   *
+   * @return string
+   *   Admin email.
+   */
+  public static function customAdminEmail($value) {
+    return defined('ADMIN_EMAIL') && ADMIN_EMAIL ? ADMIN_EMAIL : $value;
   }
 
 }

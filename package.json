@@ -1,0 +1,47 @@
+{
+  "name": "core-standards",
+  "version": "2.3.3",
+  "title": "WordPress Core Refinements",
+  "description": "Various features and adjustments for WordPress Core that do not need configuration.",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "@netzstrategen/gulp-task-collection": "^1.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netzstrategen/wordpress-core-standards.git"
+  },
+  "author": "netzstrategen",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/netzstrategen/wordpress-core-standards/issues"
+  },
+  "homepage": "https://github.com/netzstrategen/wordpress-core-standards#readme",
+  "dependencies": {},
+  "browserslist": [
+    "last 2 versions"
+  ],
+  "gulpPaths": {
+    "destDir": "./dist",
+    "fonts": {
+      "src": "./assets/fonts/**/*.{eot,svg,ttf,woff,woff2}",
+      "dest": "./dist/fonts"
+    },
+    "images": {
+      "src": "./assets/img/**/*.{jpg,jpeg,png,gif,svg}",
+      "dest": "./dist/img"
+    },
+    "scripts": {
+      "src": "./assets/scripts/**/*.js",
+      "dest": "./dist/scripts"
+    },
+    "styles": {
+      "srcDir": "./assets/styles",
+      "src": [
+        "./assets/styles/**/*.scss"
+      ],
+      "dest": "./dist/styles"
+    },
+    "templates": ""
+  }
+}
