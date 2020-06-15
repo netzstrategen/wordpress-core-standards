@@ -26,6 +26,9 @@ class Schema {
 
     // Rename /wp-login.php into /login.php and deny access to XML-RPC API.
     static::ensureFrontControllerAccess();
+
+    // Set assets cache expiry date.
+    static::setAssetsExpiryDate();
   }
 
   /**
@@ -87,6 +90,14 @@ class Schema {
    */
   public static function ensureFrontControllerAccess() {
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.security');
+    static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+  }
+
+  /**
+   * Set  Expires + Cache-Control header with a TTL of 1 year for all assets.
+   */
+  public static function setAssetsExpiryDate() {
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.assets.expiry');
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
