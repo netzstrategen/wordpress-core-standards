@@ -97,8 +97,11 @@ class Schema {
    * Set  Expires + Cache-Control header with a TTL of 1 year for all assets.
    */
   public static function setAssetsExpiryDate() {
-    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.assets.expiry');
-    static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+    $hostname = parse_url(site_url())['host'];
+    if (strpos($hostname, 'nest') === FALSE && strpos($hostname, 'local') === FALSE && !WP_DEBUG) {
+      $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.assets.expiry');
+      static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+    }
   }
 
   /**
