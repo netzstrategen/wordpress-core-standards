@@ -94,7 +94,7 @@ class Schema {
   }
 
   /**
-   * Set  Expires + Cache-Control header with a TTL of 1 year for all assets.
+   * Set Cache-Control header with a TTL of 1 year for all assets.
    */
   public static function ensureAssetsCacheControl() {
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.assets.cache.control');
