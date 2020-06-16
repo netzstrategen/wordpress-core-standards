@@ -1,0 +1,10 @@
+# BEGIN core-standards:assets-cache-control
+<IfModule mod_headers.c>
+  # Browser Caching using Cache-Control headers.
+  <If "%{HTTP_HOST} !~ /local|nest/">
+    <FilesMatch "\.(?:css|cur|eot|gif|gz|htc|ico|jpe?g|js|mp4|ogg|ogv|otf|png|svgz?|ttf|webm|woff2?).*[?&]ver=">
+      Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+  </If>
+</IfModule>
+# END core-standards:assets-cache-control

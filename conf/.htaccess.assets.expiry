@@ -1,9 +1,0 @@
-# BEGIN core-standards:assetsExpiry
-<IfModule mod_expires.c>
-  # Expires + Cache-Control header with a TTL of 1 year for all assets.
-  <FilesMatch "\.(?:css|cur|eot|gif|gz|htc|ico|jpe?g|js|mp4|ogg|ogv|otf|png|svgz?|ttf|webm|woff2?)\?ver">
-    ExpiresActive On
-    ExpiresDefault "access plus 1 year"
-  </FilesMatch>
-</IfModule>
-# END core-standards:assetsExpiry
