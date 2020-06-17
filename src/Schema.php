@@ -94,10 +94,10 @@ class Schema {
   }
 
   /**
-   * Set Cache-Control header with a TTL of 1 year for all assets.
+   * Force a long client-side caching time for assets with "ver" query string.
    */
   public static function ensureAssetsCacheControl() {
-    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.assets.cache.control');
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.assets.cache');
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
