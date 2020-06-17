@@ -25,6 +25,8 @@ Core already but are not for different reasons (as the name implies).
   virtual host or the whole server (the latter is not recommended for production
   servers).
 
+  Adds long client-side caching time for assets with "ver" query string via .htacces.
+
 = Customization =
 
 By default, /wp-login.php is replaced with /login.php. You can use a custom path
