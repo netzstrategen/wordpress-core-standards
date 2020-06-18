@@ -5,7 +5,7 @@
   <FilesMatch "\.(?:css|cur|eot|gif|gz|htc|ico|jpe?g|js|mp4|ogg|ogv|otf|png|svgz?|ttf|webm|woff2?)">
     <If "%{HTTP_HOST} =~ /(local|nest)/">
     </If>
-    <ElseIf "%{QUERY_STRING} =~ /ver/">
+    <ElseIf "%{QUERY_STRING} =~ /ver=/">
       Header set Cache-Control "public, max-age=31536000"
     </ElseIf>
   </FilesMatch>
