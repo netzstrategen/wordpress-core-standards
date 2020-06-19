@@ -25,7 +25,7 @@ Core already but are not for different reasons (as the name implies).
   virtual host or the whole server (the latter is not recommended for production
   servers).
 
-  Adds long client-side caching time for assets with "ver" query string via .htacces.
+  Adds client-side caching for assets having a `'ver'` query string.
 
 = Customization =
 

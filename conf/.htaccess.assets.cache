@@ -3,11 +3,9 @@
   # Client-side caching for assets with version query string.
   # Not applied locally as Git hash does not change while editing.
   <FilesMatch "\.(?:css|cur|eot|gif|gz|htc|ico|jpe?g|js|mp4|ogg|ogv|otf|png|svgz?|ttf|webm|woff2?)">
-    <If "%{HTTP_HOST} =~ /(local|nest)/">
-    </If>
-    <ElseIf "%{QUERY_STRING} =~ /ver=/">
+    <If "%{HTTP_HOST} !~ /\.(local|nest)$/ && %{QUERY_STRING} =~ /(^|&)ver=/">
       Header set Cache-Control "public, max-age=31536000"
-    </ElseIf>
+    </If>
   </FilesMatch>
 </IfModule>
 # END core-standards:assets-cache
