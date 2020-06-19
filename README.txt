@@ -3,7 +3,7 @@ Contributors: netzstrategen, tha_sun, fabianmarz, juanlopez4691, lucapipolo, col
 Tags: core, standards, defaults, enhancements, security
 Requires at least: 4.5
 Tested up to: 5.3.2
-Stable tag: 2.3.3
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,11 @@ Core already but are not for different reasons (as the name implies).
   For Apache, this requires `AllowOverride all` to be set for the directory of the
   virtual host or the whole server (the latter is not recommended for production
   servers).
+
+- Adds the current Git commit hash to all JS and CSS front-end asset files to
+  ensure a stable cache invalidation, and adds client-side caching for assets
+  having a `'ver'` query string.
+
 
 = Customization =
 

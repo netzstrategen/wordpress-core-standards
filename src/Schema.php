@@ -26,6 +26,9 @@ class Schema {
 
     // Rename /wp-login.php into /login.php and deny access to XML-RPC API.
     static::ensureFrontControllerAccess();
+
+    // Force a long client-side caching time for assets with "ver" query string.
+    static::ensureAssetsCacheControl();
   }
 
   /**
@@ -87,6 +90,14 @@ class Schema {
    */
   public static function ensureFrontControllerAccess() {
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.security');
+    static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+  }
+
+  /**
+   * Force a long client-side caching time for assets with "ver" query string.
+   */
+  public static function ensureAssetsCacheControl() {
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.assets.cache');
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
