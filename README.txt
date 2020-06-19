@@ -25,7 +25,9 @@ Core already but are not for different reasons (as the name implies).
   virtual host or the whole server (the latter is not recommended for production
   servers).
 
-- Adds client-side caching for assets having a `'ver'` query string.
+- Adds the current Git commit hash to all JS and CSS front-end asset files to
+  ensure a stable cache invalidation, and adds client-side caching for assets
+  having a `'ver'` query string.
 
 
 = Customization =
