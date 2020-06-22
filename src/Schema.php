@@ -121,6 +121,15 @@ class Schema {
     else {
       $content = file_get_contents($pathname);
       if (FALSE === strpos($content, $template)) {
+        // Remove old content if present, looking for the template block start
+        // and end lines.
+        $templateLines = explode("\n", rtrim($template, "\n"));
+        $start = strpos($content, $templateLines[0]);
+        $end = strpos($content, end($templateLines));
+        if ($start !== FALSE && $end !== FALSE) {
+          $content = substr_replace($content, '', $start, strlen($template));
+        }
+
         $content = $template . $separator . $content;
         $write_content = TRUE;
       }
