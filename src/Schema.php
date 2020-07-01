@@ -125,7 +125,8 @@ class Schema {
         // BEGIN and END lines.
         $template_lines = explode("\n", rtrim($template, "\n"));
         $begin = strpos($content, $template_lines[0]);
-        $end = strpos($content, end($template_lines));
+        $lastLine = end($template_lines);
+        $end = strpos($content, $lastLine) + strlen($lastLine);
         if ($begin !== FALSE && $end !== FALSE) {
           $content = substr_replace($content, $template, $begin, $end - $begin + 1);
         }
