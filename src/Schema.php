@@ -123,14 +123,15 @@ class Schema {
       if (FALSE === strpos($content, $template)) {
         // Remove old content if present, looking for the template block's
         // BEGIN and END lines.
-        $templateLines = explode("\n", rtrim($template, "\n"));
-        $start = strpos($content, $templateLines[0]);
-        $end = strpos($content, end($templateLines));
-        if ($start !== FALSE && $end !== FALSE) {
-          $content = substr_replace($content, '', $start, $end - $start + 1);
+        $template_lines = explode("\n", rtrim($template, "\n"));
+        $begin = strpos($content, $template_lines[0]);
+        $end = strpos($content, end($template_lines));
+        if ($begin !== FALSE && $end !== FALSE) {
+          $content = substr_replace($content, $template, $begin, $end - $begin + 1);
         }
-
-        $content = $template . $separator . $content;
+        else {
+          $content = $template . $separator . $content;
+        }
         $write_content = TRUE;
       }
     }
