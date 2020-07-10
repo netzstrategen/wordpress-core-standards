@@ -121,7 +121,18 @@ class Schema {
     else {
       $content = file_get_contents($pathname);
       if (FALSE === strpos($content, $template)) {
-        $content = $template . $separator . $content;
+        // Remove old content if present, looking for the template block's
+        // BEGIN and END lines.
+        $template_lines = explode("\n", rtrim($template, "\n"));
+        $begin = strpos($content, $template_lines[0]);
+        $lastLine = end($template_lines);
+        $end = strpos($content, $lastLine) + strlen($lastLine);
+        if ($begin !== FALSE && $end !== FALSE) {
+          $content = substr_replace($content, $template, $begin, $end - $begin + 1);
+        }
+        else {
+          $content = $template . $separator . $content;
+        }
         $write_content = TRUE;
       }
     }
