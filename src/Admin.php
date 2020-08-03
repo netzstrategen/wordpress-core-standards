@@ -60,6 +60,9 @@ class Admin {
       wp_schedule_event(time(), 'twicedaily', static::CRON_EVENT_REVISION_CLEANUP);
     }
     add_action(static::CRON_EVENT_REVISION_CLEANUP, __CLASS__ . '::cron_revision_cleanup');
+
+    // Removes Site Health from the dashboard.
+    add_action('wp_dashboard_setup', __CLASS__ . '::removeSiteHealthDashboardWidget');
   }
 
   /**
@@ -339,6 +342,15 @@ LIMIT 0,%d
     foreach ($revision_ids as $revision_id) {
       wp_delete_post_revision($revision_id);
     }
+  }
+
+  /**
+   * Removes Site Health from the dashboard.
+   *
+   * @implements wp_dashboard_setup
+   */
+  public static function removeSiteHealthDashboardWidget() {
+    remove_meta_box('dashboard_site_health', 'dashboard', 'normal');
   }
 
 }
