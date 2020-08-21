@@ -7,5 +7,8 @@ RedirectMatch 403 /wp-includes/.+\.php$
   RewriteRule ^login\.php$ /wp-login.php [QSA,END]
   RewriteRule ^wp-login\.php$ - [NS,F,END]
   RewriteRule ^xmlrpc\.php$ - [F,END]
+
+  #Ensure .git folder is not accessible
+  RewriteRule \.git/.*?$ - [F,NC]
 </IfModule>
 # END core-standards:security
