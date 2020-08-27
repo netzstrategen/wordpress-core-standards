@@ -3,9 +3,11 @@ RedirectMatch 403 /wp-includes/.+\.php$
 
 <IfModule mod_rewrite.c>
   # Rename /wp-login.php into /login.php and deny access to XML-RPC API.
+  # Disallow access to .git folders.
   RewriteEngine On
   RewriteRule ^login\.php$ /wp-login.php [QSA,END]
   RewriteRule ^wp-login\.php$ - [NS,F,END]
   RewriteRule ^xmlrpc\.php$ - [F,END]
+  RewriteRule \.git/ - [F,END]
 </IfModule>
 # END core-standards:security
