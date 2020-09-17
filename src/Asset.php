@@ -29,6 +29,11 @@ class Asset {
     $wp_scripts = wp_scripts();
     $default_version = $wp_scripts->default_version;
 
+    // Skip scripts loaded from remote URLs.
+    if (strpos($src, home_url()) !== 0) {
+      return $tag;
+    }
+
     if ($git_version = self::getGitCommitHash()) {
       if (strpos($src, '?') !== FALSE) {
         if (preg_match('@[?&](ver=[^&$]*)@', $src, $matches)) {
