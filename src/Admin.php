@@ -72,11 +72,9 @@ class Admin {
    * @see http://premium.wpmudev.org/blog/hide-the-wordpress-update-notification/
    */
   public static function removeUselessCoreUpdateNagMessages() {
-    if (!current_user_can('update_core')) {
-      // @see wp-admin/includes/admin-filters.php
-      remove_action('admin_notices', 'update_nag', 3);
-      remove_action('admin_notices', 'maintenance_nag', 10);
-    }
+    // @see wp-admin/includes/admin-filters.php
+    remove_action('admin_notices', 'update_nag', 3);
+    remove_action('admin_notices', 'maintenance_nag', 10);
   }
 
   /**
