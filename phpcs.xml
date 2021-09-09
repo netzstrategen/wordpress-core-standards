@@ -1,1 +1,4 @@
-./vendor/netzstrategen/phpcs-config/phpcs.xml
+<?xml version="1.0"?>
+<ruleset>
+  <rule ref="phpcs-config" />
+</ruleset>
