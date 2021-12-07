@@ -25,6 +25,16 @@ namespace Netzstrategen\CoreStandards;
  */
 class Security {
 
+  const SECURITY_HEADERS = [
+    'Referrer-Policy'           => 'no-referrer-when-downgrade',
+    'X-Content-Type-Options'    => 'nosniff',
+    'X-XSS-Protection'          => '1; mode=block',
+    'Permissions-Policy'        => 'geolocation=(self "https://example.com") microphone=() camera=()',
+    'Content-Security-Policy'   => 'script-src "self"',
+    'X-Frame-Options'           => 'SAMEORIGIN',
+    'Strict-Transport-Security' => 'Strict-Transport-Security: max-age=31536000; includeSubDomains',
+  ];
+
   /**
    * @implements network_site_url
    * @implements site_url
@@ -55,4 +65,21 @@ class Security {
     return $url;
   }
 
+  /**
+   * @implemements wp_headers
+   *
+   * @return array
+   */
+  public static function additional_securityheaders(array $headers):array {
+    if (!is_admin()) {
+      $headers['Referrer-Policy']           ??= defined('CORE_STANDARDS_Referrer_Policy') ? CORE_STANDARDS_Referrer_Policy : 'no-referrer-when-downgrade';
+      $headers['X-Content-Type-Options']    ??= defined('CORE_STANDARDS_X_Content_Type_Options') ? CORE_STANDARDS_X_Content_Type_Options : 'nosniff';
+      $headers['X-XSS-Protection']          ??= defined('CORE_STANDARDS_X_XSS_Protection') ? CORE_STANDARDS_X_XSS_Protection : '1; mode=block';
+      $headers['Permissions-Policy']        ??= defined('CORE_STANDARDS_Permissions_Policy') ? CORE_STANDARDS_Permissions_Policy : 'geolocation=(self "https://example.com") microphone=() camera=()';
+      $headers['Content-Security-Policy']   ??= defined('CORE_STANDARDS_Content_Security_Policy') ? CORE_STANDARDS_Content_Security_Policy : 'script-src "self"';
+      $headers['X-Frame-Options']           ??= defined('CORE_STANDARDS_X_Frame_Options') ? CORE_STANDARDS_X_Frame_Options : 'SAMEORIGIN';
+      $headers['Strict-Transport-Security'] ??= defined('CORE_STANDARDS_Strict_Transport_Security') ? CORE_STANDARDS_Strict_Transport_Security : 'Strict-Transport-Security: max-age=31536000; includeSubDomains';
+    }
+    return $headers;
+  }
 }
