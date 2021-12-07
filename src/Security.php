@@ -25,16 +25,6 @@ namespace Netzstrategen\CoreStandards;
  */
 class Security {
 
-  const SECURITY_HEADERS = [
-    'Referrer-Policy'           => 'no-referrer-when-downgrade',
-    'X-Content-Type-Options'    => 'nosniff',
-    'X-XSS-Protection'          => '1; mode=block',
-    'Permissions-Policy'        => 'geolocation=(self "https://example.com") microphone=() camera=()',
-    'Content-Security-Policy'   => 'script-src "self"',
-    'X-Frame-Options'           => 'SAMEORIGIN',
-    'Strict-Transport-Security' => 'Strict-Transport-Security: max-age=31536000; includeSubDomains',
-  ];
-
   /**
    * @implements network_site_url
    * @implements site_url
