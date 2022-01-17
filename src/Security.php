@@ -60,7 +60,7 @@ class Security {
    *
    * @return array
    */
-  public static function additional_securityheaders(array $headers):array {
+  public static function additional_securityheaders(array $headers): array {
     if (!is_admin()) {
       $headers['Referrer-Policy']           ??= defined('CORE_STANDARDS_Referrer_Policy') ? CORE_STANDARDS_Referrer_Policy : 'no-referrer-when-downgrade';
       $headers['X-Content-Type-Options']    ??= defined('CORE_STANDARDS_X_Content_Type_Options') ? CORE_STANDARDS_X_Content_Type_Options : 'nosniff';
