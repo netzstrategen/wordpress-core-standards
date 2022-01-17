@@ -62,12 +62,12 @@ class Security {
    */
   public static function additional_securityheaders(array $headers): array {
     if (!is_admin()) {
-      $headers['Referrer-Policy']           ??= defined('CORE_STANDARDS_Referrer_Policy') ? CORE_STANDARDS_Referrer_Policy : 'no-referrer-when-downgrade';
-      $headers['X-Content-Type-Options']    ??= defined('CORE_STANDARDS_X_Content_Type_Options') ? CORE_STANDARDS_X_Content_Type_Options : 'nosniff';
-      $headers['X-XSS-Protection']          ??= defined('CORE_STANDARDS_X_XSS_Protection') ? CORE_STANDARDS_X_XSS_Protection : '1; mode=block';
-      $headers['Permissions-Policy']        ??= defined('CORE_STANDARDS_Permissions_Policy') ? CORE_STANDARDS_Permissions_Policy : 'geolocation=(self "https://example.com") microphone=() camera=()';
-      $headers['Content-Security-Policy']   ??= defined('CORE_STANDARDS_Content_Security_Policy') ? CORE_STANDARDS_Content_Security_Policy : 'frame-ancestors';
-      $headers['X-Frame-Options']           ??= defined('CORE_STANDARDS_X_Frame_Options') ? CORE_STANDARDS_X_Frame_Options : 'SAMEORIGIN';
+      $site_url = site_url();
+      $headers['Referrer-Policy'] ??= defined('CORE_STANDARDS_REFERRER_POLICY') ? CORE_STANDARDS_Referrer_Policy : 'no-referrer-when-downgrade';
+      $headers['X-Content-Type-Options'] ??= defined('CORE_STANDARDS_X_Content_Type_Options') ? CORE_STANDARDS_X_Content_Type_Options : 'nosniff';
+      $headers['X-XSS-Protection'] ??= defined('CORE_STANDARDS_X_XSS_Protection') ? CORE_STANDARDS_X_XSS_Protection : '1; mode=block';
+      $headers['Permissions-Policy'] ??= defined('CORE_STANDARDS_Permissions_Policy') ? CORE_STANDARDS_Permissions_Policy : 'geolocation=(self "' . $site_url . '") microphone=() camera=()';
+      $headers['Content-Security-Policy'] ??= defined('CORE_STANDARDS_Content_Security_Policy') ? CORE_STANDARDS_Content_Security_Policy : 'frame-ancestors';
       $headers['Strict-Transport-Security'] ??= defined('CORE_STANDARDS_Strict_Transport_Security') ? CORE_STANDARDS_Strict_Transport_Security : 'Strict-Transport-Security: max-age=31536000; includeSubDomains';
     }
     return $headers;
