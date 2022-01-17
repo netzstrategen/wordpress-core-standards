@@ -29,6 +29,9 @@ class Schema {
 
     // Force a long client-side caching time for assets with "ver" query string.
     static::ensureAssetsCacheControl();
+
+    // Includes the necessary response headers for all requests in htaccess file.
+    static::ensureResponseHeadersHtaccess();
   }
 
   /**
@@ -44,6 +47,41 @@ class Schema {
    */
   public static function uninstall() {
     Admin::removeAccessCapability();
+  }
+
+  /**
+   * Ensures dynamic response headers for all requests from htaccess.
+   */
+  public static function ensureResponseHeadersHtaccess() {
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.headers');
+    if (defined('CORE_STANDARDS_CONTENT_SECURITY_POLICY')) {
+      static::findAndReplaceHeader($template, 'Content-Security-Policy', CORE_STANDARDS_CONTENT_SECURITY_POLICY);
+    }
+    if (defined('CORE_STANDARDS_REFERRER_POLICY')) {
+      static::findAndReplaceHeader($template, 'Referrer-Policy', CORE_STANDARDS_REFERRER_POLICY);
+    }
+    if (defined('CORE_STANDARDS_X_CONTENT_TYPE_OPTIONS')) {
+      static::findAndReplaceHeader($template, 'X-Content-Type-Options', CORE_STANDARDS_X_CONTENT_TYPE_OPTIONS);
+    }
+    if (defined('CORE_STANDARDS_X_XSS_PROTECTION')) {
+      static::findAndReplaceHeader($template, 'X-XSS-Protection', CORE_STANDARDS_X_XSS_PROTECTION);
+    }
+    if (defined('CORE_STANDARDS_STRICT_TRANSPORT_SECURITY')) {
+      static::findAndReplaceHeader($template, 'Strict-Transport-Security', CORE_STANDARDS_STRICT_TRANSPORT_SECURITY);
+    }
+    static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+  }
+
+  /**
+   * Performs a preg match to replace the new header value in the stream.
+   */
+  private static function findAndReplaceHeader(string &$content, string $headerName, string $headerValue) {
+    $search = sprintf('<(%s) \"(.*)\">', $headerName);
+    // Replace using the same header name and value.
+    $replacement = sprintf('$1 "%s"', $headerValue);
+    $result = preg_replace($search, $replacement, $content);
+    // Ensures there was no error in the matching otherwise keeps original.
+    $content = $result ?? $content;
   }
 
   /**

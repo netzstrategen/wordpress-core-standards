@@ -48,7 +48,6 @@ class Plugin {
     add_filter('network_site_url', __NAMESPACE__ . '\Security::site_url', 100, 3);
     add_filter('site_url', __NAMESPACE__ . '\Security::site_url', 100, 3);
     add_filter('wp_redirect', __NAMESPACE__ . '\Security::wp_redirect', 1);
-    add_filter('wp_headers', __NAMESPACE__ . '\Security::additional_securityheaders', 1);
 
     Plugin::loadTextdomain();
   }
