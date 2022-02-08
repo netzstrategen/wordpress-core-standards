@@ -60,14 +60,14 @@ class Schema {
     if (defined('CORE_STANDARDS_REFERRER_POLICY')) {
       static::findAndReplaceHeader($template, 'Referrer-Policy', CORE_STANDARDS_REFERRER_POLICY);
     }
+    if (defined('CORE_STANDARDS_STRICT_TRANSPORT_SECURITY')) {
+      static::findAndReplaceHeader($template, 'Strict-Transport-Security', CORE_STANDARDS_STRICT_TRANSPORT_SECURITY);
+    }
     if (defined('CORE_STANDARDS_X_CONTENT_TYPE_OPTIONS')) {
       static::findAndReplaceHeader($template, 'X-Content-Type-Options', CORE_STANDARDS_X_CONTENT_TYPE_OPTIONS);
     }
     if (defined('CORE_STANDARDS_X_XSS_PROTECTION')) {
       static::findAndReplaceHeader($template, 'X-XSS-Protection', CORE_STANDARDS_X_XSS_PROTECTION);
-    }
-    if (defined('CORE_STANDARDS_STRICT_TRANSPORT_SECURITY')) {
-      static::findAndReplaceHeader($template, 'Strict-Transport-Security', CORE_STANDARDS_STRICT_TRANSPORT_SECURITY);
     }
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
