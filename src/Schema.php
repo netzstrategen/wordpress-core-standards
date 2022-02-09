@@ -75,13 +75,9 @@ class Schema {
   /**
    * Performs a preg match to replace the new header value in the stream.
    */
-  private static function findAndReplaceHeader(string &$content, string $headerName, string $headerValue) {
-    $search = sprintf('<(%s) \"(.*)\">', $headerName);
-    // Replace using the same header name and value.
-    $replacement = sprintf('$1 "%s"', $headerValue);
-    $result = preg_replace($search, $replacement, $content);
+  private static function findAndReplaceHeader(string &$content, string $header_name, string $header_value) {
     // Ensures there was no error in the matching otherwise keeps original.
-    $content = $result ?? $content;
+    $content = preg_replace("@($header_name) .*@", "$1 $header_value", $content) ?? $content;
   }
 
   /**
