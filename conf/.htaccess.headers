@@ -1,9 +1,0 @@
-# BEGIN core-standards:headers
-<IfModule mod_headers.c>
-  Header set Content-Security-Policy "frame-ancestors"
-  Header set Referrer-Policy "no-referrer-when-downgrade"
-  Header set Strict-Transport-Security "Strict-Transport-Security: max-age=31536000; includeSubDomains"
-  Header set X-Content-Type-Options "nosniff"
-  Header set X-XSS-Protection "1; mode=block"
-</IfModule>
-# END core-standards:headers

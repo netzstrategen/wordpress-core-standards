@@ -13,6 +13,20 @@ namespace Netzstrategen\CoreStandards;
 class Schema {
 
   /**
+   * Default http headers useful to prevent clickjacking issues.
+   * Please note how the value of each header must include the quotes when needed.
+   * In case any specific project wants to extend/override these from the config/env
+   * Using the constant called CORE_STANDARDS_HTTP_HEADERS.
+   */
+  const HTTP_RESPONSE_HEADERS = [
+    'Content-Security-Policy' => '"frame-ancestors"',
+    'Referrer-Policy' => '"no-referrer-when-downgrade"',
+    'Strict-Transport-Security' => '"Strict-Transport-Security: max-age=31536000; includeSubDomains"',
+    'X-Content-Type-Options' => '"nosniff"',
+    'X-XSS-Protection' => '"1; mode=block"',
+  ];
+
+  /**
    * register_activation_hook() callback.
    */
   public static function activate() {
@@ -50,34 +64,21 @@ class Schema {
   }
 
   /**
-   * Ensures dynamic response headers for all requests from htaccess.
+   * Ensures dynamic response headers for all requests in htaccess.
    */
   public static function ensureResponseHeadersHtaccess() {
-    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.headers');
-    if (defined('CORE_STANDARDS_CONTENT_SECURITY_POLICY')) {
-      static::findAndReplaceHeader($template, 'Content-Security-Policy', CORE_STANDARDS_CONTENT_SECURITY_POLICY);
+    $headers = self::HTTP_RESPONSE_HEADERS;
+    if(defined('CORE_STANDARDS_HTTP_HEADERS') && is_array(CORE_STANDARDS_HTTP_HEADERS)) {
+      $headers = array_merge($headers, CORE_STANDARDS_HTTP_HEADERS);
     }
-    if (defined('CORE_STANDARDS_REFERRER_POLICY')) {
-      static::findAndReplaceHeader($template, 'Referrer-Policy', CORE_STANDARDS_REFERRER_POLICY);
+    $template = '# BEGIN core-standards:headers' . PHP_EOL;
+    $template .= '<IfModule mod_headers.c>' . PHP_EOL;
+    foreach ($headers as $header => $value) {
+      $template .= "\tHeader set $header $value" . PHP_EOL;
     }
-    if (defined('CORE_STANDARDS_STRICT_TRANSPORT_SECURITY')) {
-      static::findAndReplaceHeader($template, 'Strict-Transport-Security', CORE_STANDARDS_STRICT_TRANSPORT_SECURITY);
-    }
-    if (defined('CORE_STANDARDS_X_CONTENT_TYPE_OPTIONS')) {
-      static::findAndReplaceHeader($template, 'X-Content-Type-Options', CORE_STANDARDS_X_CONTENT_TYPE_OPTIONS);
-    }
-    if (defined('CORE_STANDARDS_X_XSS_PROTECTION')) {
-      static::findAndReplaceHeader($template, 'X-XSS-Protection', CORE_STANDARDS_X_XSS_PROTECTION);
-    }
+    $template .= '</IfModule>' . PHP_EOL;
+    $template .= '# END core-standards:headers' . PHP_EOL;
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
-  }
-
-  /**
-   * Performs a preg match to replace the new header value in the stream.
-   */
-  private static function findAndReplaceHeader(string &$content, string $header_name, string $header_value) {
-    // Ensures there was no error in the matching otherwise keeps original.
-    $content = preg_replace("@($header_name) .*@", "$1 $header_value", $content) ?? $content;
   }
 
   /**
