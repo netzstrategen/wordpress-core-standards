@@ -17,6 +17,8 @@ Core already but are not for different reasons (as the name implies).
 
 = Features =
 
+- Adds HTTP headers to prevent clickjacking, XSS, and other vulnerabilities.
+
 - Replaces the front controller `wp-login.php` with `login.php` and blocks
   access to `wp-login.php` and `xmlrpc.php` to prevent Denial-of-Service (DoS)
   and brute-force attacks.
@@ -31,6 +33,16 @@ Core already but are not for different reasons (as the name implies).
 
 
 = Customization =
+
+You can override the default HTTP response headers by defining a constant named
+`CORE_STANDARDS_HTTP_HEADERS` in `wp-config.php` or a custom plugin. The value
+for each header must include quotes where needed. For example:
+```
+const CORE_STANDARDS_HTTP_HEADERS = [
+  'Strict-Transport-Security' => '"max-age=63072000; includeSubDomains; preload" env=HTTPS',
+  'X-Frame-Options' => '"ALLOW-FROM https://example.com"',
+];
+```
 
 By default, /wp-login.php is replaced with /login.php. You can use a custom path
 by setting the constant CORE_STANDARDS_LOGIN_PATH in wp-config.php:
