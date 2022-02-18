@@ -68,7 +68,7 @@ class Schema {
    */
   public static function ensureResponseHeadersHtaccess() {
     $headers = self::HTTP_RESPONSE_HEADERS;
-    if(defined('CORE_STANDARDS_HTTP_HEADERS') && is_array(CORE_STANDARDS_HTTP_HEADERS)) {
+    if (defined('CORE_STANDARDS_HTTP_HEADERS') && is_array(CORE_STANDARDS_HTTP_HEADERS)) {
       $headers = array_merge($headers, CORE_STANDARDS_HTTP_HEADERS);
     }
     $template = '# BEGIN core-standards:headers' . PHP_EOL;
