@@ -13,10 +13,11 @@ namespace Netzstrategen\CoreStandards;
 class Schema {
 
   /**
-   * Default http headers useful to prevent clickjacking issues.
-   * Please note how the value of each header must include the quotes when needed.
-   * In case any specific project wants to extend/override these from the config/env
-   * Using the constant called CORE_STANDARDS_HTTP_HEADERS.
+   * HTTP headers to prevent clickjacking, XSS, and other vulnerabilities.
+   *
+   * The value for each header must include quotes where needed.
+   * The defaults can be overridden by defining a constant named
+   * CORE_STANDARDS_HTTP_HEADERS.
    */
   const HTTP_RESPONSE_HEADERS = [
     'Content-Security-Policy' => '"frame-ancestors"',
