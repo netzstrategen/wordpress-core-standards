@@ -46,7 +46,7 @@ class Schema {
     static::ensureAssetsCacheControl();
 
     // Includes the necessary response headers for all requests in htaccess file.
-    static::ensureResponseHeadersHtaccess();
+    static::ensureResponseSecurityHeadersHtaccess();
   }
 
   /**
@@ -65,20 +65,20 @@ class Schema {
   }
 
   /**
-   * Ensures dynamic response headers for all requests in htaccess.
+   * Ensures dynamic response security headers for all requests in htaccess.
    */
-  public static function ensureResponseHeadersHtaccess() {
+  public static function ensureResponseSecurityHeadersHtaccess() {
     $headers = self::HTTP_RESPONSE_HEADERS;
     if (defined('CORE_STANDARDS_HTTP_HEADERS') && is_array(CORE_STANDARDS_HTTP_HEADERS)) {
       $headers = array_merge($headers, CORE_STANDARDS_HTTP_HEADERS);
     }
-    $template = '# BEGIN core-standards:headers\n';
+    $template = '# BEGIN core-standards:security-headers\n';
     $template .= '<IfModule mod_headers.c>\n';
     foreach ($headers as $header => $value) {
       $template .= "\tHeader set $header $value\n";
     }
     $template .= '</IfModule>\n';
-    $template .= '# END core-standards:headers\n';
+    $template .= '# END core-standards:security-headers\n';
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
