@@ -72,13 +72,13 @@ class Schema {
     if (defined('CORE_STANDARDS_HTTP_HEADERS') && is_array(CORE_STANDARDS_HTTP_HEADERS)) {
       $headers = array_merge($headers, CORE_STANDARDS_HTTP_HEADERS);
     }
-    $template = '# BEGIN core-standards:headers' . PHP_EOL;
-    $template .= '<IfModule mod_headers.c>' . PHP_EOL;
+    $template = '# BEGIN core-standards:headers\n';
+    $template .= '<IfModule mod_headers.c>\n';
     foreach ($headers as $header => $value) {
-      $template .= "\tHeader set $header $value" . PHP_EOL;
+      $template .= "\tHeader set $header $value\n";
     }
-    $template .= '</IfModule>' . PHP_EOL;
-    $template .= '# END core-standards:headers' . PHP_EOL;
+    $template .= '</IfModule>\n';
+    $template .= '# END core-standards:headers\n';
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
