@@ -13,6 +13,21 @@ namespace Netzstrategen\CoreStandards;
 class Schema {
 
   /**
+   * HTTP headers to prevent clickjacking, XSS, and other vulnerabilities.
+   *
+   * The value for each header must include quotes where needed.
+   * The defaults can be overridden by defining a constant named
+   * CORE_STANDARDS_HTTP_HEADERS.
+   */
+  const HTTP_RESPONSE_HEADERS = [
+    'Content-Security-Policy' => '"frame-ancestors"',
+    'Referrer-Policy' => '"no-referrer-when-downgrade"',
+    'Strict-Transport-Security' => '"Strict-Transport-Security: max-age=31536000; includeSubDomains"',
+    'X-Content-Type-Options' => '"nosniff"',
+    'X-XSS-Protection' => '"1; mode=block"',
+  ];
+
+  /**
    * register_activation_hook() callback.
    */
   public static function activate() {
@@ -29,6 +44,9 @@ class Schema {
 
     // Force a long client-side caching time for assets with "ver" query string.
     static::ensureAssetsCacheControl();
+
+    // Includes the necessary response headers for all requests in htaccess file.
+    static::ensureResponseSecurityHeadersHtaccess();
   }
 
   /**
@@ -44,6 +62,24 @@ class Schema {
    */
   public static function uninstall() {
     Admin::removeAccessCapability();
+  }
+
+  /**
+   * Ensures dynamic response security headers for all requests in htaccess.
+   */
+  public static function ensureResponseSecurityHeadersHtaccess() {
+    $headers = self::HTTP_RESPONSE_HEADERS;
+    if (defined('CORE_STANDARDS_HTTP_HEADERS') && is_array(CORE_STANDARDS_HTTP_HEADERS)) {
+      $headers = array_merge($headers, CORE_STANDARDS_HTTP_HEADERS);
+    }
+    $template = "# BEGIN core-standards:security-headers\n";
+    $template .= "<IfModule mod_headers.c>\n";
+    foreach ($headers as $header => $value) {
+      $template .= "\tHeader set $header $value\n";
+    }
+    $template .= "</IfModule>\n";
+    $template .= "# END core-standards:security-headers\n";
+    static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
   }
 
   /**
