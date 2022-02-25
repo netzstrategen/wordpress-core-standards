@@ -20,7 +20,7 @@ class Schema {
    * CORE_STANDARDS_HTTP_HEADERS.
    */
   const HTTP_RESPONSE_HEADERS = [
-    'Content-Security-Policy' => '"frame-ancestors"',
+    'Content-Security-Policy-Report-Only' => '"script-src \'unsafe-inline\' \'unsafe-eval\' http: https:"',
     'Referrer-Policy' => '"no-referrer-when-downgrade"',
     'Strict-Transport-Security' => '"Strict-Transport-Security: max-age=31536000; includeSubDomains"',
     'X-Content-Type-Options' => '"nosniff"',
