@@ -75,7 +75,7 @@ class Schema {
     $template = "# BEGIN core-standards:security-headers\n";
     $template .= "<IfModule mod_headers.c>\n";
     foreach ($headers as $header => $value) {
-      $template .= "\tHeader set $header $value\n";
+      $template .= "  Header set $header $value\n";
     }
     $template .= "</IfModule>\n";
     $template .= "# END core-standards:security-headers\n";
