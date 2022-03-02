@@ -20,7 +20,6 @@ class Schema {
    * CORE_STANDARDS_HTTP_HEADERS.
    */
   const HTTP_RESPONSE_HEADERS = [
-    'Content-Security-Policy' => '"frame-ancestors"',
     'Referrer-Policy' => '"no-referrer-when-downgrade"',
     'Strict-Transport-Security' => '"Strict-Transport-Security: max-age=31536000; includeSubDomains"',
     'X-Content-Type-Options' => '"nosniff"',
@@ -75,7 +74,7 @@ class Schema {
     $template = "# BEGIN core-standards:security-headers\n";
     $template .= "<IfModule mod_headers.c>\n";
     foreach ($headers as $header => $value) {
-      $template .= "\tHeader set $header $value\n";
+      $template .= "  Header set $header $value\n";
     }
     $template .= "</IfModule>\n";
     $template .= "# END core-standards:security-headers\n";
