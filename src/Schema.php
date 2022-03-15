@@ -21,7 +21,7 @@ class Schema {
    */
   const HTTP_RESPONSE_HEADERS = [
     'Referrer-Policy' => '"no-referrer-when-downgrade"',
-    'Strict-Transport-Security' => '"Strict-Transport-Security: max-age=31536000; includeSubDomains"',
+    'Strict-Transport-Security' => '"max-age=31536000; includeSubDomains"',
     'X-Content-Type-Options' => '"nosniff"',
     'X-XSS-Protection' => '"1; mode=block"',
   ];
