@@ -28,7 +28,11 @@ class Feed {
       return;
     }
     $image_size = 'post-thumbnail';
-    $path = wp_upload_dir()['basedir'] . '/' . image_get_intermediate_size($attachment_id , $image_size)['path'];
+    $image = image_get_intermediate_size($attachment_id, $image_size);
+    if (!$image) {
+      return;
+    }
+    $path = wp_upload_dir()['basedir'] . '/' . $image['path'];
     $url = wp_get_attachment_image_src($attachment_id, $image_size);
     if (!file_exists($path) || !isset($url[0])) {
       return;
