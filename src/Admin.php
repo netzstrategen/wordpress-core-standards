@@ -26,6 +26,13 @@ class Admin {
    */
   const CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS = 90;
 
+  /**
+   * Cron event name for delete orphan post meta.
+   *
+   * @var string
+   */
+  const CRON_EVENT_DELETE_ORPHAN_POST_META = Plugin::PREFIX . '/cron/delete-orphan-post-meta';
+
   private static $skip_sample_permalink = [];
 
   /**
@@ -60,6 +67,12 @@ class Admin {
       wp_schedule_event(time(), 'twicedaily', static::CRON_EVENT_REVISION_CLEANUP);
     }
     add_action(static::CRON_EVENT_REVISION_CLEANUP, __CLASS__ . '::cron_revision_cleanup');
+
+    // Schedules delete orphan post meta cron.
+    if (!wp_next_scheduled(static::CRON_EVENT_DELETE_ORPHAN_POST_META)) {
+      wp_schedule_event(time(), 'weekly', static::CRON_EVENT_DELETE_ORPHAN_POST_META);
+    }
+    add_action(static::CRON_EVENT_DELETE_ORPHAN_POST_META, __CLASS__ . '::cron_delete_orphan_post_meta');
 
     // Removes Site Health from the dashboard.
     add_action('wp_dashboard_setup', __CLASS__ . '::removeSiteHealthDashboardWidget');
@@ -340,6 +353,14 @@ LIMIT 0,%d
     foreach ($revision_ids as $revision_id) {
       wp_delete_post_revision($revision_id);
     }
+  }
+
+  /**
+   * Cron event callback to delete orphan post meta.
+   */
+  public static function cron_delete_orphan_post_meta() {
+    global $wpdb;
+    $wpdb->query($wpdb->prepare("DELETE pm FROM {$wpdb->prefix}postmeta pm LEFT JOIN {$wpdb->prefix}posts p ON p.ID = pm.post_id WHERE p.ID IS NULL"));
   }
 
   /**
