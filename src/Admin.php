@@ -27,11 +27,11 @@ class Admin {
   const CRON_EVENT_REVISION_CLEANUP_RETAIN_DAYS = 90;
 
   /**
-   * Cron event name for delete orphan post meta.
+   * Cron event name for delete orphan postmeta.
    *
    * @var string
    */
-  const CRON_EVENT_DELETE_ORPHAN_POST_META = Plugin::PREFIX . '/cron/delete-orphan-post-meta';
+  const CRON_EVENT_POSTMETA_CLEANUP = Plugin::PREFIX . '/cron/postmeta-cleanup';
 
   private static $skip_sample_permalink = [];
 
@@ -68,11 +68,11 @@ class Admin {
     }
     add_action(static::CRON_EVENT_REVISION_CLEANUP, __CLASS__ . '::cron_revision_cleanup');
 
-    // Schedules delete orphan post meta cron.
-    if (!wp_next_scheduled(static::CRON_EVENT_DELETE_ORPHAN_POST_META)) {
-      wp_schedule_event(time(), 'weekly', static::CRON_EVENT_DELETE_ORPHAN_POST_META);
+    // Schedules delete orphan postmeta cron.
+    if (!wp_next_scheduled(static::CRON_EVENT_POSTMETA_CLEANUP)) {
+      wp_schedule_event(time(), 'weekly', static::CRON_EVENT_POSTMETA_CLEANUP);
     }
-    add_action(static::CRON_EVENT_DELETE_ORPHAN_POST_META, __CLASS__ . '::cron_delete_orphan_post_meta');
+    add_action(static::CRON_EVENT_POSTMETA_CLEANUP, __CLASS__ . '::cron_postmeta_cleanup');
 
     // Removes Site Health from the dashboard.
     add_action('wp_dashboard_setup', __CLASS__ . '::removeSiteHealthDashboardWidget');
@@ -356,11 +356,11 @@ LIMIT 0,%d
   }
 
   /**
-   * Cron event callback to delete orphan post meta.
+   * Cron event callback to delete orphan postmeta.
    */
-  public static function cron_delete_orphan_post_meta() {
+  public static function cron_postmeta_cleanup() {
     global $wpdb;
-    $wpdb->query($wpdb->prepare("DELETE pm FROM {$wpdb->prefix}postmeta pm LEFT JOIN {$wpdb->prefix}posts p ON p.ID = pm.post_id WHERE p.ID IS NULL"));
+    $wpdb->query("DELETE pm FROM {$wpdb->prefix}postmeta pm LEFT JOIN {$wpdb->prefix}posts p ON p.ID = pm.post_id WHERE p.ID IS NULL");
   }
 
   /**
