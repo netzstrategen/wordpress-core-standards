@@ -107,6 +107,9 @@ class Plugin {
     add_filter('script_loader_tag', __NAMESPACE__ . '\Asset::loader_tag', 10, 3);
     add_filter('style_loader_tag', __NAMESPACE__ . '\Asset::loader_tag', 10, 3);
 
+    // Filter whether to kill elasticpress sync during imports.
+    add_filter('ep_sync_indexable_kill', '__return_false', 1, 2);
+
     // Enable caching of registered themes in WordPress Core.
     add_filter('wp_cache_themes_persistently', '__return_true');
 
