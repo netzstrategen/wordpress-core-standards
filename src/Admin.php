@@ -57,6 +57,10 @@ class Admin {
     add_filter('wp_prepare_attachment_for_js', __CLASS__ . '::wp_prepare_attachment_for_js');
     add_action('admin_head', __CLASS__ . '::admin_head');
 
+    // Cache available months for filtering posts and attachments.
+    add_filter('media_library_months_with_files', __NAMESPACE__ . '\AdminDateFilterCache::media_library_months_with_files');
+    add_filter('pre_months_dropdown_query', __NAMESPACE__ . '\AdminDateFilterCache::pre_months_dropdown_query', 10, 2);
+
     // Exclude subscribers from post author select options to prevent a performance
     // slowdown on sites with large amounts of non-administrative registered users.
     add_filter('wp_dropdown_users_args', __CLASS__ . '::wp_dropdown_users_args');
