@@ -68,6 +68,10 @@ class Plugin {
     // Enforce youtube-nocookie and add wrapper to oEmbed elements.
     add_filter('embed_oembed_html', __CLASS__ . '::embed_oembed_html', 10, 4);
 
+    // Invalidates the cache of available month filters in the admin.
+    add_action('add_attachment', __NAMESPACE__ . '\AdminDateFilterCache::invalidateCacheByPost');
+    add_action('save_post', __NAMESPACE__ . '\AdminDateFilterCache::invalidateCacheByPost');
+
     // Allow SVG files in media library.
     add_filter('upload_mimes', __CLASS__ . '::upload_mime_types');
     add_filter('wp_check_filetype_and_ext', __CLASS__ . '::wp_check_filetype_and_ext', 10, 4);
