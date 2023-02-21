@@ -12,6 +12,8 @@ class MultilingualSupport {
   /**
    * Changes the command language to return entities of matching language only.
    *
+   * Currently only supporting WPML.
+   *
    * @param array $args
    * @param array $assoc_args
    * @param array $options
