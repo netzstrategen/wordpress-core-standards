@@ -10,7 +10,7 @@ namespace Netzstrategen\CoreStandards\Hooks;
 class MultilingualSupport {
 
   /**
-   * Changes the command language to return entities of matching language only.
+   * Sets the language for the current process limiting results to specified language.
    *
    * Currently supporting WPML only.
    *
