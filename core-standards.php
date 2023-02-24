@@ -47,4 +47,5 @@ add_action('admin_init', __NAMESPACE__ . '\TrackingOptOut::admin_init', 9);
 if (defined('WP_CLI') && WP_CLI) {
   \WP_CLI::add_command('user export-csv', __NAMESPACE__ . '\Commands\UserExport');
   \WP_CLI::add_command('user import-csv-raw', __NAMESPACE__ . '\Commands\UserImport');
+  \WP_CLI::add_hook('before_run_command', __NAMESPACE__ . '\Hooks\Language::limitLanguage');
 }
