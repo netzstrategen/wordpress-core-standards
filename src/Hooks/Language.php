@@ -16,11 +16,12 @@ class Language {
    * results for all languages. Defaults to the language set in the plugin.
    *
    * Note: Currently supporting WPML only.
+   * Note: Using an env variable to avoid synopsis parser validation errors.
    *
    * ### EXAMPLES
    *
-   *    wp post list --lang=en
-   *    wp post list --lang=all
+   *    WPLANG=en wp post list
+   *    WPLANG=all wp post list
    *
    * @param array $args
    * @param array $assoc_args
@@ -30,9 +31,8 @@ class Language {
    */
   public static function limitLanguage(array $args, array $assoc_args, array $options): array {
     global $sitepress;
-    if ($sitepress && $lang = $assoc_args['lang'] ?? '') {
+    if ($sitepress && $lang = getenv('WPLANG') ?? '') {
       $sitepress->switch_lang($lang, TRUE);
-      unset($assoc_args['lang']);
     }
     return $args;
   }
