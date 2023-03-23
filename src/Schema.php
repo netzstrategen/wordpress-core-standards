@@ -213,6 +213,8 @@ class Schema {
    * Cron event callback to ensure proper database indexes.
    */
   public static function cron_ensure_indexes() {
+    global $wpdb;
+
     // Core queries all options with autoload=yes on every request, which becomes
     // slower when there are plenty of rows (e.g., due to options that ought to
     // be transients but are not).
@@ -239,6 +241,19 @@ class Schema {
 
     // Administrative user listing attempts to filter users by meta fields.
     self::ensureIndex('usermeta', 'user_id_meta_key', 'user_id, meta_key');
+
+    // wp-all-import queries products by SKU.
+    if (isset($wpdb->wc_product_meta_lookup)) {
+      self::ensureIndex('wc_product_meta_lookup', 'sku', 'sku');
+    }
+    // wp-all-import lacks an index on its entity lookup table.
+    if ($wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->prefix . 'pmxi_posts'))) {
+      self::ensureIndex('pmxi_posts', 'unique_key', 'unique_key(250)');
+    }
+    // wp-all-import lacks an index on its entity lookup table.
+    if ($wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->prefix . 'pmxi_hash'))) {
+      self::ensureIndex('pmxi_hash', 'post_id', 'post_id');
+    }
   }
 
   /**
@@ -246,7 +261,7 @@ class Schema {
    */
   public static function ensureIndex($table, $index_name, $index_definition) {
     global $wpdb;
-    $table = $wpdb->{$table};
+    $table = $wpdb->prefix . $table;
     if (!$wpdb->get_var("SHOW INDEX FROM $table WHERE Key_name = '$index_name'")) {
       self::createIndex($table, $index_name, $index_definition);
     }
