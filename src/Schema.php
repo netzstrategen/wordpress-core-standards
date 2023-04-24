@@ -254,6 +254,11 @@ class Schema {
     if ($wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->prefix . 'pmxi_hash'))) {
       self::ensureIndex('pmxi_hash', 'post_id', 'post_id');
     }
+
+    // real-media-library lacks an index on its lookup table.
+    if ($wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->prefix . 'realmedialibrary_posts'))) {
+      self::ensureIndex('realmedialibrary_posts', 'fid', 'fid');
+    }
   }
 
   /**
