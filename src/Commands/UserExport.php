@@ -12,8 +12,26 @@ class UserExport extends \WP_CLI_Command {
   /**
    * Export users into a CSV file.
    *
-   * Implement the filter hook 'user_contactmethods' to control which user meta
+   * Implement the filter hook 'user_contactmethods' to add user meta fields.
+   * ```
+   * add_filter('user_contactmethods', fn() => [
+   *   'alg_wc_ev_is_activated' => 1,
+   * ]);
+   * ```
+   *
+   * Implement the filter hook 'wp user export-csv keys' to control which user meta
    * fields are exported.
+   * ```
+   * add_filter('wp user export-csv keys', fn() => [
+   *   'ID' => 1,
+   *   'user_login' => 1,
+   *   'user_email' => 1,
+   *   'user_pass' => 1,
+   *   'user_registered' => 1,
+   *   'alg_wc_ev_is_activated' => 1,
+   *   'role' => 1,
+   * ]);
+   * ```
    *
    * The CSV file will contain the hashed passwords. Use the wrapper command
    * `wp user import-csv-raw` to import them identically into the target site.
@@ -47,17 +65,26 @@ class UserExport extends \WP_CLI_Command {
     array_walk($users, function (&$user) use (&$columns, $meta_keys) {
       // import-csv looks for 'none' to assign no role.
       // @see https://github.com/wp-cli/entity-command/blob/master/src/User_Command.php#L938-L939
-      $role = isset($user->roles[0]) ? $user->roles[0] : 'none';
+      $role = !empty($user->roles) ? implode(',', $user->roles) : 'none';
       $user = $user->to_array();
       $user['role'] = $role;
       foreach ($meta_keys as $meta_key) {
         $meta[$meta_key] = get_user_meta($user['ID'], $meta_key, TRUE);
-      }
-      unset($user['ID']);
-      if (!isset($columns)) {
-        $columns = array_merge(array_keys($user), $meta_keys);
+        if (is_array($meta[$meta_key])) {
+          $meta[$meta_key] = implode(',', $meta[$meta_key]);
+        }
+        elseif (!is_string($meta[$meta_key])) {
+          $meta[$meta_key] = json_encode($meta[$meta_key], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        }
       }
       $user += $meta;
+      if (!isset($export_keys)) {
+        $export_keys = apply_filters('wp user export-csv keys', $user);
+      }
+      $user = array_intersect_key($user, $export_keys);
+      if (!isset($columns)) {
+        $columns = array_keys($user);
+      }
     });
 
     $file = fopen($filename, 'w');
