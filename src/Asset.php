@@ -26,11 +26,8 @@ class Asset {
    *   The tag to print with the version updated.
    */
   public static function loader_tag($tag, $handle, $src) {
-    $wp_scripts = wp_scripts();
-    $default_version = $wp_scripts->default_version;
-
     // Skip scripts loaded from remote URLs.
-    if (strpos($src, home_url()) !== 0) {
+    if (strpos($src, site_url()) !== 0) {
       return $tag;
     }
 
