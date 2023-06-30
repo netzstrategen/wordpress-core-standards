@@ -224,6 +224,10 @@ class Schema {
     // values, but there is no index on the values by default as it is a longtext
     // column.
     self::ensureIndex('postmeta', 'meta_value', 'meta_value(60)');
+    // Lookup queries filtering by meta_key and meta_value indicate that the
+    // meta_value index is not sufficiently reducing the result set to filter and
+    // sort the rest in memory.
+    self::ensureIndex('postmeta', 'meta_key_value', 'meta_key(80), meta_value(111)');
 
     // Data migration and import scripts and plugins are trying to locate
     // previously migrated content by its UUID, but the GUID column does not have
