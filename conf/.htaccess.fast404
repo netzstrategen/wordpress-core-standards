@@ -4,9 +4,9 @@
   # WordPress "File not found" page rendering.
   RewriteEngine On
   RewriteCond %{REQUEST_URI} ^(UPLOAD_DIR_REPLACE).+$
-  RewriteCond %{REQUEST_URI} !-f
-  RewriteCond %{REQUEST_URI} !-d
-  RewriteCond %{REQUEST_URI} !-l
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule ^.*$ - [nocase,nosubreq,R=404,L]
 </IfModule>
 # END core-standards:fast404
