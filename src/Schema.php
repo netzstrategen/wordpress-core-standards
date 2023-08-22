@@ -108,7 +108,7 @@ class Schema {
    */
   public static function ensureFast404Response() {
     $uploads_dir = wp_get_upload_dir()['basedir'];
-    $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH) - 1);
+    $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH));
 
     // Changes to .htaccess need to be performed in separate steps for each
     // chunk of content that needs to be ensured. Otherwise the existing chunks
