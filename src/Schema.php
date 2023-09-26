@@ -94,11 +94,10 @@ class Schema {
     $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.uploads.noscript');
     static::createOrPrependFile($pathname, $template, "\n");
 
-    // Ensure that .gitignore in the document root tracks the .htaccess file.
+    // Ensure uploads folder is ignored in .gitignore.
     $uploads_dir_relative = substr($uploads_dir, strlen(ABSPATH));
     $pathname = ABSPATH . '.gitignore';
-    $template = "/$uploads_dir_relative/*
-!/$uploads_dir_relative/.htaccess
+    $template = "/$uploads_dir_relative
 ";
     static::createOrPrependFile($pathname, $template);
   }
