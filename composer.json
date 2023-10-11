@@ -1,15 +1,30 @@
 {
-    "name": "netzstrategen/core-standards",
-    "type": "wordpress-plugin",
-    "description": "Various features and adjustments for WordPress Core that do not need configuration.",
-    "authors": [
-        {
-            "name": "netzstrategen",
-            "email": "hallo@netzstrategen.com",
-            "homepage": "https://netzstrategen.com"
-        }
-    ],
-    "require": {
-        "php": ">=7.0.0"
+  "name": "netzstrategen/core-standards",
+  "type": "wordpress-plugin",
+  "description": "Various features and adjustments for WordPress Core that do not need configuration.",
+  "authors": [
+    {
+      "name": "netzstrategen",
+      "email": "hallo@netzstrategen.com",
+      "homepage": "https://netzstrategen.com"
     }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/netzstrategen/phpcs-config.git"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "require-dev": {
+    "netzstrategen/phpcs-config": "dev-main",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1"
+  },
+  "scripts": {
+    "post-package-install": [
+      "cp ./vendor/netzstrategen/phpcs-config/phpcs.xml ."
+    ]
+  }
 }
