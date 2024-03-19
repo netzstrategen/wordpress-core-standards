@@ -210,7 +210,7 @@ class Admin {
       parse_str($_COOKIE['wp-settings-' . $user->ID], $cookie_settings);
       $cookie_settings = http_build_query(array_merge($cookie_settings, $overrides));
       $secure = ('https' === parse_url(admin_url(), PHP_URL_SCHEME));
-      setcookie('wp-settings-' . $user->ID, $cookie_settings, time() + YEAR_IN_SECONDS, SITECOOKIEPATH, null, $secure);
+      setcookie('wp-settings-' . $user->ID, $cookie_settings, time() + YEAR_IN_SECONDS, SITECOOKIEPATH, '', $secure);
       $_COOKIE['wp-settings-' . $user->ID] = $cookie_settings;
     }
     return $settings;
