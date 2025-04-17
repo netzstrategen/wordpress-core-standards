@@ -124,8 +124,10 @@ class Schema {
    * Ensures no access to slow front controllers and creates route for login.php.
    */
   public static function ensureFrontControllerAccess() {
-    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.security');
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/.htaccess.security-files');
     static::createOrPrependFile(ABSPATH . '.htaccess', $template, "\n");
+    $template = file_get_contents(Plugin::getBasePath() . '/conf/remove/.htaccess.security');
+    static::removeFromFile(ABSPATH . '.htaccess', $template);
   }
 
   /**

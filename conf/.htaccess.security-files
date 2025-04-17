@@ -1,0 +1,21 @@
+# BEGIN core-standards:security-files
+RedirectMatch 403 /wp-includes/.+\.php$
+Redirect 403 /.gitignore
+Redirect 403 /.gitmodules
+Redirect 403 /license.txt
+Redirect 403 /readme.html
+Redirect 403 /.wp-cli
+Redirect 403 /wp-cli.yml
+Redirect 403 /wp-config.php
+
+<IfModule mod_rewrite.c>
+  # Rename /wp-login.php into /login.php and deny access to XML-RPC API.
+  # Disallow access to .git folders.
+  RewriteEngine On
+  RewriteRule ^login\.php$ /wp-login.php [QSA,END]
+  RewriteRule ^wp-login\.php$ - [NS,F,END]
+  RewriteRule ^wp-content/debug\.log$ - [F,END]
+  RewriteRule ^xmlrpc\.php$ - [F,END]
+  RewriteRule \.git/ - [F,END]
+</IfModule>
+# END core-standards:security-files
