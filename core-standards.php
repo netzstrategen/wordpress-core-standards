@@ -43,6 +43,7 @@ add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 add_action('admin_init', __NAMESPACE__ . '\Admin::init');
 // Adds settings fields to 'Reading' settings page, after 'Search Engine visibility'.
 add_action('admin_init', __NAMESPACE__ . '\TrackingOptOut::admin_init', 9);
+add_action('rest_endpoints', Rest::class . '::rest_endpoints', 20);
 
 if (defined('WP_CLI') && WP_CLI) {
   \WP_CLI::add_command('user export-csv', __NAMESPACE__ . '\Commands\UserExport');
