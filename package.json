@@ -5,7 +5,9 @@
   "description": "Various features and adjustments for WordPress Core that do not need configuration.",
   "main": "gulpfile.js",
   "devDependencies": {
-    "@netzstrategen/gulp-task-collection": "^1.5.0"
+    "@netzstrategen/gulp-task-collection": "^1.5.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.1.2"
   },
   "repository": {
     "type": "git",
@@ -43,5 +45,11 @@
       "dest": "./dist/styles"
     },
     "templates": ""
+  },
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.php": "./vendor/bin/phpcs"
   }
 }
