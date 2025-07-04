@@ -4,6 +4,7 @@ Redirect 403 /.gitignore
 Redirect 403 /.gitmodules
 Redirect 403 /license.txt
 Redirect 403 /readme.html
+Redirect 403 /README.md
 Redirect 403 /.wp-cli
 Redirect 403 /wp-cli.yml
 Redirect 403 /wp-config.php
