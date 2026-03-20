@@ -30,6 +30,12 @@ class Asset {
     if (strpos($src, site_url()) !== 0) {
       return $tag;
     }
+    // Skip assets that are already versioned.
+    // - Elementor post/template CSS uses last modification timestamp.
+    // - Stripe UPE blocks use settings version.
+    if (str_contains($src, 'elementor/css/') || str_contains($src, 'upe-blocks.css')) {
+      return $tag;
+    }
 
     if ($git_version = self::getGitCommitHash()) {
       if (strpos($src, '?') !== FALSE) {
