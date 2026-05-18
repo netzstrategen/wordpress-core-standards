@@ -54,6 +54,18 @@ class Schema {
   public static function deactivate() {
     // Remove scheduled revision cleanup cron event.
     wp_clear_scheduled_hook(Admin::CRON_EVENT_REVISION_CLEANUP);
+
+    // Restore .htaccess to its pre-plugin state so the site (including
+    // /wp-login.php) remains accessible while the plugin is deactivated.
+    $root_htaccess = ABSPATH . '.htaccess';
+    static::removeBlockFromFile($root_htaccess, 'core-standards:security-files');
+    static::removeBlockFromFile($root_htaccess, 'core-standards:security');
+    static::removeBlockFromFile($root_htaccess, 'core-standards:fast404');
+    static::removeBlockFromFile($root_htaccess, 'core-standards:assets-cache');
+    static::removeBlockFromFile($root_htaccess, 'core-standards:security-headers');
+
+    $uploads_htaccess = wp_upload_dir(NULL, FALSE)['basedir'] . '/.htaccess';
+    static::removeBlockFromFile($uploads_htaccess, 'core-standards:uploads.noscript');
   }
 
   /**
@@ -209,6 +221,30 @@ class Schema {
 
     $content = str_replace($template, '', $content);
     file_put_contents($pathname, $content);
+  }
+
+  /**
+   * Removes a marker-delimited block from a file.
+   *
+   * Matches the section between "# BEGIN core-standards:<id>" and
+   * "# END core-standards:<id>", inclusive, plus the trailing newline.
+   *
+   * @param string $pathname
+   *   Path to the file to update.
+   * @param string $id
+   *   The full marker id (e.g. "core-standards:security-files").
+   */
+  private static function removeBlockFromFile($pathname, $id) {
+    if (!file_exists($pathname) || !is_writable($pathname)) {
+      return;
+    }
+    $content = file_get_contents($pathname);
+    $pattern = '/[ \t]*# BEGIN ' . preg_quote($id, '/')
+      . '\b.*?# END ' . preg_quote($id, '/') . "[^\n]*\n?/s";
+    $updated = preg_replace($pattern, '', $content);
+    if ($updated !== NULL && $updated !== $content) {
+      file_put_contents($pathname, $updated);
+    }
   }
 
   /**
