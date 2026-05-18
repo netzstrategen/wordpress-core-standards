@@ -3,9 +3,10 @@
   "phpVersion": "8.1",
   "port": 8989,
   "testsPort": 8990,
-  "plugins": [
-    "."
-  ],
+  "plugins": [],
+  "mappings": {
+    "wp-content/plugins/core-standards": "."
+  },
   "config": {
     "WP_DEBUG": true,
     "WP_DEBUG_LOG": true,
