@@ -4,8 +4,17 @@
   "title": "WordPress Core Refinements",
   "description": "Various features and adjustments for WordPress Core that do not need configuration.",
   "main": "gulpfile.js",
+  "scripts": {
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "env:clean": "wp-env clean all",
+    "test:e2e": "playwright test",
+    "test:e2e:debug": "PWDEBUG=1 playwright test"
+  },
   "devDependencies": {
-    "@netzstrategen/gulp-task-collection": "^1.5.0"
+    "@netzstrategen/gulp-task-collection": "^1.5.0",
+    "@playwright/test": "^1.60.0",
+    "@wordpress/env": "^10.39.0"
   },
   "repository": {
     "type": "git",
@@ -17,7 +26,6 @@
     "url": "https://github.com/netzstrategen/wordpress-core-standards/issues"
   },
   "homepage": "https://github.com/netzstrategen/wordpress-core-standards#readme",
-  "dependencies": {},
   "browserslist": [
     "last 2 versions"
   ],

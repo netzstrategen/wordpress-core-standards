@@ -54,6 +54,15 @@ class Schema {
   public static function deactivate() {
     // Remove scheduled revision cleanup cron event.
     wp_clear_scheduled_hook(Admin::CRON_EVENT_REVISION_CLEANUP);
+
+    // When temporarily disabling the plugin, disable the rule that
+    // blocks direct access to /wp-login.php, so admins can log in.
+    // Reenabling the plugin rewrites all templates, so the line is
+    // restored.
+    static::commentOutLineInFile(
+      ABSPATH . '.htaccess',
+      'RewriteRule ^wp-login\.php$ - [NS,F,END]'
+    );
   }
 
   /**
@@ -61,6 +70,18 @@ class Schema {
    */
   public static function uninstall() {
     Admin::removeAccessCapability();
+
+    // The plugin is being permanently removed; clean up every .htaccess
+    // block it ever wrote so no orphan rules are left behind.
+    $root_htaccess = ABSPATH . '.htaccess';
+    static::removeBlockFromFile($root_htaccess, 'core-standards:security-files');
+    static::removeBlockFromFile($root_htaccess, 'core-standards:security');
+    static::removeBlockFromFile($root_htaccess, 'core-standards:fast404');
+    static::removeBlockFromFile($root_htaccess, 'core-standards:assets-cache');
+    static::removeBlockFromFile($root_htaccess, 'core-standards:security-headers');
+
+    $uploads_htaccess = wp_upload_dir(NULL, FALSE)['basedir'] . '/.htaccess';
+    static::removeBlockFromFile($uploads_htaccess, 'core-standards:uploads.noscript');
   }
 
   /**
@@ -209,6 +230,57 @@ class Schema {
 
     $content = str_replace($template, '', $content);
     file_put_contents($pathname, $content);
+  }
+
+  /**
+   * Comments out a single line in a file, preserving its indentation.
+   *
+   * Only matches uncommented occurrences (idempotent: a second call after
+   * the line is already commented out is a no-op). Only the first match
+   * is replaced.
+   *
+   * @param string $pathname
+   *   Path to the file to update.
+   * @param string $line
+   *   The exact line content to comment out (without surrounding whitespace).
+   */
+  private static function commentOutLineInFile($pathname, $line) {
+    if (!file_exists($pathname) || !is_writable($pathname)) {
+      return;
+    }
+    $content = file_get_contents($pathname);
+    $pattern = '/^([ \t]*)(' . preg_quote($line, '/') . ')$/m';
+    $updated = preg_replace($pattern, '$1# $2', $content, 1);
+    if ($updated !== NULL && $updated !== $content) {
+      file_put_contents($pathname, $updated);
+    }
+  }
+
+  /**
+   * Removes a marker-delimited block from a file.
+   *
+   * Matches the section between "# BEGIN core-standards:<id>" and
+   * "# END core-standards:<id>", inclusive, plus the trailing newline.
+   *
+   * @param string $pathname
+   *   Path to the file to update.
+   * @param string $id
+   *   The full marker id (e.g. "core-standards:security-files").
+   */
+  private static function removeBlockFromFile($pathname, $id) {
+    if (!file_exists($pathname) || !is_writable($pathname)) {
+      return;
+    }
+    $content = file_get_contents($pathname);
+    // Anchor BEGIN/END markers at end-of-line so e.g. removing
+    // "core-standards:security" doesn't also strip "...:security-files"
+    // or "...:security-headers" (`\b` is satisfied by a hyphen).
+    $pattern = '/[ \t]*# BEGIN ' . preg_quote($id, '/')
+      . '[ \t]*\n.*?# END ' . preg_quote($id, '/') . "[ \t]*\n?/s";
+    $updated = preg_replace($pattern, '', $content);
+    if ($updated !== NULL && $updated !== $content) {
+      file_put_contents($pathname, $updated);
+    }
   }
 
   /**

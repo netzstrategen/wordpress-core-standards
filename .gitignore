@@ -19,3 +19,9 @@ lerna-debug.log*
 # Performant Translations
 *.l10n.php
 *.mo.php
+
+# E2E test artifacts
+test-results/
+playwright-report/
+.wp-env/
+
