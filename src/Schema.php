@@ -55,12 +55,10 @@ class Schema {
     // Remove scheduled revision cleanup cron event.
     wp_clear_scheduled_hook(Admin::CRON_EVENT_REVISION_CLEANUP);
 
-    // The plugin may be deactivated temporarily; the production security
-    // and stability rules in .htaccess must stay in place. Only the rule
-    // that blocks direct access to /wp-login.php is disabled, so the
-    // login page remains reachable while the plugin is inactive.
-    // Re-activation rewrites the security-files block from the template
-    // and naturally restores the line.
+    // When temporarily disabling the plugin, disable the rule that
+    // blocks direct access to /wp-login.php, so admins can log in.
+    // Reenabling the plugin rewrites all templates, so the line is
+    // restored.
     static::commentOutLineInFile(
       ABSPATH . '.htaccess',
       'RewriteRule ^wp-login\.php$ - [NS,F,END]'
