@@ -26,32 +26,58 @@ class Asset {
    *   The tag to print with the version updated.
    */
   public static function loader_tag($tag, $handle, $src) {
+    return str_replace($src, self::versionUrl($src), $tag);
+  }
+
+  /**
+   * Replaces default version to Git reference in preload hint URLs.
+   *
+   * Without this, a preloaded asset URL differs from the URL of its script or
+   * style tag after loader_tag(), so the browser discards the preloaded file
+   * and downloads the asset a second time.
+   *
+   * @implements wp_preload_resources
+   */
+  public static function wp_preload_resources($resources) {
+    foreach ($resources as $key => $resource) {
+      if (isset($resource['href'])) {
+        $resources[$key]['href'] = self::versionUrl($resource['href']);
+      }
+    }
+    return $resources;
+  }
+
+  /**
+   * Replaces default version to Git reference in a local asset URL.
+   *
+   * @param string $src
+   *   The asset URL.
+   *
+   * @return string
+   *   The asset URL with the version updated.
+   */
+  private static function versionUrl($src) {
     // Skip scripts loaded from remote URLs.
     if (strpos($src, site_url()) !== 0) {
-      return $tag;
+      return $src;
     }
     // Skip assets that are already versioned.
     // - Elementor post/template CSS uses last modification timestamp.
     // - Stripe UPE blocks use settings version.
     if (str_contains($src, 'elementor/css/') || str_contains($src, 'upe-blocks.css')) {
-      return $tag;
+      return $src;
     }
 
     if ($git_version = self::getGitCommitHash()) {
       if (strpos($src, '?') !== FALSE) {
         if (preg_match('@[?&](ver=[^&$]*)@', $src, $matches)) {
-          $new_src = str_replace($matches[1], 'ver=' . $git_version, $src);
+          return str_replace($matches[1], 'ver=' . $git_version, $src);
         }
-        else {
-          $new_src = $src . '&ver=' . $git_version;
-        }
+        return $src . '&ver=' . $git_version;
       }
-      else {
-        $new_src = $src . '?ver=' . $git_version;
-      }
-      $tag = str_replace($src, $new_src, $tag);
+      return $src . '?ver=' . $git_version;
     }
-    return $tag;
+    return $src;
   }
 
   /**
