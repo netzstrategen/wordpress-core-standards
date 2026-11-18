@@ -107,9 +107,10 @@ class Plugin {
     // Transliterates filenames.
     add_filter('sanitize_file_name', __CLASS__ . '::sanitize_file_name', 10, 2);
 
-    // Adds version string to all scripts.
+    // Adds version string to all scripts, styles and their preload hints.
     add_filter('script_loader_tag', __NAMESPACE__ . '\Asset::loader_tag', 10, 3);
     add_filter('style_loader_tag', __NAMESPACE__ . '\Asset::loader_tag', 10, 3);
+    add_filter('wp_preload_resources', __NAMESPACE__ . '\Asset::wp_preload_resources');
 
     // Prevent Elasticsearch becoming out of sync after importing data.
     add_filter('ep_sync_indexable_kill', '__return_false', 1);
